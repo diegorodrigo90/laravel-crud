@@ -16,4 +16,7 @@ use Illuminate\Support\Facades\Route;
 Auth::routes(['register' => false]);
 
 
-Route::resource('/', 'FornecedorController')->middleware('auth');
+Route::get('/', 'HomeController@index')->middleware('auth');
+
+Route::resource('/fornecedor', 'FornecedorController')->middleware('auth');
+
