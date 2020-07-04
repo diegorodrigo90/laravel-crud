@@ -26,11 +26,9 @@ $(document).ready(function () {
             "email" : {
                 required: true,
                 email: true
-            }
-        },
-        tooltip_options: {
-            _all_ : {
-                placement: 'top'
+            },
+            "cep" : {
+                cep: true
             }
         }
     });
