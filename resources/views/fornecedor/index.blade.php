@@ -1,6 +1,6 @@
 @extends('adminlte::page')
 
-@section('title', 'Dashboard')
+@section('title', 'Fornecedores - Painel de controle')
 
 @section('content_header')
 <section class="content-header">

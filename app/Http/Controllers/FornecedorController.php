@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\State;
 use Illuminate\Http\Request;
 
 class FornecedorController extends Controller
@@ -23,7 +24,10 @@ class FornecedorController extends Controller
      */
     public function create()
     {
-        return view('fornecedor.create');
+
+        $states = State::all();
+
+        return view('fornecedor.create', compact('states'));
 
     }
 
