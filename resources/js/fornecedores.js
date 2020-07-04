@@ -1,9 +1,61 @@
 $(document).ready(function () {
 
+    //limpando caracteres não numericos de uma variavel
+    var removeNonNumericsCaracters = function(value) {
+        return value.replace(/\D/g,'');
+    }
+
+    //verificando cnpj no receita ws
+    var receitaWS = function(cnpj) {
+            $.ajax({
+                type: 'GET',
+                dataType: 'jsonp',
+                url: "https://www.receitaws.com.br/v1/cnpj/" + removeNonNumericsCaracters(cnpj), //Url da Action Aqui
+                success: function (data) {
+                    $("#razaoSocial").val(data.nome);
+                    $("#nomeFantasia").val(data.fantasia);
+                    $("#situacaoCNPJ").val(data.situacao);
+                    $("#cep").val(data.cep.replace(".",""));
+
+                }
+            });
+    };
+
+    var viaCep = function(cep) {
+        $.ajax({
+            type: 'GET',
+            dataType: 'jsonp',
+            url: "https://viacep.com.br/ws/" + removeNonNumericsCaracters(cep) + "/json", //Url da Action Aqui
+            success: function (data) {
+                console.log(data);
+                $('#logradouro').val(data.logradouro);
+                $('#complemento').val(data.complemento);
+                $('#bairro').val(data.bairro);
+
+                $('#uf').val(data.uf).trigger('change.select2');
+
+
+            }
+        });
+};
 
     //aplicando mascaras
     $('#cnpj').mask('99.999.999/9999-99');
     $('#cep').mask('99999-999');
+
+
+        $('#cnpj').on('change',function(){
+            if($("[name='cnpj']").valid()){
+                receitaWS($(this).val());
+            }
+        });
+
+        $('#cep').on('change',function(){
+            if($("[name='cep']").valid()){
+                viaCep($(this).val());
+            }
+        });
+
 
     $("#fornecedorForm").validate({
         errorClass: 'is-invalid error',
