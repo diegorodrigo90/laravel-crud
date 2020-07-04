@@ -37,34 +37,67 @@
                     </div>
 
 
-                    <div id="formPessoaJuridica" class="row">
+                    <div class="row">
 
-                        <div class="col-md-3">
+                        <div class="col-md-3" id="div-cnpj">
                             <div class="form-group">
                                 <label for="cnpj">CNPJ <sup style="color: red">•</sup></label>
-                                <input type="tel" name="cnpj" class="form-control" id="cnpj" required>
+                                <input type="tel" name="cnpj" class="form-control set-required" id="cnpj" required>
                             </div>
                         </div>
 
-                        <div class="col-md-6">
+                        <div class="col-md-3" id="div-cpf" style="display: none">
+                            <div class="form-group">
+                                <label for="cpf">CPF <sup style="color: red;">•</sup></label>
+                                <input pattern="\d{3}\.\d{3}\.\d{3}-\d{2}" name="cpf" type="text"
+                                    class="form-control set-required" id="cpf" required>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6" id="div-nome" style="display: none">
+                            <div class="form-group">
+                                <label for="nome">Nome <sup style="color: red">•</sup></label>
+                                <input type="text" class="form-control set-required" id="nome" name="nome" required>
+                            </div>
+                        </div>
+
+                        <div class="col-md-3" id="div-apelido" style="display: none">
+                            <div class="form-group">
+                                <label for="apelido">Apelido</label>
+                                <input type="text" class="form-control set-required" id="apelido" name="apelido">
+                            </div>
+                        </div>
+
+                        <div class="col-md-3" id="div-rg" style="display: none">
+                            <div class="form-group">
+                                <label for="rg">RG <sup style="color: red">•</sup></label>
+                                <input type="text" class="form-control set-required" id="rg" name="rg">
+                            </div>
+                        </div>
+
+
+                        <div class="col-md-6" id="div-razao-social">
                             <div class="form-group">
                                 <label for="razaoSocial">Razão Social <sup style="color: red">•</sup></label>
-                                <input type="text" class="form-control" id="razaoSocial" name="razaoSocial" required>
+                                <input type="text" class="form-control set-required" id="razaoSocial" name="razaoSocial"
+                                    required>
                             </div>
                         </div>
 
-                        <div class="col-md-3">
+                        <div class="col-md-3" id="div-nome-fantasia">
                             <div class="form-group">
                                 <label for="nomeFantasia">Nome fantasia <sup style="color: red">•</sup></label>
-                                <input type="text" class="form-control" id="nomeFantasia" name="nomeFantasia" required>
+                                <input type="text" class="form-control set-required" id="nomeFantasia"
+                                    name="nomeFantasia" required>
                             </div>
                         </div>
 
-                        <div class="col-md-3">
+                        <div class="col-md-3" id="div-indicador-inscricao-estadual">
                             <div class="form-group">
                                 <label for="indicadorInscricaoEstadual">Indicador de Inscrição Estadual<sup
                                         style="color: red">•</sup></label>
-                                <select id="indicadorInscricaoEstadual" name="indicadorInscricaoEstadual" class="form-control" required>
+                                <select id="indicadorInscricaoEstadual" name="indicadorInscricaoEstadual"
+                                    class="form-control set-required" required>
                                     <option selected disabled>Selecione</option>
                                     <option>Contribuinte</option>
                                     <option>Contribuinte Isento</option>
@@ -73,31 +106,35 @@
                             </div>
                         </div>
 
-                        <div class="col-md-3">
+                        <div class="col-md-3" id="div-inscricao-estadual">
                             <div class="form-group">
                                 <label for="inscricaoEstadual">Inscrição Estadual</label>
-                                <input type="text" class="form-control" id="inscricaoEstadual" name="inscricaoEstadual" disabled>
+                                <input type="text" class="form-control set-required" id="inscricaoEstadual"
+                                    name="inscricaoEstadual" disabled>
                             </div>
                         </div>
 
-                        <div class="col-md-3">
+                        <div class="col-md-3" id="div-inscricao-municipal">
                             <div class="form-group">
                                 <label for="inscricaoMunicipal">Inscrição Municipal</label>
-                                <input type="text" class="form-control" id="inscricaoMunicipal" name="inscricaoMunicipal">
+                                <input type="text" class="form-control set-required" id="inscricaoMunicipal"
+                                    name="inscricaoMunicipal">
                             </div>
                         </div>
 
-                        <div class="col-md-3">
+                        <div class="col-md-3" id="div-situacao-cnpj">
                             <div class="form-group">
                                 <label for="situacaoCNPJ">Situação CNPJ</label>
-                                <input type="text" class="form-control" id="situacaoCNPJ" name="situacaoCNPJ" disabled>
+                                <input type="text" class="form-control set-required" id="situacaoCNPJ"
+                                    name="situacaoCNPJ" disabled>
                             </div>
                         </div>
 
-                        <div class="col-md-3">
+                        <div class="col-md-3" id="div-recolhimento">
                             <div class="form-group">
                                 <label for="recolhimento">Recolhimento<sup style="color: red">•</sup></label>
-                                <select id="recolhimento" name="recolhimento" class="form-control" required>
+                                <select id="recolhimento" name="recolhimento" class="form-control set-required"
+                                    required>
                                     <option selected disabled>Selecione</option>
                                     <option>A recolher pelo prestador</option>
                                     <option>Retido pelo tomador</option>
@@ -105,10 +142,10 @@
                             </div>
                         </div>
 
-                        <div class="col-md-3">
+                        <div class="col-md-3" id="div-ativo">
                             <div class="form-group">
                                 <label for="ativo">Ativo<sup style="color: red">•</sup></label>
-                                <select id="recolhimento" name="recolhimento" class="form-control" required>
+                                <select id="ativo" name="ativo" class="form-control set-required" required>
                                     <option disabled>Selecione</option>
                                     <option selected>Sim</option>
                                     <option>Não</option>
@@ -118,50 +155,6 @@
 
                     </div>
 
-                    <div id="formPessoaFisica" class="row d-none">
-
-                        <div class="col-md-3">
-                            <div class="form-group">
-                                <label for="cpf">CPF <sup style="color: red">•</sup></label>
-                                <input pattern="\d{3}\.\d{3}\.\d{3}-\d{2}" name="cpf" type="text" class="form-control" id="cpf" required>
-                            </div>
-                        </div>
-
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label for="nome">Nome <sup style="color: red">•</sup></label>
-                                <input type="text" class="form-control" id="nome" name="nome" required>
-                            </div>
-                        </div>
-
-                        <div class="col-md-3">
-                            <div class="form-group">
-                                <label for="apelido">Apelido</label>
-                                <input type="text" class="form-control" id="apelido" name="apelido">
-                            </div>
-                        </div>
-
-                        <div class="col-md-3">
-                            <div class="form-group">
-                                <label for="rg">RG <sup style="color: red">•</sup></label>
-                                <input type="text" class="form-control" id="rg" name="rg">
-                            </div>
-                        </div>
-
-
-
-                        <div class="col-md-3">
-                            <div class="form-group">
-                                <label for="ativo">Ativo<sup style="color: red">•</sup></label>
-                                <select id="recolhimento" class="form-control" required>
-                                    <option disabled>Selecione</option>
-                                    <option selected>Sim</option>
-                                    <option>Não</option>
-                                </select>
-                            </div>
-                        </div>
-
-                    </div>
 
 
 
@@ -181,69 +174,86 @@
             <div id="contatoPrincipal" class="collapse show" role="tabpanel" aria-labelledby="contatoPrincipal">
                 <div class="card-body">
 
+                    <div class="contacts-field">
+                        <div class="row">
 
-                    <div class="row">
+                            <div class="col-md-6" id="telefoneContato">
 
-                        <div class="col-md-6 row" id="telefoneContato">
-                            <div class="form-group col-6">
-                                <label for="telefone">Telefone<sup style="color: red">•</sup></label>
-                                <input type="text" class="form-control telefone" id="telefone" name="telefone" required>
-                            </div>
+                                <span class="telefone-field">
+                                    <div class="telefone-principal row col-md6">
+                                        <div class="form-group col-6">
+                                            <label for="telefone">Telefone<sup style="color: red">•</sup></label>
+                                            <input type="text" class="form-control telefone" name="telefone" required>
+                                        </div>
 
+                                        <div class="form-group  col-6">
 
-                            <div class="form-group  col-6">
-
-                                <label for="telefoneTipo">Tipo<sup style="color: red">•</sup></label>
-                                <div class="input-group">
-                                    <select id="telefoneTipo" class="form-control" required>
-                                        <option selected disabled>Selecione</option>
-                                        <option>Residencial</option>
-                                        <option>Comercial</option>
-                                        <option>Celular</option>
-                                    </select>
-                                    <div class="input-group-append">
-                                        <div id="addTelefone" data-toggle="tooltip" title="Adicionar telefone"
-                                            class="ml-2 btn btn-sm btn-primary my-auto">
-                                            <i class="fa fa-plus"></i>
+                                            <label for="telefoneTipo">Tipo<sup style="color: red">•</sup></label>
+                                            <div class="input-group">
+                                                <select id="telefoneTipo" class="form-control" required>
+                                                    <option selected disabled>Selecione</option>
+                                                    <option>Residencial</option>
+                                                    <option>Comercial</option>
+                                                    <option>Celular</option>
+                                                </select>
+                                                <div class="input-group-append button-add" data-add="telefone">
+                                                    <div data-toggle="tooltip"
+                                                        title="Adicionar telefone"
+                                                        class="ml-2 btn btn-sm btn-primary my-auto">
+                                                        <i class="fa fa-plus"></i>
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                            </div>
+                                </span>
 
-                        </div>
 
-                        <div class="col-md-6 row ml-1" id="emailContato" style="border-left: 1px solid #c3c3c3;">
-                            <div class="form-group col-6">
-                                <label for="email">E-mail<sup style="color: red">•</sup></label>
-                                <input type="text" class="form-control" id="email" name="email" required>
+                                <div class="telefonesAdicionais"></div>
+
+
                             </div>
 
 
-                            <div class="form-group  col-6">
 
-                                <label for="emailTipo">Tipo<sup style="color: red;">•</sup></label>
-                                <div class="input-group">
-                                    <select id="emailTipo" class="form-control" required>
-                                        <option selected disabled>Selecione</option>
-                                        <option>Pessoal</option>
-                                        <option>Comercial</option>
-                                        <option>Outro</option>
-                                    </select>
-                                    <div class="input-group-append">
-                                        <div id="addEmail" data-toggle="tooltip" title="Adicionar e-mail"
-                                            class="ml-2 btn btn-sm btn-primary my-auto">
-                                            <i class="fa fa-plus"></i>
+                            <div class="col-md-6" id="emailContato">
+
+                                <span class="email-field">
+
+                                    <div class="email-principal row">
+                                        <div class="form-group col-6">
+                                            <label for="email">E-mail<sup style="color: red">•</sup></label>
+                                            <input type="text" class="form-control" id="email" name="email" required>
                                         </div>
+
+                                        <div class="form-group  col-6">
+
+                                            <label for="emailTipo">Tipo<sup style="color: red;">•</sup></label>
+                                            <div class="input-group">
+                                                <select name="emailTipo" class="form-control" required>
+                                                    <option selected disabled>Selecione</option>
+                                                    <option>Pessoal</option>
+                                                    <option>Comercial</option>
+                                                    <option>Outro</option>
+                                                </select>
+                                                <div class="input-group-append button-add" data-add="email">
+                                                    <div data-toggle="tooltip" title="Adicionar e-mail"
+                                                        class="ml-2 btn btn-sm btn-primary my-auto">
+                                                        <i class="fa fa-plus"></i>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
                                     </div>
-                                </div>
+                                </span>
+
+
+                                <div class="emailsAdicionais"></div>
+
                             </div>
-
                         </div>
-
-
-
                     </div>
-
 
 
 
@@ -252,25 +262,78 @@
         </div>
         <!-- /Contato principal -->
 
-        <!-- Contatos adicionais-->
-        <div class="card card-secondary">
+        {{-- botão adicionar contato adicional --}}
+        <div class="col-12 row">
+            <div class="form-group float-right">
+                <div id="addContact" data-toggle="tooltip" title="Adicionar contato" class="btn btn-primary mt-3">
+                    <i class="fa fa-plus"></i> Contato adicional
+                </div>
+            </div>
+        </div>
+
+        {{-- /botão adicionar contato adicional --}}
+
+        <!-- sem contatos adicionais-->
+        <div class="card card-secondary" id="sem-contato-adicional">
             <h5 class="card-header" role="tab">
                 <a data-toggle="collapse" data-parent="#accordion" href="#contatosAdicionais" aria-expanded="true"
                     aria-controls="collapseTwo" class="d-block">
                     <i class="fa fa-chevron-down float-right"></i> Contatos adicionais
                 </a>
             </h5>
+
             <div id="contatosAdicionais" class="collapse show" role="tabpanel" aria-labelledby="contatosAdicionais">
 
-                <div class="form-group float-right mr-3">
-                    <div id="addContact" data-toggle="tooltip" title="Adicionar contato" class="btn btn-primary mt-3">
-                        <i class="fa fa-plus"></i>
-                    </div>
-                </div>
                 <div class="card-body">
 
-
                     <div class="d-flex justify-content-center text-muted">NÃO HÁ CONTATOS ADICIONAIS. </div>
+
+                </div>
+            </div>
+        </div>
+        <!-- /sem contatos adicionais -->
+
+         <!-- Contatos adicionais-->
+         <div class="card card-secondary" class="contato-adicional">
+            <h5 class="card-header" role="tab">
+                <a data-toggle="collapse" data-parent="#accordion" href="#contatosAdicionais" aria-expanded="true"
+                    aria-controls="collapseTwo" class="d-block">
+                    <i class="fa fa-chevron-down float-right"></i> Contato adicional
+                </a>
+            </h5>
+
+            <div class="collapse show" role="tabpanel" aria-labelledby="contatosAdicionais">
+
+
+                <div class="card-body">
+
+                    <div class="row">
+
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="nome-contato-adicional">Nome</label>
+                                <input type="text" class="form-control set-required" name="nome-contato-adicional">
+                            </div>
+                        </div>
+
+                        <div class="col-md-3" id="div-inscricao-minucipal">
+                            <div class="form-group">
+                                <label for="nome-contato-adicional">Empresa</label>
+                                <input type="text" class="form-control set-required"
+                                    name="nome-contato-adicional">
+                            </div>
+                        </div>
+
+                        <div class="col-md-3" id="div-inscricao-minucipal">
+                            <div class="form-group">
+                                <label for="nome-contato-adicional">Cargo</label>
+                                <input type="text" class="form-control set-required"
+                                    name="nome-contato-adicional">
+                            </div>
+                        </div>
+
+                    </div>
+
 
 
                 </div>
@@ -351,9 +414,6 @@
                                 <label for="cidade">Cidade<sup style="color: red">•</sup></label>
                                 <select id="cidade" name="cidade" class="form-control" required disabled>
                                     <option selected disabled>Selecione</option>
-                                    <option>Pessoal</option>
-                                    <option>Comercial</option>
-                                    <option>Outro</option>
                                 </select>
                             </div>
                         </div>
@@ -369,17 +429,19 @@
                             </div>
                         </div>
 
-                        <div class="col-md-3 enderecoCondominio d-none">
+                        <div class="col-md-3 enderecoCondominio" style="display: none">
                             <div class="form-group">
                                 <label for="enderecoCondominio">Endereço<sup style="color: red">•</sup></label>
-                                <input type="text" class="form-control" id="enderecoCondominio" name="enderecoCondominio" required>
+                                <input type="text" class="form-control set-required" id="enderecoCondominio"
+                                    name="enderecoCondominio" required>
                             </div>
                         </div>
 
-                        <div class="col-md-3 numeroCondominio d-none">
+                        <div class="col-md-3 numeroCondominio" style="display: none">
                             <div class="form-group">
                                 <label for="numeroCondominio">Número<sup style="color: red">•</sup></label>
-                                <input type="text" class="form-control" id="numeroCondominio" name="numeroCondominio" required>
+                                <input type="text" class="form-control set-required" id="numeroCondominio" name="numeroCondominio"
+                                    required>
                             </div>
                         </div>
 
@@ -401,10 +463,7 @@
             <div id="observacao" class="collapse show" role="tabpanel" aria-labelledby="headingOne">
                 <div class="card-body">
 
-                    <div id="observacao" name="observacao">
-                        <p>Editar nota</p>
-                    </div>
-
+                    <textarea name="observacao" id="observacao" style="display: none;"></textarea>
 
 
                 </div>
@@ -451,7 +510,7 @@
     $('#uf').select2();
     $('#cidade').select2();
 
-   $('[data-toggle="tooltip"]').tooltip()
+   $('[data-toggle="tooltip"]').tooltip();
 
 
     });

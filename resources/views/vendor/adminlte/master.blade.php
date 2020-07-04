@@ -65,7 +65,7 @@
 </head>
 
 <body class="@yield('classes_body')" @yield('body_data')>
-
+    <div id="url" style="display: none">{{url('')}}</div>
     {{-- Body Content --}}
     @yield('body')
 
