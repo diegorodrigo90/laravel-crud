@@ -858,71 +858,104 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 var url = document.getElementById("url").textContent;
 var uid = 0;
 var contatosAdicionais = 0;
+var telefoneField = $(".telefone-field").html(); //pegando html da div telefone
+
+var emailField = $(".email-field").html(); //pegando html da div telefone
+
 $(document).ready(function () {
-  //limpando caracteres não numericos de uma variavel
+  //Modificando telefoneField com dados necessários
+  telefoneField = telefoneField.replace("button-add", "button-del");
+  telefoneField = telefoneField.replace("btn-primary", "btn-danger");
+  telefoneField = telefoneField.replace("fa fa-plus", "fa fa-minus");
+  telefoneField = telefoneField.replace("Adicionar telefone", "Remover telefone"); //Modificando emailField com dados necessários
+
+  emailField = emailField.replace("button-add", "button-del");
+  emailField = emailField.replace("btn-primary", "btn-danger");
+  emailField = emailField.replace("fa fa-plus", "fa fa-minus");
+  emailField = emailField.replace("Adicionar e-mail", "Remover e-mail");
+
+  var getEmailField = function getEmailField(uid) {
+    var emailReturn = emailField;
+    emailReturn = emailReturn.replace('name="email', 'name="email-adicional' + uid);
+    emailReturn = emailReturn.replace('data-add="email"', 'data-del="email-adicional' + uid + '"');
+    emailReturn = emailReturn.replace('class="form-control email"', 'class="form-control email-adicional' + uid + '"');
+    emailReturn = emailReturn.replace("email-principal", "email-adicional" + uid);
+    return emailReturn;
+  };
+
+  var getTelefoneField = function getTelefoneField(uid) {
+    var telefoneReturn = telefoneField;
+    telefoneReturn = telefoneReturn.replace("telefone-principal", "telefone-adicional" + uid);
+    telefoneReturn = telefoneReturn.replace('data-add="telefone"', 'data-del="telefone-adicional' + uid + '"');
+    telefoneReturn = telefoneReturn.replace('name="telefone', 'name="telefone-adicional' + uid);
+    telefoneReturn = telefoneReturn.replace('class="form-control telefone"', 'class="form-control telefone-adicional' + uid + '"');
+    return telefoneReturn;
+  }; //limpando caracteres não numericos de uma variavel
+
+
   var removeNonNumericsCaracters = function removeNonNumericsCaracters(value) {
-    return value.replace(/\D/g, '');
+    return value.replace(/\D/g, "");
   };
 
   var resetFormErrors = function resetFormErrors() {
-    $("#fornecedorForm").data('validator').resetForm();
+    $("#fornecedorForm").data("validator").resetForm();
   };
 
   var setFieldDisplay = {
     show: function show(element, isRequired) {
       resetFormErrors();
-      var input = $(element + ' > div > .set-required');
-      $(element).removeClass('d-none');
+      var input = $(element + " > div > .set-required");
+      $(element).removeClass("d-none");
       $(element).show("slow");
 
       if (isRequired) {
-        input.prop('required', true);
+        input.prop("required", true);
       }
     },
     hide: function hide(element) {
       resetFormErrors();
-      var input = $(element + ' > div > .set-required');
+      var input = $(element + " > div > .set-required");
       $(element).hide();
-      input.prop('required', false);
-      input.val('');
+      input.prop("required", false);
+      input.val("");
     }
   };
   var pessoaFisicaElements = [{
-    field: '#div-cpf',
+    field: "#div-cpf",
     required: true
   }, {
-    field: '#div-nome',
+    field: "#div-nome",
     required: true
   }, {
-    field: '#div-apelido',
+    field: "#div-apelido",
     required: false
   }, {
-    field: '#div-rg',
+    field: "#div-rg",
     required: true
   }];
   var pessoaJuridicaElements = [{
-    field: '#div-cnpj',
+    field: "#div-cnpj",
     required: true
   }, {
-    field: '#div-razao-social',
+    field: "#div-razao-social",
     required: true
   }, {
-    field: '#div-nome-fantasia',
+    field: "#div-nome-fantasia",
     required: true
   }, {
-    field: '#div-indicador-inscricao-estadual',
+    field: "#div-indicador-inscricao-estadual",
     required: true
   }, {
-    field: '#div-inscricao-estadual',
+    field: "#div-inscricao-estadual",
     required: false
   }, {
-    field: '#div-inscricao-municipal',
+    field: "#div-inscricao-municipal",
     required: false
   }, {
-    field: '#div-situacao-cnpj',
+    field: "#div-situacao-cnpj",
     required: false
   }, {
-    field: '#div-recolhimento',
+    field: "#div-recolhimento",
     required: true
   }];
   var cangePessoaTipo = {
@@ -948,15 +981,15 @@ $(document).ready(function () {
 
   var receitaWS = function receitaWS(cnpj) {
     $.ajax({
-      type: 'GET',
-      dataType: 'jsonp',
+      type: "GET",
+      dataType: "jsonp",
       url: "https://www.receitaws.com.br/v1/cnpj/" + removeNonNumericsCaracters(cnpj),
       //Url da Action Aqui
       success: function success(data) {
         $("#razaoSocial").val(data.nome);
         $("#nomeFantasia").val(data.fantasia);
         $("#situacaoCNPJ").val(data.situacao);
-        $("#cep").val(data.cep.replace(".", "")).trigger('change');
+        $("#cep").val(data.cep.replace(".", "")).trigger("change");
       }
     });
   }; //pegando cidades do estado
@@ -969,16 +1002,16 @@ $(document).ready(function () {
           switch (_context.prev = _context.next) {
             case 0:
               $.ajax({
-                type: 'GET',
-                dataType: 'json',
+                type: "GET",
+                dataType: "json",
                 url: url + "/api/v1/cidades/" + state,
                 //Url da Action Aqui
                 success: function success(data) {
-                  $("#cidade").empty().trigger('change'); //limpando select2 antes de adicionar cidades
+                  $("#cidade").empty().trigger("change"); //limpando select2 antes de adicionar cidades
 
-                  $('#cidade').prepend('<option disabled>Selecione</option>'); //adicionando oção padrão
+                  $("#cidade").prepend("<option disabled>Selecione</option>"); //adicionando oção padrão
 
-                  $('#cidade').val("Selecione").trigger('change'); //selecionado
+                  $("#cidade").val("Selecione").trigger("change"); //selecionado
 
                   $(data).each(function (index) {
                     if (city) {
@@ -988,9 +1021,9 @@ $(document).ready(function () {
                       var option = new Option(this.title, this.id, false, false);
                     }
 
-                    $('#cidade').append(option);
+                    $("#cidade").append(option);
                   });
-                  $('#cidade').prop("disabled", false); //ativando select
+                  $("#cidade").prop("disabled", false); //ativando select
                 }
               });
 
@@ -1009,109 +1042,89 @@ $(document).ready(function () {
 
   var viaCep = function viaCep(cep) {
     $.ajax({
-      type: 'GET',
-      dataType: 'jsonp',
+      type: "GET",
+      dataType: "jsonp",
       url: "https://viacep.com.br/ws/" + removeNonNumericsCaracters(cep) + "/json",
       //Url da Action Aqui
       success: function success(data) {
-        $('#logradouro').val(data.logradouro);
-        $('#complemento').val(data.complemento);
-        $('#bairro').val(data.bairro);
-        $('#uf').val(data.uf).trigger('change.select2');
+        $("#logradouro").val(data.logradouro);
+        $("#complemento").val(data.complemento);
+        $("#bairro").val(data.bairro);
+        $("#uf").val(data.uf).trigger("change.select2");
         getCities(data.uf, data.localidade);
       }
     });
   }; //aplicando mascaras
 
 
-  $('#cnpj').mask('99.999.999/9999-99');
-  $('#cep').mask('99999-999');
-  $('#cnpj').on('change keyup', function () {
-    console.log('teste');
+  $("#cnpj").mask("99.999.999/9999-99");
+  $("#cep").mask("99999-999");
+  $("#cnpj").on("change keyup", function () {
+    console.log("teste");
 
     if ($(this).valid()) {
       receitaWS($(this).val());
     }
   });
-  $('#uf').change(function () {
+  $("#uf").change(function () {
     getCities($(this).val());
   });
-  $('#cep').on('change keyup', function () {
+  $("#cep").on("change keyup", function () {
     if ($(this).valid()) {
       viaCep($(this).val());
     }
   }); //remover campos adicionais
 
-  $(".button-del").on('click', function () {
-    console.log('asdasdas');
+  $(".button-del").on("click", function () {
+    console.log("asdasdas");
     console.log($(this).attr("data-del"));
   });
   $("#fornecedorForm").validate({
-    errorClass: 'is-invalid error',
-    validClass: 'is-valid',
-    errorElement: 'div',
+    errorClass: "is-invalid error",
+    validClass: "is-valid",
+    errorElement: "div",
     //debug: true, //retira essa linha, para o form voltar a funcionar
     rules: {
-      "cpf": {
-        cpf: 'both' //valida tanto Formatação como os Digitos
+      cpf: {
+        cpf: "both" //valida tanto Formatação como os Digitos
         //caso não queira validar a formatação use => cpf: 'valid’
         //caso só queira validar a formatação use => cpf: 'format’
 
       },
-      "cnpj": {
-        cnpj: 'both' //valida tanto Formatação como os Digitos
+      cnpj: {
+        cnpj: "both" //valida tanto Formatação como os Digitos
 
       },
-      "telefone": {
+      telefone: {
         telefone_celular: true
       },
-      "email": {
+      email: {
         required: true,
         email: true
       },
-      "cep": {
+      cep: {
         cep: true
       }
     }
   }); //adiconar email/telefone
 
-  $('.button-add').on('click', function () {
-    if ($(this).attr("data-add") == 'telefone') {
+  $(".button-add").on("click", function () {
+    if ($(this).attr("data-add") == "telefone") {
       uid = uid + 1;
-      var telefoneField = $(".telefone-field").html(); //pegando html da div telefone
-      //e modificando classes necessários
-
-      telefoneField = telefoneField.replace('telefone-principal', 'telefone-adicional' + uid);
-      telefoneField = telefoneField.replace('name="telefone', 'name="telefone-adicional' + uid);
-      telefoneField = telefoneField.replace('button-add', 'button-del');
-      telefoneField = telefoneField.replace('data-add="telefone"', 'data-del="telefone-adicional' + uid + '"');
-      telefoneField = telefoneField.replace('btn-primary', 'btn-danger');
-      telefoneField = telefoneField.replace('fa fa-plus', 'fa fa-minus');
-      telefoneField = telefoneField.replace('class="form-control telefone"', 'class="form-control telefone-adicional' + uid + '"');
-      telefoneField = telefoneField.replace('Adicionar telefone', 'Remover telefone');
-      $(".telefonesAdicionais").append(telefoneField);
-      $('input.telefone-adicional' + uid).mask(telefoneMask, telefoneMaskOptions);
-      $('input.telefone-adicional' + uid).rules('add', {
+      $(".telefonesAdicionais").append(getTelefoneField(uid));
+      $("input.telefone-adicional" + uid).empty();
+      $("input.telefone-adicional" + uid).mask(telefoneMask, telefoneMaskOptions);
+      $("input.telefone-adicional" + uid).rules("add", {
         telefone_celular: true
       });
       $(".button-del").delegate("div", "click", function () {
         $("." + $(this).parent().attr("data-del")).remove();
       });
-    } else if ($(this).attr("data-add") == 'email') {
+    } else if ($(this).attr("data-add") == "email") {
       uid = uid + 1;
-      var emailField = $(".email-field").html(); //pegando html da div telefone
-      //e modificando classes necessários
-
-      emailField = emailField.replace('email-principal', 'email-adicional' + uid);
-      emailField = emailField.replace('name="email', 'name="email-adicional' + uid);
-      emailField = emailField.replace('button-add', 'button-del');
-      emailField = emailField.replace('data-add="email"', 'data-del="email-adicional' + uid + '"');
-      emailField = emailField.replace('class="form-control email"', 'class="form-control email-adicional' + uid + '"');
-      emailField = emailField.replace('btn-primary', 'btn-danger');
-      emailField = emailField.replace('fa fa-plus', 'fa fa-minus');
-      emailField = emailField.replace('Adicionar e-mail', 'Remover e-mail');
-      $(".emailsAdicionais").append(emailField);
-      $('input.email-adicional' + uid).rules('add', {
+      $(".emailsAdicionais").append(getEmailField(uid));
+      $("input.email-adicional" + uid).empty();
+      $("input.email-adicional" + uid).rules("add", {
         required: true,
         email: true
       });
@@ -1122,12 +1135,12 @@ $(document).ready(function () {
 
     $('[data-toggle="tooltip"]').tooltip();
   });
-  $('#addContact').on('click', function () {
-    $('.contatos-adicionais').append($('.contacts-field').html());
+  $("#addContact").on("click", function () {
+    $(".contatos-adicionais").append($(".contacts-field").html());
   });
 
   var telefoneMask = function telefoneMask(val) {
-    return val.replace(/\D/g, '').length === 11 ? '(00) 00000-0000' : '(00) 0000-00009';
+    return val.replace(/\D/g, "").length === 11 ? "(00) 00000-0000" : "(00) 0000-00009";
   },
       telefoneMaskOptions = {
     onKeyPress: function onKeyPress(val, e, field, options) {
@@ -1135,27 +1148,27 @@ $(document).ready(function () {
     }
   };
 
-  $('.telefone').mask(telefoneMask, telefoneMaskOptions);
-  $('#formPessoaFisica').html('');
-  $("input[name='tipoPessoa']").on('change', function () {
-    if ($(this).val() == 'fisica') {
+  $(".telefone").mask(telefoneMask, telefoneMaskOptions);
+  $("#formPessoaFisica").html("");
+  $("input[name='tipoPessoa']").on("change", function () {
+    if ($(this).val() == "fisica") {
       cangePessoaTipo.display.fisica();
     }
 
-    if ($(this).val() == 'juridica') {
+    if ($(this).val() == "juridica") {
       cangePessoaTipo.display.juridica();
     }
   });
-  $('#isCondominio').change(function () {
-    $('#enderecoCondominio').val('');
-    $('#numeroCondominio').val('');
+  $("#isCondominio").change(function () {
+    $("#enderecoCondominio").val("");
+    $("#numeroCondominio").val("");
 
-    if ($(this).val() == 'sim') {
-      setFieldDisplay.show('.enderecoCondominio', true);
-      setFieldDisplay.show('.numeroCondominio', true);
+    if ($(this).val() == "sim") {
+      setFieldDisplay.show(".enderecoCondominio", true);
+      setFieldDisplay.show(".numeroCondominio", true);
     } else {
-      setFieldDisplay.hide('.enderecoCondominio');
-      setFieldDisplay.hide('.numeroCondominio');
+      setFieldDisplay.hide(".enderecoCondominio");
+      setFieldDisplay.hide(".numeroCondominio");
     }
   });
 });
