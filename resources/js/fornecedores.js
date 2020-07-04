@@ -97,6 +97,8 @@ $(document).ready(function () {
     ];
 
 
+
+
     const cangePessoaTipo = {
 
         display: {
@@ -214,34 +216,41 @@ $(document).ready(function () {
         }
     });
 
-
-    $("#fornecedorForm").validate({
-        errorClass: 'is-invalid error',
-        validClass: 'is-valid',
-        errorElement: 'div',
-        //debug: true, //retira essa linha, para o form voltar a funcionar
-        rules: {
-            "cpf": {
-                cpf: 'both' //valida tanto Formatação como os Digitos
-                //caso não queira validar a formatação use => cpf: 'valid’
-                //caso só queira validar a formatação use => cpf: 'format’
-            },
-            "cnpj": {
-                cnpj: 'both' //valida tanto Formatação como os Digitos
-            },
-
-            "telefone": {
-                telefone_celular: true
-            },
-            "email": {
-                required: true,
-                email: true
-            },
-            "cep": {
-                cep: true
-            }
-        }
+    //remover campos adicionais
+    $(".button-del").on('click', function() {
+        console.log('asdasdas');
+        console.log($(this).attr("data-del"));
     });
+
+
+        $("#fornecedorForm").validate({
+            errorClass: 'is-invalid error',
+            validClass: 'is-valid',
+            errorElement: 'div',
+            //debug: true, //retira essa linha, para o form voltar a funcionar
+            rules: {
+                "cpf": {
+                    cpf: 'both' //valida tanto Formatação como os Digitos
+                    //caso não queira validar a formatação use => cpf: 'valid’
+                    //caso só queira validar a formatação use => cpf: 'format’
+                },
+                "cnpj": {
+                    cnpj: 'both' //valida tanto Formatação como os Digitos
+                },
+
+                "telefone": {
+                    telefone_celular: true
+                },
+                "email": {
+                    required: true,
+                    email: true
+                },
+                "cep": {
+                    cep: true
+                }
+            }
+        });
+
 
     //adiconar email/telefone
     $('.button-add').on('click', function () {
@@ -254,27 +263,49 @@ $(document).ready(function () {
 
             //e modificando classes necessários
             telefoneField = telefoneField.replace('telefone-principal' , 'telefone-adicional' + uid);
+            telefoneField = telefoneField.replace('name="telefone' , 'name="telefone-adicional' + uid);
             telefoneField = telefoneField.replace('button-add' , 'button-del');
             telefoneField = telefoneField.replace('data-add="telefone"' , 'data-del="telefone-adicional'+ uid +'"');
             telefoneField = telefoneField.replace('btn-primary' , 'btn-danger');
             telefoneField = telefoneField.replace('fa fa-plus' , 'fa fa-minus');
+            telefoneField = telefoneField.replace('class="form-control telefone"' , 'class="form-control telefone-adicional'+ uid +'"');
             telefoneField = telefoneField.replace('Adicionar telefone' , 'Remover telefone');
+
 
             $(".telefonesAdicionais").append(telefoneField);
 
+            $('input.telefone-adicional'+ uid).mask(telefoneMask, telefoneMaskOptions);
+            $('input.telefone-adicional'+ uid).rules('add', {telefone_celular: true });
+
+            $(".button-del").delegate("div", "click", function(){
+                $("." + $(this).parent().attr("data-del")).remove();
+
+            });
+
         } else if ($(this).attr("data-add") == 'email') {
             uid = uid+ 1;
-            let emailField = $(".telefone-field").html(); //pegando html da div telefone
+            let emailField = $(".email-field").html(); //pegando html da div telefone
 
             //e modificando classes necessários
             emailField = emailField.replace('email-principal' , 'email-adicional' + uid);
+            emailField = emailField.replace('name="email' , 'name="email-adicional' + uid);
             emailField = emailField.replace('button-add' , 'button-del');
             emailField = emailField.replace('data-add="email"' , 'data-del="email-adicional'+ uid +'"');
+            emailField = emailField.replace('class="form-control email"' , 'class="form-control email-adicional'+ uid +'"');
             emailField = emailField.replace('btn-primary' , 'btn-danger');
             emailField = emailField.replace('fa fa-plus' , 'fa fa-minus');
             emailField = emailField.replace('Adicionar e-mail' , 'Remover e-mail');
 
             $(".emailsAdicionais").append(emailField);
+
+            $('input.email-adicional'+ uid).rules('add', {required: true, email: true });
+
+            $(".button-del").delegate("div", "click", function(){
+                $("." + $(this).parent().attr("data-del")).remove();
+
+            });
+
+
 
 
 

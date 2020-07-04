@@ -223,7 +223,7 @@
                                     <div class="email-principal row">
                                         <div class="form-group col-6">
                                             <label for="email">E-mail<sup style="color: red">•</sup></label>
-                                            <input type="text" class="form-control" id="email" name="email" required>
+                                            <input type="text" class="form-control email" id="email" name="email" required>
                                         </div>
 
                                         <div class="form-group  col-6">
