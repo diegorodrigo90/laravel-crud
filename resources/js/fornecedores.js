@@ -263,7 +263,10 @@ $(document).ready(function() {
     });
 
     $("#uf").change(function() {
+        $("#cidade").prop("disabled", true); //desativando select
+
         $("#cidade").prepend("<option selected disabled>Carregando...</option>"); //exibe carregando na lista de cidades
+
         getCities($(this).val());
     });
 
