@@ -862,33 +862,59 @@ var telefoneField = $(".telefone-field").html(); //pegando html da div telefone
 
 var emailField = $(".email-field").html(); //pegando html da div telefone
 
+var contactsFields = $(".contacts-field").html(); //pegando html da div .contacts-field
+
+var AddContactsFields = $(".contato-adicional").html(); //pegando html da div .contacts-field
+
 $(document).ready(function () {
+  $("#contato-adicional-fields").append(contactsFields); //adicona capos de email e telefone no contato adicional
   //Modificando telefoneField com dados necessários
-  telefoneField = telefoneField.replace("button-add", "button-del");
-  telefoneField = telefoneField.replace("btn-primary", "btn-danger");
-  telefoneField = telefoneField.replace("fa fa-plus", "fa fa-minus");
+
+  telefoneField = telefoneField.replace(/button-add/g, "button-del");
+  telefoneField = telefoneField.replace(/btn-primary/g, "btn-danger");
+  telefoneField = telefoneField.replace(/fa fa-plus/g, "fa fa-minus");
   telefoneField = telefoneField.replace("Adicionar telefone", "Remover telefone"); //Modificando emailField com dados necessários
 
-  emailField = emailField.replace("button-add", "button-del");
-  emailField = emailField.replace("btn-primary", "btn-danger");
-  emailField = emailField.replace("fa fa-plus", "fa fa-minus");
-  emailField = emailField.replace("Adicionar e-mail", "Remover e-mail");
+  emailField = emailField.replace(/button-add/g, "button-del");
+  emailField = emailField.replace(/btn-primary/g, "btn-danger");
+  emailField = emailField.replace(/fa fa-plus/g, "fa fa-minus");
+  emailField = emailField.replace(/Adicionar e-mail/g, "Remover e-mail");
+  AddContactsFields = $("#contatos-adicional").html(); //pegando html da div
+
+  $("#contatos-adicional").html(""); //limpando div
+
+  var getContactsField = function getContactsField() {
+    uid = uid + 1;
+    var contactsReturn = AddContactsFields;
+    contactsReturn = contactsReturn.replace(/telefonesAdicionais/g, "telefonesAdicionais" + uid);
+    contactsReturn = contactsReturn.replace(/emailsAdicionais/g, "emailsAdicionais" + uid);
+    contactsReturn = contactsReturn.replace(/contatos-adicional/g, "contatos-adicional" + uid);
+    contactsReturn = contactsReturn.replace(/style="display: none"/g, ""); // console.log(contactsReturn);
+
+    return contactsReturn;
+  };
+
+  $("#addContact").on("click", function () {
+    contatosAdicionais = contatosAdicionais + 1;
+    $("#sem-contato-adicional").hide();
+    $("#contatos-adicional").before(getContactsField());
+  });
 
   var getEmailField = function getEmailField(uid) {
     var emailReturn = emailField;
-    emailReturn = emailReturn.replace('name="email', 'name="email-adicional' + uid);
-    emailReturn = emailReturn.replace('data-add="email"', 'data-del="email-adicional' + uid + '"');
-    emailReturn = emailReturn.replace('class="form-control email"', 'class="form-control email-adicional' + uid + '"');
-    emailReturn = emailReturn.replace("email-principal", "email-adicional" + uid);
+    emailReturn = emailReturn.replace(/name="email/g, 'name="email-adicional' + uid);
+    emailReturn = emailReturn.replace(/data-add="email"/g, 'data-del="email-adicional' + uid + '"');
+    emailReturn = emailReturn.replace(/class="form-control email"/g, 'class="form-control email-adicional' + uid + '"');
+    emailReturn = emailReturn.replace(/email-principal/g, "email-adicional" + uid);
     return emailReturn;
   };
 
   var getTelefoneField = function getTelefoneField(uid) {
     var telefoneReturn = telefoneField;
-    telefoneReturn = telefoneReturn.replace("telefone-principal", "telefone-adicional" + uid);
-    telefoneReturn = telefoneReturn.replace('data-add="telefone"', 'data-del="telefone-adicional' + uid + '"');
-    telefoneReturn = telefoneReturn.replace('name="telefone', 'name="telefone-adicional' + uid);
-    telefoneReturn = telefoneReturn.replace('class="form-control telefone"', 'class="form-control telefone-adicional' + uid + '"');
+    telefoneReturn = telefoneReturn.replace(/telefone-principal/g, "telefone-adicional" + uid);
+    telefoneReturn = telefoneReturn.replace(/data-add="telefone"/g, 'data-del="telefone-adicional' + uid + '"');
+    telefoneReturn = telefoneReturn.replace(/name="telefone/g, 'name="telefone-adicional' + uid);
+    telefoneReturn = telefoneReturn.replace(/class="form-control telefone"/g, 'class="form-control telefone-adicional' + uid + '"');
     return telefoneReturn;
   }; //limpando caracteres não numericos de uma variavel
 
@@ -1060,8 +1086,6 @@ $(document).ready(function () {
   $("#cnpj").mask("99.999.999/9999-99");
   $("#cep").mask("99999-999");
   $("#cnpj").on("change keyup", function () {
-    console.log("teste");
-
     if ($(this).valid()) {
       receitaWS($(this).val());
     }
@@ -1073,11 +1097,6 @@ $(document).ready(function () {
     if ($(this).valid()) {
       viaCep($(this).val());
     }
-  }); //remover campos adicionais
-
-  $(".button-del").on("click", function () {
-    console.log("asdasdas");
-    console.log($(this).attr("data-del"));
   });
   $("#fornecedorForm").validate({
     errorClass: "is-invalid error",
@@ -1106,35 +1125,44 @@ $(document).ready(function () {
         cep: true
       }
     }
-  }); //adiconar email/telefone
+  });
 
-  $(".button-add").on("click", function () {
-    if ($(this).attr("data-add") == "telefone") {
+  var addEmailTelefone = function addEmailTelefone(element) {
+    if (element.attr("data-add") == "telefone") {
       uid = uid + 1;
-      $(".telefonesAdicionais").append(getTelefoneField(uid));
+      var teste = $("." + element.attr("data-append")).append(getTelefoneField(uid));
       $("input.telefone-adicional" + uid).empty();
       $("input.telefone-adicional" + uid).mask(telefoneMask, telefoneMaskOptions);
       $("input.telefone-adicional" + uid).rules("add", {
         telefone_celular: true
       });
-      $(".button-del").delegate("div", "click", function () {
-        $("." + $(this).parent().attr("data-del")).remove();
-      });
-    } else if ($(this).attr("data-add") == "email") {
+    } else if (element.attr("data-add") == "email") {
       uid = uid + 1;
-      $(".emailsAdicionais").append(getEmailField(uid));
+      $("." + element.attr("data-append")).append(getEmailField(uid));
       $("input.email-adicional" + uid).empty();
       $("input.email-adicional" + uid).rules("add", {
         required: true,
         email: true
       });
-      $(".button-del").delegate("div", "click", function () {
-        $("." + $(this).parent().attr("data-del")).remove();
-      });
     }
 
+    $(".button-del").delegate("div", "click", function () {
+      $("." + $(this).parent().attr("data-del")).remove();
+    });
     $('[data-toggle="tooltip"]').tooltip();
+  }; //adciona event, inclusive os elementos futoros
+
+
+  $("body").on("click", ".button-add", function (event) {
+    addEmailTelefone($(this));
   });
+  $("body").on("click", ".remove-contact", function (event) {
+    contatosAdicionais = contatosAdicionais - 1;
+    $("." + $(this).attr("data-remove")).hide("slow");
+    $("." + $(this).attr("data-remove")).remove();
+    if (contatosAdicionais == 0) $("#sem-contato-adicional").show("slow");
+  }); //adiconar email/telefone
+
   $("#addContact").on("click", function () {
     $(".contatos-adicionais").append($(".contacts-field").html());
   });
