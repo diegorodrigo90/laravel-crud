@@ -1091,6 +1091,8 @@ $(document).ready(function () {
     }
   });
   $("#uf").change(function () {
+    $("#cidade").prepend("<option selected disabled>Carregando...</option>"); //exibe carregando na lista de cidades
+
     getCities($(this).val());
   });
   $("#cep").on("change keyup", function () {

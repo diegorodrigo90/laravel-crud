@@ -248,10 +248,10 @@
         <!-- /Contato principal -->
 
         {{-- botão adicionar contato adicional --}}
-        <div class="col-12">
+        <div class="col-12 d-flex flex-row-reverse">
             <div class="form-group">
-                <div id="addContact" data-toggle="tooltip" title="Adicionar contato" class="btn btn-primary mt-3">
-                    <i class="fa fa-plus"></i> Novo contato adicional
+                <div id="addContact" data-toggle="tooltip" title="Novo contato adicional" class="btn btn-primary mt-3">
+                    <i class="fa fa-plus"></i>
                 </div>
             </div>
         </div>
@@ -271,7 +271,7 @@
 
                 <div class="card-body">
 
-                    <div class="d-flex justify-content-center text-muted">NÃO HÁ CONTATOS ADICIONAIS. </div>
+                    <div class="d-flex justify-content-center text-muted">NENHUM CONTATO ADICIONAL. </div>
 
                 </div>
             </div>
@@ -445,10 +445,7 @@
         <!-- Observação -->
         <div class="card card-secondary">
             <h5 class="card-header" role="tab">
-                <a data-toggle="collapse" data-parent="#accordion" href="#observacao" aria-expanded="true"
-                    aria-controls="collapseOne" class="d-block">
-                    <i class="fa fa-chevron-down float-right"></i> Observação
-                </a>
+                    Observação
             </h5>
             <div id="observacao" class="collapse show" role="tabpanel" aria-labelledby="headingOne">
                 <div class="card-body">
