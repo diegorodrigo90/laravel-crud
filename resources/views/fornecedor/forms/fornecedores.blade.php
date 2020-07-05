@@ -1,4 +1,4 @@
-<form role="form" id="fornecedorForm">
+<form role="form" method="POST" action="{{ route('fornecedor.index') }}" id="fornecedorForm">
     @csrf
     <div id="accordion" role="tablist" aria-multiselectable="true">
         <!-- Dados do fornecedor -->
@@ -140,9 +140,6 @@
 
                     </div>
 
-
-
-
                 </div>
             </div>
         </div>
@@ -175,13 +172,14 @@
 
                                             <label for="telefoneTipo">Tipo<sup style="color: red">•</sup></label>
                                             <div class="input-group">
-                                                <select id="telefoneTipo" class="form-control" required>
+                                                <select id="telefoneTipo" class="form-control group-error" required>
                                                     <option selected disabled>Selecione</option>
                                                     <option>Residencial</option>
                                                     <option>Comercial</option>
                                                     <option>Celular</option>
                                                 </select>
-                                                <div class="input-group-append button-add" data-add="telefone" data-append="telefonesAdicionais">
+                                                <div class="input-group-append button-add" data-add="telefone"
+                                                    data-append="telefonesAdicionais">
                                                     <div data-toggle="tooltip" title="Adicionar telefone"
                                                         class="ml-2 btn btn-sm btn-primary my-auto">
                                                         <i class="fa fa-plus"></i>
@@ -192,13 +190,9 @@
                                     </div>
                                 </span>
 
-
                                 <div class="telefonesAdicionais"></div>
 
-
                             </div>
-
-
 
                             <div class="col-md-6" id="emailContato">
 
@@ -207,21 +201,21 @@
                                     <div class="email-principal row">
                                         <div class="form-group col-6">
                                             <label for="email">E-mail<sup style="color: red">•</sup></label>
-                                            <input type="text" class="form-control email" id="email" name="email"
-                                                required>
+                                            <input type="text" class="form-control email" name="email" required>
                                         </div>
 
                                         <div class="form-group  col-6">
 
                                             <label for="emailTipo">Tipo<sup style="color: red;">•</sup></label>
                                             <div class="input-group">
-                                                <select name="emailTipo" class="form-control" required>
+                                                <select name="emailTipo" class="form-control group-error" required>
                                                     <option selected disabled>Selecione</option>
                                                     <option>Pessoal</option>
                                                     <option>Comercial</option>
                                                     <option>Outro</option>
                                                 </select>
-                                                <div class="input-group-append button-add" data-add="email" data-append="emailsAdicionais">
+                                                <div class="input-group-append button-add" data-add="email"
+                                                    data-append="emailsAdicionais">
                                                     <div data-toggle="tooltip" title="Adicionar e-mail"
                                                         class="ml-2 btn btn-sm btn-primary my-auto">
                                                         <i class="fa fa-plus"></i>
@@ -233,14 +227,11 @@
                                     </div>
                                 </span>
 
-
                                 <div class="emailsAdicionais"></div>
 
                             </div>
                         </div>
                     </div>
-
-
 
                 </div>
             </div>
@@ -290,29 +281,31 @@
 
                 <div class="collapse show" role="tabpanel" aria-labelledby="contatosAdicionais">
 
-
                     <div class="card-body">
 
                         <div class="row">
 
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="nome-contato-adicional">Nome</label>
-                                    <input type="text" class="form-control set-required" name="nome-contato-adicional">
+                                    <label for="contato-adicional[][nome]">Nome</label>
+                                    <input type="text" class="form-control set-required"
+                                        name="contato-adicional[][nome]">
                                 </div>
                             </div>
 
                             <div class="col-md-3" id="div-inscricao-minucipal">
                                 <div class="form-group">
-                                    <label for="nome-contato-adicional">Empresa</label>
-                                    <input type="text" class="form-control set-required" name="nome-contato-adicional">
+                                    <label for="contato-adicional[][empresa]">Empresa</label>
+                                    <input type="text" class="form-control set-required"
+                                        name="contato-adicional[][empresa]">
                                 </div>
                             </div>
 
                             <div class="col-md-3" id="div-inscricao-minucipal">
                                 <div class="form-group">
-                                    <label for="nome-contato-adicional">Cargo</label>
-                                    <input type="text" class="form-control set-required" name="nome-contato-adicional">
+                                    <label for="contato-adicional[][cargo]">Cargo</label>
+                                    <input type="text" class="form-control set-required"
+                                        name="contato-adicional[][cargo]">
                                 </div>
                             </div>
 
@@ -324,7 +317,9 @@
                     </div>
 
                     <div class="card-footer">
-                        <div class="btn btn-danger float-right remove-contact" data-toggle="tooltip" title="Remover contato adicional" data-remove="contatos-adicional"><i class="fa fa-trash"></i></div>
+                        <div class="btn btn-danger float-right remove-contact" data-toggle="tooltip"
+                            title="Remover contato adicional" data-remove="contatos-adicional"><i
+                                class="fa fa-trash"></i></div>
                     </div>
                 </div>
             </div>
@@ -445,7 +440,7 @@
         <!-- Observação -->
         <div class="card card-secondary">
             <h5 class="card-header" role="tab">
-                    Observação
+                Observação
             </h5>
             <div id="observacao" class="collapse show" role="tabpanel" aria-labelledby="headingOne">
                 <div class="card-body">

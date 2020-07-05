@@ -29,18 +29,19 @@ $(document).ready(function() {
 
     //adiciona evento on click, inclusive os elementos futuros
     $("body").on("click", ".button-add", function(event) {
-        $($(this)).tooltip('hide'); //remover tooltip
+        $($(this)).tooltip("hide"); //remover tooltip
         addEmailTelefone($(this));
     });
 
     //adiciona evento on click, inclusive os elementos futuros
     $("body").on("click", ".remove-contact", function(event) {
-        $('[data-toggle="tooltip"]').tooltip('hide'); //remover tooltip
+        $('[data-toggle="tooltip"]').tooltip("hide"); //remover tooltip
     });
 
     //adiciona evento on click, inclusive os elementos futuros
     $("body").on("click", "#addContact", function(event) {
         $('[data-toggle="tooltip"]').tooltip(); //reaplicando tooltips
+        $('input[name="telefone"]').mask(telefoneMask, telefoneMaskOptions);
     });
 
     var getContactsField = function() {
@@ -67,7 +68,9 @@ $(document).ready(function() {
         contatosAdicionais = contatosAdicionais + 1;
         $("#sem-contato-adicional").hide();
         $("#contatos-adicional").before(getContactsField());
-
+        $('html, body').animate({
+            scrollTop: $(".contatos-adicional" + uid).offset().top - 80
+        }, 500);
     });
 
     var getEmailField = function(uid) {
@@ -271,6 +274,7 @@ $(document).ready(function() {
 
     //aplicando mascaras
     $("#cnpj").mask("99.999.999/9999-99");
+    $("#cpf").mask("999.999.999-00");
     $("#cep").mask("99999-999");
 
     $("#cnpj").on("change keyup", function() {
@@ -282,7 +286,9 @@ $(document).ready(function() {
     $("#uf").change(function() {
         $("#cidade").prop("disabled", true); //desativando select
 
-        $("#cidade").prepend("<option selected disabled>Carregando...</option>"); //exibe carregando na lista de cidades
+        $("#cidade").prepend(
+            "<option selected disabled>Carregando...</option>"
+        ); //exibe carregando na lista de cidades
 
         getCities($(this).val());
     });
@@ -296,7 +302,12 @@ $(document).ready(function() {
     $("#fornecedorForm").validate({
         errorClass: "is-invalid error",
         validClass: "is-valid",
-        errorElement: "div",
+        errorPlacement: function(error, element) {
+            if (element.hasClass("group-error")) {
+                console.log("ok");
+                error.insertAfter(element.parent(".input-group"));
+            } else element.after(error); // default error placement
+        },
         //debug: true, //retira essa linha, para o form voltar a funcionar
         rules: {
             cpf: {
@@ -309,6 +320,7 @@ $(document).ready(function() {
             },
 
             telefone: {
+                required: true,
                 telefone_celular: true
             },
             email: {
@@ -331,13 +343,14 @@ $(document).ready(function() {
 
             $("input.telefone-adicional" + uid).empty();
 
+            $("input.telefone-adicional" + uid).rules("add", {
+                required: true,
+                telefone_celular: true
+            });
             $("input.telefone-adicional" + uid).mask(
                 telefoneMask,
                 telefoneMaskOptions
             );
-            $("input.telefone-adicional" + uid).rules("add", {
-                telefone_celular: true
-            });
         } else if (element.attr("data-add") == "email") {
             uid = uid + 1;
 
@@ -352,16 +365,17 @@ $(document).ready(function() {
         }
 
         $(".button-del").delegate("div", "click", function() {
-            $('[data-toggle="tooltip"]').tooltip('hide'); //remover tooltip
-            $("." +$(this).parent().attr("data-del")).remove();
+            $('[data-toggle="tooltip"]').tooltip("hide"); //remover tooltip
+            $(
+                "." +
+                    $(this)
+                        .parent()
+                        .attr("data-del")
+            ).remove();
         });
 
         $('[data-toggle="tooltip"]').tooltip();
     };
-
-
-
-
 
     $("body").on("click", ".remove-contact", function(event) {
         contatosAdicionais = contatosAdicionais - 1;
@@ -413,4 +427,6 @@ $(document).ready(function() {
             setFieldDisplay.hide(".numeroCondominio");
         }
     });
+
+    $('input[name="telefone"]').mask(telefoneMask, telefoneMaskOptions);
 });

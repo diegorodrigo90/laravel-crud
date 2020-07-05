@@ -16,5 +16,7 @@
 
 @stop
 
-
+@section('footer')
+ Laravel CRUD
+@endsection
 

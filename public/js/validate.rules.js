@@ -265,7 +265,7 @@ function isCpfFormatted(cpf) {
       return this.optional(element) || false;
     }
 
-    if (value.length < 10 || value.length > 12) {
+    if (value.length < 10 || value.length > 11) {
       return this.optional(element) || false;
     }
 
