@@ -96,7 +96,9 @@ $(document).ready(function() {
         uid = uid + 1;
         contatosAdicionais = contatosAdicionais + 1;
         $("#sem-contato-adicional").hide();
-        $("#contatos-adicional").before(getContactsField(uid,contatosAdicionais));
+        $("#contatos-adicional").before(
+            getContactsField(uid, contatosAdicionais)
+        );
         $("html, body").animate(
             {
                 scrollTop: $(".contatos-adicional" + uid).offset().top - 80
@@ -363,6 +365,16 @@ $(document).ready(function() {
         }
     });
 
+    const validate_function = function (element) {
+        if (!$(element).hasClass('note-editable'))
+        { $(element).valid() }
+            else
+        {
+            element = $(element).parent().parent().parent().find('textarea')
+            $(element).valid();
+        }
+    }
+
     $("#fornecedorForm").validate({
         errorClass: "is-invalid error",
         validClass: "is-valid",
@@ -371,6 +383,8 @@ $(document).ready(function() {
                 error.insertAfter(element.parent(".input-group"));
             } else element.after(error); // default error placement
         },
+        onkeyup: validate_function,
+        onfocusout: validate_function,
         //debug: true, //retira essa linha, para o form voltar a funcionar
         rules: {
             cpf: {
@@ -396,21 +410,23 @@ $(document).ready(function() {
         }
     });
 
+
     var addEmailTelefone = function(element) {
         uid = uid + 1;
         let newTelefoneField;
         let newEmailField;
 
         // corrigindo nome para campos de contato adicionas
-        if($(element).closest('.contatos-adicional' + contatosAdicionais).length > 0){
-            newTelefoneField = getTelefoneField(uid , contatosAdicionais);
-            newEmailField = getEmailField(uid , contatosAdicionais);
-        }
-        else {
+        if (
+            $(element).closest(".contatos-adicional" + contatosAdicionais)
+                .length > 0
+        ) {
+            newTelefoneField = getTelefoneField(uid, contatosAdicionais);
+            newEmailField = getEmailField(uid, contatosAdicionais);
+        } else {
             newTelefoneField = getTelefoneField(uid);
             newEmailField = getEmailField(uid);
         }
-
 
         if (element.attr("data-add") == "telefone") {
             $("." + element.attr("data-append")).append(newTelefoneField);
@@ -501,7 +517,7 @@ $(document).ready(function() {
 
     $('input[name="telefone"]').mask(telefoneMask, telefoneMaskOptions);
 
-    $("#observacao").summernote({
+    $("#observacao-div").summernote({
         lang: "pt-BR",
         height: "300",
         toolbar: [
@@ -510,7 +526,10 @@ $(document).ready(function() {
             ["color", ["color"]],
             ["para", ["ul", "ol", "paragraph"]],
             ["insert", ["link"]]
-        ]
+        ],
+        // onKeyup: function(e) {
+        //     $("#observacao").val($(this).code());
+        //   },
     });
 
     $("#uf").select2();

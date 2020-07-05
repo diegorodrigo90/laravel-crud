@@ -17,6 +17,5 @@
 @stop
 
 @section('footer')
- Laravel CRUD
+Laravel CRUD
 @endsection
-

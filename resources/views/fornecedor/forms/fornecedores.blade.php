@@ -447,7 +447,9 @@
             <div id="observacao" class="collapse show" role="tabpanel" aria-labelledby="headingOne">
                 <div class="card-body">
 
-                    <textarea name="observacao" id="observacao" style="display: none;"></textarea>
+                    <textarea name="observacao" id="observacao-div"></textarea>
+
+                    {{-- <div id="observacao-div"></div> --}}
 
 
                 </div>

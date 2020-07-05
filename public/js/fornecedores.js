@@ -1148,6 +1148,16 @@ $(document).ready(function () {
       viaCep($(this).val());
     }
   });
+
+  var validate_function = function validate_function(element) {
+    if (!$(element).hasClass('note-editable')) {
+      $(element).valid();
+    } else {
+      element = $(element).parent().parent().parent().find('textarea');
+      $(element).valid();
+    }
+  };
+
   $("#fornecedorForm").validate({
     errorClass: "is-invalid error",
     validClass: "is-valid",
@@ -1157,6 +1167,8 @@ $(document).ready(function () {
       } else element.after(error); // default error placement
 
     },
+    onkeyup: validate_function,
+    onfocusout: validate_function,
     //debug: true, //retira essa linha, para o form voltar a funcionar
     rules: {
       cpf: {
@@ -1188,7 +1200,7 @@ $(document).ready(function () {
     var newTelefoneField;
     var newEmailField; // corrigindo nome para campos de contato adicionas
 
-    if ($(element).closest('.contatos-adicional' + contatosAdicionais).length > 0) {
+    if ($(element).closest(".contatos-adicional" + contatosAdicionais).length > 0) {
       newTelefoneField = getTelefoneField(uid, contatosAdicionais);
       newEmailField = getEmailField(uid, contatosAdicionais);
     } else {
@@ -1265,10 +1277,13 @@ $(document).ready(function () {
     }
   });
   $('input[name="telefone"]').mask(telefoneMask, telefoneMaskOptions);
-  $("#observacao").summernote({
+  $("#observacao-div").summernote({
     lang: "pt-BR",
     height: "300",
-    toolbar: [["style", ["style"]], ["font", ["bold", "underline", "clear"]], ["color", ["color"]], ["para", ["ul", "ol", "paragraph"]], ["insert", ["link"]]]
+    toolbar: [["style", ["style"]], ["font", ["bold", "underline", "clear"]], ["color", ["color"]], ["para", ["ul", "ol", "paragraph"]], ["insert", ["link"]]] // onKeyup: function(e) {
+    //     $("#observacao").val($(this).code());
+    //   },
+
   });
   $("#uf").select2();
   $("#cidade").select2();
