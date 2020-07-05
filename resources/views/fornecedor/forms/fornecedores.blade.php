@@ -324,7 +324,7 @@
                     </div>
 
                     <div class="card-footer">
-                        <div class="btn btn-danger float-right remove-contact" data-remove="contatos-adicional"><i class="fa fa-trash"></i> Remover contato adicional</div>
+                        <div class="btn btn-danger float-right remove-contact" data-toggle="tooltip" title="Remover contato adicional" data-remove="contatos-adicional"><i class="fa fa-trash"></i></div>
                     </div>
                 </div>
             </div>
@@ -494,7 +494,7 @@
     $('#uf').select2();
     $('#cidade').select2();
 
-   $('[data-toggle="tooltip"]').tooltip();
+    $('[data-toggle="tooltip"]').tooltip();
 
 
     });

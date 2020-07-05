@@ -882,6 +882,21 @@ $(document).ready(function () {
   AddContactsFields = $("#contatos-adicional").html(); //pegando html da div
 
   $("#contatos-adicional").html(""); //limpando div
+  //adiciona evento on click, inclusive os elementos futuros
+
+  $("body").on("click", ".button-add", function (event) {
+    $($(this)).tooltip('hide'); //remover tooltip
+
+    addEmailTelefone($(this));
+  }); //adiciona evento on click, inclusive os elementos futuros
+
+  $("body").on("click", ".remove-contact", function (event) {
+    $('[data-toggle="tooltip"]').tooltip('hide'); //remover tooltip
+  }); //adiciona evento on click, inclusive os elementos futuros
+
+  $("body").on("click", "#addContact", function (event) {
+    $('[data-toggle="tooltip"]').tooltip(); //reaplicando tooltips
+  });
 
   var getContactsField = function getContactsField() {
     uid = uid + 1;
@@ -1151,15 +1166,13 @@ $(document).ready(function () {
     }
 
     $(".button-del").delegate("div", "click", function () {
+      $('[data-toggle="tooltip"]').tooltip('hide'); //remover tooltip
+
       $("." + $(this).parent().attr("data-del")).remove();
     });
     $('[data-toggle="tooltip"]').tooltip();
-  }; //adciona event, inclusive os elementos futoros
+  };
 
-
-  $("body").on("click", ".button-add", function (event) {
-    addEmailTelefone($(this));
-  });
   $("body").on("click", ".remove-contact", function (event) {
     contatosAdicionais = contatosAdicionais - 1;
     $("." + $(this).attr("data-remove")).hide("slow");
