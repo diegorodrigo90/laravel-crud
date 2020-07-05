@@ -172,7 +172,8 @@
 
                                             <label for="telefoneTipo">Tipo<sup style="color: red">•</sup></label>
                                             <div class="input-group">
-                                                <select id="telefoneTipo" class="form-control group-error" required>
+                                                <select id="telefoneTipo" name="telefoneTipo"
+                                                    class="form-control group-error" required>
                                                     <option selected disabled>Selecione</option>
                                                     <option>Residencial</option>
                                                     <option>Comercial</option>
@@ -208,7 +209,8 @@
 
                                             <label for="emailTipo">Tipo<sup style="color: red;">•</sup></label>
                                             <div class="input-group">
-                                                <select name="emailTipo" class="form-control group-error" required>
+                                                <select name="emailTipo" name="emailTipo"
+                                                    class="form-control group-error" required>
                                                     <option selected disabled>Selecione</option>
                                                     <option>Pessoal</option>
                                                     <option>Comercial</option>
@@ -287,7 +289,7 @@
 
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="contato-adicional[][nome]">Nome</label>
+                                    <label for="contato-adicional[nome]">Nome</label>
                                     <input type="text" class="form-control set-required"
                                         name="contato-adicional[][nome]">
                                 </div>
@@ -295,7 +297,7 @@
 
                             <div class="col-md-3" id="div-inscricao-minucipal">
                                 <div class="form-group">
-                                    <label for="contato-adicional[][empresa]">Empresa</label>
+                                    <label for="contato-adicional[empresa]">Empresa</label>
                                     <input type="text" class="form-control set-required"
                                         name="contato-adicional[][empresa]">
                                 </div>
@@ -303,7 +305,7 @@
 
                             <div class="col-md-3" id="div-inscricao-minucipal">
                                 <div class="form-group">
-                                    <label for="contato-adicional[][cargo]">Cargo</label>
+                                    <label for="contato-adicional[cargo]">Cargo</label>
                                     <input type="text" class="form-control set-required"
                                         name="contato-adicional[][cargo]">
                                 </div>
@@ -465,34 +467,8 @@
 
 @stop
 
-
-
 @section('js')
 <script src="{{ asset('/js/validate.rules.js')}}" defer></script>
 
 <script src="{{ asset('/js/fornecedores.js')}}" defer></script>
-<script>
-    $(document).ready(function() {
-
-        $('#observacao').summernote({
-            lang: 'pt-BR',
-            height: '300',
-            toolbar: [
-            ['style', ['style']],
-            ['font', ['bold', 'underline', 'clear']],
-            ['color', ['color']],
-            ['para', ['ul', 'ol', 'paragraph']],
-            ['insert', ['link']],
-            ]
-        });
-
-    $('#uf').select2();
-    $('#cidade').select2();
-
-    $('[data-toggle="tooltip"]').tooltip();
-
-
-    });
-</script>
-
 @stop

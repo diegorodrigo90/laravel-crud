@@ -44,41 +44,88 @@ $(document).ready(function() {
         $('input[name="telefone"]').mask(telefoneMask, telefoneMaskOptions);
     });
 
-    var getContactsField = function() {
-        uid = uid + 1;
+    var getContactsField = function(uid, contatosAdicionais) {
         let contactsReturn = AddContactsFields;
         contactsReturn = contactsReturn.replace(
             /telefonesAdicionais/g,
-            "telefonesAdicionais" + uid
+            "telefonesAdicionais" + contatosAdicionais
+        );
+        contactsReturn = contactsReturn.replace(
+            /name="emailTipo"/g,
+            `name="contato[${contatosAdicionais}][email][${uid}][tipo]"`
+        );
+
+        contactsReturn = contactsReturn.replace(
+            /name="telefoneTipo"/g,
+            `name="contato[${contatosAdicionais}][telefone][${uid}][tipo]"`
+        );
+        contactsReturn = contactsReturn.replace(
+            'name="contato-adicional[][nome]',
+            'name="contato-adicional[' + contatosAdicionais + "][nome]"
+        );
+        contactsReturn = contactsReturn.replace(
+            'name="contato-adicional[][cargo]',
+            'name="contato-adicional[' + contatosAdicionais + "][cargo]"
+        );
+        contactsReturn = contactsReturn.replace(
+            'name="contato-adicional[][empresa]',
+            'name="contato-adicional[' + contatosAdicionais + "][empresa]"
+        );
+        contactsReturn = contactsReturn.replace(
+            'name="email',
+            'name="contato[' + contatosAdicionais + "][" + uid + "][email]"
+        );
+        contactsReturn = contactsReturn.replace(
+            'name="telefone',
+            'name="contato[' + contatosAdicionais + "][" + uid + "][telefone]"
         );
         contactsReturn = contactsReturn.replace(
             /emailsAdicionais/g,
-            "emailsAdicionais" + uid
+            "emailsAdicionais" + contatosAdicionais
         );
         contactsReturn = contactsReturn.replace(
             /contatos-adicional/g,
-            "contatos-adicional" + uid
+            "contatos-adicional" + contatosAdicionais
         );
-        contactsReturn = contactsReturn.replace(/style="display: none"/g, "");
-        // console.log(contactsReturn);
+        contactsReturn = contactsReturn.replace(/style="display: none"/g, ""); //tornando div visivel
+
         return contactsReturn;
     };
 
     $("#addContact").on("click", function() {
+        uid = uid + 1;
         contatosAdicionais = contatosAdicionais + 1;
         $("#sem-contato-adicional").hide();
-        $("#contatos-adicional").before(getContactsField());
-        $('html, body').animate({
-            scrollTop: $(".contatos-adicional" + uid).offset().top - 80
-        }, 500);
+        $("#contatos-adicional").before(getContactsField(uid,contatosAdicionais));
+        $("html, body").animate(
+            {
+                scrollTop: $(".contatos-adicional" + uid).offset().top - 80
+            },
+            500
+        );
     });
 
-    var getEmailField = function(uid) {
+    var getEmailField = function(uid, contatoAdicional = null) {
         let emailReturn = emailField;
-        emailReturn = emailReturn.replace(
-            /name="email/g,
-            'name="email-adicional' + uid
-        );
+        if (contatoAdicional) {
+            emailReturn = emailReturn.replace(
+                /name="email"/g,
+                `name="contato[${contatoAdicional}][email][${uid}][email]"`
+            );
+            emailReturn = emailReturn.replace(
+                /name="emailTipo"/g,
+                `name="contato[${contatoAdicional}][email][${uid}][tipo]"`
+            );
+        } else {
+            emailReturn = emailReturn.replace(
+                /name="email"/g,
+                `name="email-adicional[${uid}][email]"`
+            );
+            emailReturn = emailReturn.replace(
+                /name="emailTipo"/g,
+                `name="email-adicional[${uid}][tipo]"`
+            );
+        }
         emailReturn = emailReturn.replace(
             /data-add="email"/g,
             'data-del="email-adicional' + uid + '"'
@@ -95,7 +142,7 @@ $(document).ready(function() {
         return emailReturn;
     };
 
-    var getTelefoneField = function(uid) {
+    var getTelefoneField = function(uid, contatoAdicional = null) {
         let telefoneReturn = telefoneField;
 
         telefoneReturn = telefoneReturn.replace(
@@ -106,10 +153,27 @@ $(document).ready(function() {
             /data-add="telefone"/g,
             'data-del="telefone-adicional' + uid + '"'
         );
-        telefoneReturn = telefoneReturn.replace(
-            /name="telefone/g,
-            'name="telefone-adicional' + uid
-        );
+
+        if (contatoAdicional) {
+            telefoneReturn = telefoneReturn.replace(
+                /name="telefone"/g,
+                `name="contato[${contatoAdicional}][telefone][${uid}][telefone]"`
+            );
+            telefoneReturn = telefoneReturn.replace(
+                /name="telefoneTipo"/g,
+                `name="contato[${contatoAdicional}][telefone][${uid}][tipo]"`
+            );
+        } else {
+            telefoneReturn = telefoneReturn.replace(
+                /name="telefone"/g,
+                `name="telefone-adicional[${uid}][telefone]"`
+            );
+            telefoneReturn = telefoneReturn.replace(
+                /name="telefoneTipo"/g,
+                `name="telefone-adicional[${uid}][tipo]"`
+            );
+        }
+
         telefoneReturn = telefoneReturn.replace(
             /class="form-control telefone"/g,
             'class="form-control telefone-adicional' + uid + '"'
@@ -304,7 +368,6 @@ $(document).ready(function() {
         validClass: "is-valid",
         errorPlacement: function(error, element) {
             if (element.hasClass("group-error")) {
-                console.log("ok");
                 error.insertAfter(element.parent(".input-group"));
             } else element.after(error); // default error placement
         },
@@ -334,12 +397,23 @@ $(document).ready(function() {
     });
 
     var addEmailTelefone = function(element) {
-        if (element.attr("data-add") == "telefone") {
-            uid = uid + 1;
+        uid = uid + 1;
+        let newTelefoneField;
+        let newEmailField;
 
-            var teste = $("." + element.attr("data-append")).append(
-                getTelefoneField(uid)
-            );
+        // corrigindo nome para campos de contato adicionas
+        if($(element).closest('.contatos-adicional' + contatosAdicionais).length > 0){
+            newTelefoneField = getTelefoneField(uid , contatosAdicionais);
+            newEmailField = getEmailField(uid , contatosAdicionais);
+        }
+        else {
+            newTelefoneField = getTelefoneField(uid);
+            newEmailField = getEmailField(uid);
+        }
+
+
+        if (element.attr("data-add") == "telefone") {
+            $("." + element.attr("data-append")).append(newTelefoneField);
 
             $("input.telefone-adicional" + uid).empty();
 
@@ -352,9 +426,7 @@ $(document).ready(function() {
                 telefoneMaskOptions
             );
         } else if (element.attr("data-add") == "email") {
-            uid = uid + 1;
-
-            $("." + element.attr("data-append")).append(getEmailField(uid));
+            $("." + element.attr("data-append")).append(newEmailField);
 
             $("input.email-adicional" + uid).empty();
 
@@ -385,7 +457,6 @@ $(document).ready(function() {
     });
 
     //adiconar email/telefone
-
     $("#addContact").on("click", function() {
         $(".contatos-adicionais").append($(".contacts-field").html());
     });
@@ -429,4 +500,21 @@ $(document).ready(function() {
     });
 
     $('input[name="telefone"]').mask(telefoneMask, telefoneMaskOptions);
+
+    $("#observacao").summernote({
+        lang: "pt-BR",
+        height: "300",
+        toolbar: [
+            ["style", ["style"]],
+            ["font", ["bold", "underline", "clear"]],
+            ["color", ["color"]],
+            ["para", ["ul", "ol", "paragraph"]],
+            ["insert", ["link"]]
+        ]
+    });
+
+    $("#uf").select2();
+    $("#cidade").select2();
+
+    $('[data-toggle="tooltip"]').tooltip();
 });

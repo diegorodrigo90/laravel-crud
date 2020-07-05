@@ -900,29 +900,45 @@ $(document).ready(function () {
     $('input[name="telefone"]').mask(telefoneMask, telefoneMaskOptions);
   });
 
-  var getContactsField = function getContactsField() {
-    uid = uid + 1;
+  var getContactsField = function getContactsField(uid, contatosAdicionais) {
     var contactsReturn = AddContactsFields;
-    contactsReturn = contactsReturn.replace(/telefonesAdicionais/g, "telefonesAdicionais" + uid);
-    contactsReturn = contactsReturn.replace(/emailsAdicionais/g, "emailsAdicionais" + uid);
-    contactsReturn = contactsReturn.replace(/contatos-adicional/g, "contatos-adicional" + uid);
-    contactsReturn = contactsReturn.replace(/style="display: none"/g, ""); // console.log(contactsReturn);
+    contactsReturn = contactsReturn.replace(/telefonesAdicionais/g, "telefonesAdicionais" + contatosAdicionais);
+    contactsReturn = contactsReturn.replace(/name="emailTipo"/g, "name=\"contato[".concat(contatosAdicionais, "][email][").concat(uid, "][tipo]\""));
+    contactsReturn = contactsReturn.replace(/name="telefoneTipo"/g, "name=\"contato[".concat(contatosAdicionais, "][telefone][").concat(uid, "][tipo]\""));
+    contactsReturn = contactsReturn.replace('name="contato-adicional[][nome]', 'name="contato-adicional[' + contatosAdicionais + "][nome]");
+    contactsReturn = contactsReturn.replace('name="contato-adicional[][cargo]', 'name="contato-adicional[' + contatosAdicionais + "][cargo]");
+    contactsReturn = contactsReturn.replace('name="contato-adicional[][empresa]', 'name="contato-adicional[' + contatosAdicionais + "][empresa]");
+    contactsReturn = contactsReturn.replace('name="email', 'name="contato[' + contatosAdicionais + "][" + uid + "][email]");
+    contactsReturn = contactsReturn.replace('name="telefone', 'name="contato[' + contatosAdicionais + "][" + uid + "][telefone]");
+    contactsReturn = contactsReturn.replace(/emailsAdicionais/g, "emailsAdicionais" + contatosAdicionais);
+    contactsReturn = contactsReturn.replace(/contatos-adicional/g, "contatos-adicional" + contatosAdicionais);
+    contactsReturn = contactsReturn.replace(/style="display: none"/g, ""); //tornando div visivel
 
     return contactsReturn;
   };
 
   $("#addContact").on("click", function () {
+    uid = uid + 1;
     contatosAdicionais = contatosAdicionais + 1;
     $("#sem-contato-adicional").hide();
-    $("#contatos-adicional").before(getContactsField());
-    $('html, body').animate({
+    $("#contatos-adicional").before(getContactsField(uid, contatosAdicionais));
+    $("html, body").animate({
       scrollTop: $(".contatos-adicional" + uid).offset().top - 80
     }, 500);
   });
 
   var getEmailField = function getEmailField(uid) {
+    var contatoAdicional = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : null;
     var emailReturn = emailField;
-    emailReturn = emailReturn.replace(/name="email/g, 'name="email-adicional' + uid);
+
+    if (contatoAdicional) {
+      emailReturn = emailReturn.replace(/name="email"/g, "name=\"contato[".concat(contatoAdicional, "][email][").concat(uid, "][email]\""));
+      emailReturn = emailReturn.replace(/name="emailTipo"/g, "name=\"contato[".concat(contatoAdicional, "][email][").concat(uid, "][tipo]\""));
+    } else {
+      emailReturn = emailReturn.replace(/name="email"/g, "name=\"email-adicional[".concat(uid, "][email]\""));
+      emailReturn = emailReturn.replace(/name="emailTipo"/g, "name=\"email-adicional[".concat(uid, "][tipo]\""));
+    }
+
     emailReturn = emailReturn.replace(/data-add="email"/g, 'data-del="email-adicional' + uid + '"');
     emailReturn = emailReturn.replace(/class="form-control email"/g, 'class="form-control email-adicional' + uid + '"');
     emailReturn = emailReturn.replace(/email-principal/g, "email-adicional" + uid);
@@ -930,10 +946,19 @@ $(document).ready(function () {
   };
 
   var getTelefoneField = function getTelefoneField(uid) {
+    var contatoAdicional = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : null;
     var telefoneReturn = telefoneField;
     telefoneReturn = telefoneReturn.replace(/telefone-principal/g, "telefone-adicional" + uid);
     telefoneReturn = telefoneReturn.replace(/data-add="telefone"/g, 'data-del="telefone-adicional' + uid + '"');
-    telefoneReturn = telefoneReturn.replace(/name="telefone/g, 'name="telefone-adicional' + uid);
+
+    if (contatoAdicional) {
+      telefoneReturn = telefoneReturn.replace(/name="telefone"/g, "name=\"contato[".concat(contatoAdicional, "][telefone][").concat(uid, "][telefone]\""));
+      telefoneReturn = telefoneReturn.replace(/name="telefoneTipo"/g, "name=\"contato[".concat(contatoAdicional, "][telefone][").concat(uid, "][tipo]\""));
+    } else {
+      telefoneReturn = telefoneReturn.replace(/name="telefone"/g, "name=\"telefone-adicional[".concat(uid, "][telefone]\""));
+      telefoneReturn = telefoneReturn.replace(/name="telefoneTipo"/g, "name=\"telefone-adicional[".concat(uid, "][tipo]\""));
+    }
+
     telefoneReturn = telefoneReturn.replace(/class="form-control telefone"/g, 'class="form-control telefone-adicional' + uid + '"');
     return telefoneReturn;
   }; //limpando caracteres não numericos de uma variavel
@@ -1128,7 +1153,6 @@ $(document).ready(function () {
     validClass: "is-valid",
     errorPlacement: function errorPlacement(error, element) {
       if (element.hasClass("group-error")) {
-        console.log("ok");
         error.insertAfter(element.parent(".input-group"));
       } else element.after(error); // default error placement
 
@@ -1160,9 +1184,20 @@ $(document).ready(function () {
   });
 
   var addEmailTelefone = function addEmailTelefone(element) {
+    uid = uid + 1;
+    var newTelefoneField;
+    var newEmailField; // corrigindo nome para campos de contato adicionas
+
+    if ($(element).closest('.contatos-adicional' + contatosAdicionais).length > 0) {
+      newTelefoneField = getTelefoneField(uid, contatosAdicionais);
+      newEmailField = getEmailField(uid, contatosAdicionais);
+    } else {
+      newTelefoneField = getTelefoneField(uid);
+      newEmailField = getEmailField(uid);
+    }
+
     if (element.attr("data-add") == "telefone") {
-      uid = uid + 1;
-      var teste = $("." + element.attr("data-append")).append(getTelefoneField(uid));
+      $("." + element.attr("data-append")).append(newTelefoneField);
       $("input.telefone-adicional" + uid).empty();
       $("input.telefone-adicional" + uid).rules("add", {
         required: true,
@@ -1170,8 +1205,7 @@ $(document).ready(function () {
       });
       $("input.telefone-adicional" + uid).mask(telefoneMask, telefoneMaskOptions);
     } else if (element.attr("data-add") == "email") {
-      uid = uid + 1;
-      $("." + element.attr("data-append")).append(getEmailField(uid));
+      $("." + element.attr("data-append")).append(newEmailField);
       $("input.email-adicional" + uid).empty();
       $("input.email-adicional" + uid).rules("add", {
         required: true,
@@ -1231,6 +1265,14 @@ $(document).ready(function () {
     }
   });
   $('input[name="telefone"]').mask(telefoneMask, telefoneMaskOptions);
+  $("#observacao").summernote({
+    lang: "pt-BR",
+    height: "300",
+    toolbar: [["style", ["style"]], ["font", ["bold", "underline", "clear"]], ["color", ["color"]], ["para", ["ul", "ol", "paragraph"]], ["insert", ["link"]]]
+  });
+  $("#uf").select2();
+  $("#cidade").select2();
+  $('[data-toggle="tooltip"]').tooltip();
 });
 
 /***/ }),
