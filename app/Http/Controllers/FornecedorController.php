@@ -28,7 +28,6 @@ class FornecedorController extends Controller
         $states = State::all();
 
         return view('fornecedor.create', compact('states'));
-
     }
 
     /**
@@ -39,6 +38,69 @@ class FornecedorController extends Controller
      */
     public function store(Request $request)
     {
+        switch ($request->tipoPessoa) {
+            case 'juridica':
+
+
+                $pessoa = [
+                    ['tipo' => 'juridica'],
+                    ['cnpj' => $request->cnpj],
+                    ['razao_social' => $request->razaoSocial],
+                    ['nome_fantasia' => $request->nomeFantasia],
+                    ['indicador_inscricao_estadual' => $request->indicadorInscricaoEstadual],
+                    ['inscricao_municipal' => $request->inscricaoMunicipal],
+                    ['recolhimento' => $request->recolhimento],
+                    ['ativo' => $request->ativo],
+                    ['telefone' => $request->telefone],
+                    ['telefone_tipo' => $request->telefoneTipo],
+                    ['email' => $request->email],
+                    ['email_tipo' => $request->emailTipo],
+                    ['cep' => $request->cep],
+                    ['logradouro' => $request->logradouro],
+                    ['numero' => $request->numero],
+                    ['complemento' => $request->complemento],
+                    ['bairro' => $request->bairro],
+                    ['ponto_referencia' => $request->pontoReferencia],
+                    ['uf' => $request->uf],
+                    ['cidade' => $request->cidade],
+                    ['is_condominio' => $request->isCondominio],
+                    ['endereco_condominio' => $request->enderecoCondominio],
+                    ['numero_condominio' => $request->numeroCondominio],
+                    ['observacao' => $request->observacao],
+                ] ;
+
+                break;
+
+            case 'fisica':
+
+                $pessoa = [
+                    ['tipo' => 'juridica'],
+                    ['cpf' => $request->cpf],
+                    ['nome' => $request->nome],
+                    ['apelido' => $request->apelido],
+                    ['rg' => $request->rg],
+                    ['ativo' => $request->ativo],
+                    ['telefone' => $request->telefone],
+                    ['telefone_tipo' => $request->telefoneTipo],
+                    ['email' => $request->email],
+                    ['email_tipo' => $request->emailTipo],
+                    ['cep' => $request->cep],
+                    ['logradouro' => $request->logradouro],
+                    ['numero' => $request->numero],
+                    ['complemento' => $request->complemento],
+                    ['bairro' => $request->bairro],
+                    ['ponto_referencia' => $request->pontoReferencia],
+                    ['uf' => $request->uf],
+                    ['cidade' => $request->cidade],
+                    ['is_condominio' => $request->isCondominio],
+                    ['endereco_condominio' => $request->enderecoCondominio],
+                    ['numero_condominio' => $request->numeroCondominio],
+                    ['observacao' => $request->observacao],
+                ] ;
+
+                break;
+        }
+
         return response()->json($request);
     }
 
