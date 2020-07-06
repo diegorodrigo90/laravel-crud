@@ -1057,11 +1057,28 @@ $(document).ready(function () {
       dataType: "jsonp",
       url: "https://www.receitaws.com.br/v1/cnpj/" + removeNonNumericsCaracters(cnpj),
       //Url da Action Aqui
+      beforeSend: function beforeSend() {
+        $("#razaoSocial").prop("disabled", true);
+        $("#nomeFantasia").prop("disabled", true);
+        $("#razaoSocial").val("carregando...");
+        $("#nomeFantasia").val("carregando...");
+        $("#situacaoCNPJ").val("carregando...");
+      },
+      complete: function complete() {
+        $("#razaoSocial").prop("disabled", false);
+        $("#nomeFantasia").prop("disabled", false);
+      },
+      error: function error(request, status, _error) {
+        $("#razaoSocial").val("");
+        $("#nomeFantasia").val("");
+        $("#situacaoCNPJ").val("");
+      },
       success: function success(data) {
         $("#razaoSocial").val(data.nome);
         $("#nomeFantasia").val(data.fantasia);
         $("#situacaoCNPJ").val(data.situacao);
         $("#cep").val(data.cep.replace(".", "")).trigger("change");
+        resetFormErrors();
       }
     });
   }; //pegando cidades do estado
@@ -1118,12 +1135,31 @@ $(document).ready(function () {
       dataType: "jsonp",
       url: "https://viacep.com.br/ws/" + removeNonNumericsCaracters(cep) + "/json",
       //Url da Action Aqui
+      beforeSend: function beforeSend() {
+        $("#logradouro").prop("disabled", true);
+        $("#complemento").prop("disabled", true);
+        $("#bairro").prop("disabled", true);
+        $("#logradouro").val("carregando...");
+        $("#complemento").val("carregando...");
+        $("#bairro").val("carregando...");
+      },
+      complete: function complete() {
+        $("#logradouro").prop("disabled", false);
+        $("#complemento").prop("disabled", false);
+        $("#bairro").prop("disabled", false);
+      },
+      error: function error(request, status, _error2) {
+        $("#logradouro").val("");
+        $("#complemento").val("");
+        $("#bairro").val("");
+      },
       success: function success(data) {
         $("#logradouro").val(data.logradouro);
         $("#complemento").val(data.complemento);
         $("#bairro").val(data.bairro);
         $("#uf").val(data.uf).trigger("change.select2");
         getCities(data.uf, data.localidade);
+        resetFormErrors();
       }
     });
   }; //aplicando mascaras

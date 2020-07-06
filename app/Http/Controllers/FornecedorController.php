@@ -39,7 +39,7 @@ class FornecedorController extends Controller
      */
     public function store(Request $request)
     {
-        dd($request);
+        return response()->json($request);
     }
 
     /**

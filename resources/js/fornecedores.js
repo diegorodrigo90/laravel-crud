@@ -276,13 +276,33 @@ $(document).ready(function() {
             url:
                 "https://www.receitaws.com.br/v1/cnpj/" +
                 removeNonNumericsCaracters(cnpj), //Url da Action Aqui
+            beforeSend: function() {
+                $("#razaoSocial").prop("disabled", true);
+                $("#nomeFantasia").prop("disabled", true);
+
+                $("#razaoSocial").val("carregando...");
+                $("#nomeFantasia").val("carregando...");
+                $("#situacaoCNPJ").val("carregando...");
+            },
+            complete: function() {
+                $("#razaoSocial").prop("disabled", false);
+                $("#nomeFantasia").prop("disabled", false);
+            },
+            error: function(request, status, error) {
+                $("#razaoSocial").val("");
+                $("#nomeFantasia").val("");
+                $("#situacaoCNPJ").val("");
+            },
             success: function(data) {
                 $("#razaoSocial").val(data.nome);
                 $("#nomeFantasia").val(data.fantasia);
                 $("#situacaoCNPJ").val(data.situacao);
+
                 $("#cep")
                     .val(data.cep.replace(".", ""))
                     .trigger("change");
+
+                resetFormErrors();
             }
         });
     };
@@ -335,6 +355,25 @@ $(document).ready(function() {
                 "https://viacep.com.br/ws/" +
                 removeNonNumericsCaracters(cep) +
                 "/json", //Url da Action Aqui
+            beforeSend: function() {
+                $("#logradouro").prop("disabled", true);
+                $("#complemento").prop("disabled", true);
+                $("#bairro").prop("disabled", true);
+
+                $("#logradouro").val("carregando...");
+                $("#complemento").val("carregando...");
+                $("#bairro").val("carregando...");
+            },
+            complete: function() {
+                $("#logradouro").prop("disabled", false);
+                $("#complemento").prop("disabled", false);
+                $("#bairro").prop("disabled", false);
+            },
+            error: function(request, status, error) {
+                $("#logradouro").val("");
+                $("#complemento").val("");
+                $("#bairro").val("");
+            },
             success: function(data) {
                 $("#logradouro").val(data.logradouro);
                 $("#complemento").val(data.complemento);
@@ -344,6 +383,8 @@ $(document).ready(function() {
                     .val(data.uf)
                     .trigger("change.select2");
                 getCities(data.uf, data.localidade);
+
+                resetFormErrors();
             }
         });
     };
