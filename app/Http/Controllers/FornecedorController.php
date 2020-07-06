@@ -38,9 +38,12 @@ class FornecedorController extends Controller
      */
     public function store(Request $request)
     {
+
+        return response()->json($request);
+
+
         switch ($request->tipoPessoa) {
             case 'juridica':
-
 
                 $pessoa = [
                     ['tipo' => 'juridica'],
@@ -51,23 +54,8 @@ class FornecedorController extends Controller
                     ['inscricao_municipal' => $request->inscricaoMunicipal],
                     ['recolhimento' => $request->recolhimento],
                     ['ativo' => $request->ativo],
-                    ['telefone' => $request->telefone],
-                    ['telefone_tipo' => $request->telefoneTipo],
-                    ['email' => $request->email],
-                    ['email_tipo' => $request->emailTipo],
-                    ['cep' => $request->cep],
-                    ['logradouro' => $request->logradouro],
-                    ['numero' => $request->numero],
-                    ['complemento' => $request->complemento],
-                    ['bairro' => $request->bairro],
-                    ['ponto_referencia' => $request->pontoReferencia],
-                    ['uf' => $request->uf],
-                    ['cidade' => $request->cidade],
-                    ['is_condominio' => $request->isCondominio],
-                    ['endereco_condominio' => $request->enderecoCondominio],
-                    ['numero_condominio' => $request->numeroCondominio],
                     ['observacao' => $request->observacao],
-                ] ;
+                ];
 
                 break;
 
@@ -80,26 +68,34 @@ class FornecedorController extends Controller
                     ['apelido' => $request->apelido],
                     ['rg' => $request->rg],
                     ['ativo' => $request->ativo],
-                    ['telefone' => $request->telefone],
-                    ['telefone_tipo' => $request->telefoneTipo],
-                    ['email' => $request->email],
-                    ['email_tipo' => $request->emailTipo],
-                    ['cep' => $request->cep],
-                    ['logradouro' => $request->logradouro],
-                    ['numero' => $request->numero],
-                    ['complemento' => $request->complemento],
-                    ['bairro' => $request->bairro],
-                    ['ponto_referencia' => $request->pontoReferencia],
-                    ['uf' => $request->uf],
-                    ['cidade' => $request->cidade],
-                    ['is_condominio' => $request->isCondominio],
-                    ['endereco_condominio' => $request->enderecoCondominio],
-                    ['numero_condominio' => $request->numeroCondominio],
                     ['observacao' => $request->observacao],
-                ] ;
+                ];
 
                 break;
         }
+
+        $contato = [
+            ['telefone' => $request->telefone],
+            ['telefone_tipo' => $request->telefoneTipo],
+            ['email' => $request->email],
+            ['email_tipo' => $request->emailTipo],
+        ];
+
+        $endereco = [
+            ['cep' => $request->cep],
+            ['logradouro' => $request->logradouro],
+            ['numero' => $request->numero],
+            ['complemento' => $request->complemento],
+            ['bairro' => $request->bairro],
+            ['ponto_referencia' => $request->pontoReferencia],
+            ['uf' => $request->uf],
+            ['cidade' => $request->cidade],
+            ['is_condominio' => $request->isCondominio],
+            ['endereco_condominio' => $request->enderecoCondominio],
+            ['numero_condominio' => $request->numeroCondominio],
+        ];
+
+
 
         return response()->json($request);
     }

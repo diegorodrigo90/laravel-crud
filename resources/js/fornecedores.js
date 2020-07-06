@@ -111,7 +111,7 @@ $(document).ready(function() {
 
         $("html, body").animate(
             {
-                scrollTop: $(".contatos-adicional" + uid).offset().top - 80
+                scrollTop: $(".contatos-adicional" + contatosAdicionais).offset().top - 80
             },
             500
         );
