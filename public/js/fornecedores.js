@@ -908,8 +908,8 @@ $(document).ready(function () {
     contactsReturn = contactsReturn.replace('name="contato-adicional[][nome]', 'name="contato-adicional[' + contatosAdicionais + "][nome]");
     contactsReturn = contactsReturn.replace('name="contato-adicional[][cargo]', 'name="contato-adicional[' + contatosAdicionais + "][cargo]");
     contactsReturn = contactsReturn.replace('name="contato-adicional[][empresa]', 'name="contato-adicional[' + contatosAdicionais + "][empresa]");
-    contactsReturn = contactsReturn.replace('name="email', 'name="contato[' + contatosAdicionais + "][" + uid + "][email]");
-    contactsReturn = contactsReturn.replace('name="telefone', 'name="contato[' + contatosAdicionais + "][" + uid + "][telefone]");
+    contactsReturn = contactsReturn.replace('name="email', 'name="contato[' + contatosAdicionais + "][email][" + uid + "][email]");
+    contactsReturn = contactsReturn.replace('name="telefone', 'name="contato[' + contatosAdicionais + "][telefone][" + uid + "][telefone]");
     contactsReturn = contactsReturn.replace(/emailsAdicionais/g, "emailsAdicionais" + contatosAdicionais);
     contactsReturn = contactsReturn.replace(/contatos-adicional/g, "contatos-adicional" + contatosAdicionais);
     contactsReturn = contactsReturn.replace(/style="display: none"/g, ""); //tornando div visivel
@@ -922,6 +922,7 @@ $(document).ready(function () {
     contatosAdicionais = contatosAdicionais + 1;
     $("#sem-contato-adicional").hide();
     $("#contatos-adicional").before(getContactsField(uid, contatosAdicionais));
+    $(".telefone").mask(telefoneMask, telefoneMaskOptions);
     $("html, body").animate({
       scrollTop: $(".contatos-adicional" + uid).offset().top - 80
     }, 500);
@@ -1150,10 +1151,10 @@ $(document).ready(function () {
   });
 
   var validate_function = function validate_function(element) {
-    if (!$(element).hasClass('note-editable')) {
+    if (!$(element).hasClass("note-editable")) {
       $(element).valid();
     } else {
-      element = $(element).parent().parent().parent().find('textarea');
+      element = $(element).parent().parent().parent().find("textarea");
       $(element).valid();
     }
   };

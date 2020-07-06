@@ -73,11 +73,19 @@ $(document).ready(function() {
         );
         contactsReturn = contactsReturn.replace(
             'name="email',
-            'name="contato[' + contatosAdicionais + "][" + uid + "][email]"
+            'name="contato[' +
+                contatosAdicionais +
+                "][email][" +
+                uid +
+                "][email]"
         );
         contactsReturn = contactsReturn.replace(
             'name="telefone',
-            'name="contato[' + contatosAdicionais + "][" + uid + "][telefone]"
+            'name="contato[' +
+                contatosAdicionais +
+                "][telefone][" +
+                uid +
+                "][telefone]"
         );
         contactsReturn = contactsReturn.replace(
             /emailsAdicionais/g,
@@ -99,6 +107,8 @@ $(document).ready(function() {
         $("#contatos-adicional").before(
             getContactsField(uid, contatosAdicionais)
         );
+        $(".telefone").mask(telefoneMask, telefoneMaskOptions);
+
         $("html, body").animate(
             {
                 scrollTop: $(".contatos-adicional" + uid).offset().top - 80
@@ -365,15 +375,18 @@ $(document).ready(function() {
         }
     });
 
-    const validate_function = function (element) {
-        if (!$(element).hasClass('note-editable'))
-        { $(element).valid() }
-            else
-        {
-            element = $(element).parent().parent().parent().find('textarea')
+    const validate_function = function(element) {
+        if (!$(element).hasClass("note-editable")) {
+            $(element).valid();
+        } else {
+            element = $(element)
+                .parent()
+                .parent()
+                .parent()
+                .find("textarea");
             $(element).valid();
         }
-    }
+    };
 
     $("#fornecedorForm").validate({
         errorClass: "is-invalid error",
@@ -409,7 +422,6 @@ $(document).ready(function() {
             }
         }
     });
-
 
     var addEmailTelefone = function(element) {
         uid = uid + 1;
@@ -526,7 +538,7 @@ $(document).ready(function() {
             ["color", ["color"]],
             ["para", ["ul", "ol", "paragraph"]],
             ["insert", ["link"]]
-        ],
+        ]
         // onKeyup: function(e) {
         //     $("#observacao").val($(this).code());
         //   },
