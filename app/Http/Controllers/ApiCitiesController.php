@@ -47,9 +47,7 @@ class ApiCitiesController extends Controller
      */
     public function show($state)
     {
-        $state = State::where('letter', $state)->first();
-
-        $cities = City::where('state_id', $state->id)->get();
+        $cities = City::where('state_id', $state )->get();
 
         return response()->json($cities);
 

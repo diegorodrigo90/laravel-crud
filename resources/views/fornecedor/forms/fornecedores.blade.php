@@ -389,7 +389,7 @@
                                     <option selected disabled>Selecione</option>
 
                                     @foreach ($states as $state)
-                                    <option value="{{ $state->letter }}">{{ $state->letter }}</option>
+                                    <option value="{{ $state->id }}">{{ $state->letter }}</option>
                                     @endforeach
 
                                 </select>

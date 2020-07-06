@@ -379,10 +379,18 @@ $(document).ready(function() {
                 $("#complemento").val(data.complemento);
                 $("#bairro").val(data.bairro);
 
+                console.log(data);
+
+                $("#uf option").filter(function() {
+                    return this.text == data.uf;
+                }).attr('selected', true);
+
                 $("#uf")
-                    .val(data.uf)
                     .trigger("change.select2");
-                getCities(data.uf, data.localidade);
+
+                let selectedStated = $('#uf').val();
+
+                getCities(selectedStated, data.localidade);
 
                 resetFormErrors();
             }
