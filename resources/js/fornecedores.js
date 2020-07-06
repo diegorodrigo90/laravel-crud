@@ -379,8 +379,6 @@ $(document).ready(function() {
                 $("#complemento").val(data.complemento);
                 $("#bairro").val(data.bairro);
 
-                console.log(data);
-
                 $("#uf option").filter(function() {
                     return this.text == data.uf;
                 }).attr('selected', true);

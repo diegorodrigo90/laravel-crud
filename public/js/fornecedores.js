@@ -1157,7 +1157,6 @@ $(document).ready(function () {
         $("#logradouro").val(data.logradouro);
         $("#complemento").val(data.complemento);
         $("#bairro").val(data.bairro);
-        console.log(data);
         $("#uf option").filter(function () {
           return this.text == data.uf;
         }).attr('selected', true);
