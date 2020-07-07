@@ -969,13 +969,8 @@ $(document).ready(function () {
     return value.replace(/\D/g, "");
   };
 
-  var resetFormErrors = function resetFormErrors() {
-    $("#fornecedorForm").data("validator").resetForm();
-  };
-
   var setFieldDisplay = {
     show: function show(element, isRequired) {
-      resetFormErrors();
       var input = $(element + " > div > .set-required");
       $(element).removeClass("d-none");
       $(element).show("slow");
@@ -985,7 +980,6 @@ $(document).ready(function () {
       }
     },
     hide: function hide(element) {
-      resetFormErrors();
       var input = $(element + " > div > .set-required");
       $(element).hide();
       input.prop("required", false);
@@ -1078,7 +1072,6 @@ $(document).ready(function () {
         $("#nomeFantasia").val(data.fantasia);
         $("#situacaoCNPJ").val(data.situacao);
         $("#cep").val(data.cep.replace(".", "")).trigger("change");
-        resetFormErrors();
       }
     });
   }; //pegando cidades do estado
@@ -1163,7 +1156,6 @@ $(document).ready(function () {
         $("#uf").trigger("change.select2");
         var selectedStated = $('#uf').val();
         getCities(selectedStated, data.localidade);
-        resetFormErrors();
       }
     });
   }; //aplicando mascaras

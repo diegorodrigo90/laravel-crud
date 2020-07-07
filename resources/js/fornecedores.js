@@ -198,15 +198,8 @@ $(document).ready(function() {
         return value.replace(/\D/g, "");
     };
 
-    var resetFormErrors = function() {
-        $("#fornecedorForm")
-            .data("validator")
-            .resetForm();
-    };
-
     var setFieldDisplay = {
         show: function(element, isRequired) {
-            resetFormErrors();
             let input = $(element + " > div > .set-required");
 
             $(element).removeClass("d-none");
@@ -216,7 +209,6 @@ $(document).ready(function() {
             }
         },
         hide: function(element) {
-            resetFormErrors();
 
             let input = $(element + " > div > .set-required");
 
@@ -302,7 +294,6 @@ $(document).ready(function() {
                     .val(data.cep.replace(".", ""))
                     .trigger("change");
 
-                resetFormErrors();
             }
         });
     };
@@ -390,7 +381,6 @@ $(document).ready(function() {
 
                 getCities(selectedStated, data.localidade);
 
-                resetFormErrors();
             }
         });
     };
