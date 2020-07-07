@@ -194,86 +194,21 @@ function isCpfFormatted(cpf) {
     if ((type == 'format' || type == 'both') && !isCnpjFormatted(value)) return false;else return type == 'valid' || type == 'both' ? isCnpj(value) : true;
   }, function (type, element) {
     return type == 'format' || type == 'both' && !isCnpjFormatted($(element).val()) ? 'Formato do CNPJ não é válido' : 'Por favor digite um CNPJ válido';
-  }); //Celular
+  }); //validar telefone fixo e celular
 
-  jQuery.validator.addMethod('celular', function (value, element) {
-    value = value.replace("(", "");
-    value = value.replace(")", "");
-    value = value.replace("-", "");
-    value = value.replace(" ", "").trim();
+  jQuery.validator.addMethod('phone', function (value, element, type) {
+    value = value.replace(/["'()]/g, "");
+    value = value.replace(/-/g, "");
+    value = value.replace(/\s/g, "");
+    if (type == 'phone') regex = /^[0-9]{10}$/;
+    if (type == 'mobile') regex = /^[0-9]{11}$/;
+    if (type == 'both') regex = /^[0-9]{10,11}$/;
 
-    if (value == '0000000000') {
-      return this.optional(element) || false;
-    } else if (value == '00000000000') {
-      return this.optional(element) || false;
-    }
-
-    if (["00", "01", "02", "03",, "04",, "05",, "06",, "07",, "08", "09", "10"].indexOf(value.substring(0, 2)) != -1) {
+    if (value == '0000000000' | value == '00000000000') {
       return this.optional(element) || false;
     }
 
-    if (value.length < 10 || value.length > 11) {
-      return this.optional(element) || false;
-    }
-
-    if (["6", "7", "8", "9"].indexOf(value.substring(2, 3)) == -1) {
-      return this.optional(element) || false;
-    }
-
-    return this.optional(element) || true;
-  }, 'Informe um celular válido'); //Telefone fixo
-
-  jQuery.validator.addMethod('telefone', function (value, element) {
-    value = value.replace("(", "");
-    value = value.replace(")", "");
-    value = value.replace("-", "");
-    value = value.replace(" ", "").trim();
-
-    if (value == '0000000000') {
-      return this.optional(element) || false;
-    } else if (value == '00000000000') {
-      return this.optional(element) || false;
-    }
-
-    if (["00", "01", "02", "03", "04", "05", "06", "07", "08", "09", "10"].indexOf(value.substring(0, 2)) != -1) {
-      return this.optional(element) || false;
-    }
-
-    if (value.length < 10 || value.length > 11) {
-      return this.optional(element) || false;
-    }
-
-    if (["1", "2", "3", "4", "5"].indexOf(value.substring(2, 3)) == -1) {
-      return this.optional(element) || false;
-    }
-
-    return this.optional(element) || true;
-  }, 'Informe um telefone válido');
-  jQuery.validator.addMethod('telefone_celular', function (value, element) {
-    value = value.replace("(", "");
-    value = value.replace(")", "");
-    value = value.replace("-", "");
-    value = value.replace(" ", "").trim();
-
-    if (value == '0000000000') {
-      return this.optional(element) || false;
-    } else if (value == '00000000000') {
-      return this.optional(element) || false;
-    }
-
-    if (["00", "01", "02", "03", "04", "05", "06", "07", "08", "09", "10"].indexOf(value.substring(0, 2)) != -1) {
-      return this.optional(element) || false;
-    }
-
-    if (value.length < 10 || value.length > 11) {
-      return this.optional(element) || false;
-    }
-
-    if (["1", "2", "3", "4", "5"].indexOf(value.substring(2, 3)) == -1) {
-      return this.optional(element) || false;
-    }
-
-    return this.optional(element) || true;
+    return this.optional(element) || regex.test(value);
   }, 'Informe um telefone válido');
   jQuery.validator.addMethod("cep", function (value, element) {
     return this.optional(element) || /^[0-9]{5}-[0-9]{3}$/.test(value);

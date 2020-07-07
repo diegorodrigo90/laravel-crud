@@ -52,12 +52,12 @@ $(document).ready(function() {
         );
         contactsReturn = contactsReturn.replace(
             /name="emailTipo"/g,
-            `name="contato[${contatosAdicionais}][email][${uid}][tipo]"`
+            `name="contato-adicional[${contatosAdicionais}][email][${uid}][tipo]"`
         );
 
         contactsReturn = contactsReturn.replace(
             /name="telefoneTipo"/g,
-            `name="contato[${contatosAdicionais}][telefone][${uid}][tipo]"`
+            `name="contato-adicional[${contatosAdicionais}][telefone][${uid}][tipo]"`
         );
         contactsReturn = contactsReturn.replace(
             'name="contato-adicional[][nome]',
@@ -73,7 +73,7 @@ $(document).ready(function() {
         );
         contactsReturn = contactsReturn.replace(
             'name="email',
-            'name="contato[' +
+            'name="contato-adicional[' +
                 contatosAdicionais +
                 "][email][" +
                 uid +
@@ -81,7 +81,7 @@ $(document).ready(function() {
         );
         contactsReturn = contactsReturn.replace(
             'name="telefone',
-            'name="contato[' +
+            'name="contato-adicional[' +
                 contatosAdicionais +
                 "][telefone][" +
                 uid +
@@ -122,11 +122,11 @@ $(document).ready(function() {
         if (contatoAdicional) {
             emailReturn = emailReturn.replace(
                 /name="email"/g,
-                `name="contato[${contatoAdicional}][email][${uid}][email]"`
+                `name="contato-adicional[${contatoAdicional}][email][${uid}][email]"`
             );
             emailReturn = emailReturn.replace(
                 /name="emailTipo"/g,
-                `name="contato[${contatoAdicional}][email][${uid}][tipo]"`
+                `name="contato-adicional[${contatoAdicional}][email][${uid}][tipo]"`
             );
         } else {
             emailReturn = emailReturn.replace(
@@ -169,11 +169,11 @@ $(document).ready(function() {
         if (contatoAdicional) {
             telefoneReturn = telefoneReturn.replace(
                 /name="telefone"/g,
-                `name="contato[${contatoAdicional}][telefone][${uid}][telefone]"`
+                `name="contato-adicional[${contatoAdicional}][telefone][${uid}][telefone]"`
             );
             telefoneReturn = telefoneReturn.replace(
                 /name="telefoneTipo"/g,
-                `name="contato[${contatoAdicional}][telefone][${uid}][tipo]"`
+                `name="contato-adicional[${contatoAdicional}][telefone][${uid}][tipo]"`
             );
         } else {
             telefoneReturn = telefoneReturn.replace(
@@ -458,7 +458,7 @@ $(document).ready(function() {
 
             telefone: {
                 required: true,
-                telefone_celular: true
+                phone: "both"
             },
             email: {
                 required: true,
@@ -494,7 +494,7 @@ $(document).ready(function() {
 
             $("input.telefone-adicional" + uid).rules("add", {
                 required: true,
-                telefone_celular: true
+                phone: "both"
             });
             $("input.telefone-adicional" + uid).mask(
                 telefoneMask,

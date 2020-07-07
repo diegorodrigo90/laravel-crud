@@ -903,13 +903,13 @@ $(document).ready(function () {
   var getContactsField = function getContactsField(uid, contatosAdicionais) {
     var contactsReturn = AddContactsFields;
     contactsReturn = contactsReturn.replace(/telefonesAdicionais/g, "telefonesAdicionais" + contatosAdicionais);
-    contactsReturn = contactsReturn.replace(/name="emailTipo"/g, "name=\"contato[".concat(contatosAdicionais, "][email][").concat(uid, "][tipo]\""));
-    contactsReturn = contactsReturn.replace(/name="telefoneTipo"/g, "name=\"contato[".concat(contatosAdicionais, "][telefone][").concat(uid, "][tipo]\""));
+    contactsReturn = contactsReturn.replace(/name="emailTipo"/g, "name=\"contato-adicional[".concat(contatosAdicionais, "][email][").concat(uid, "][tipo]\""));
+    contactsReturn = contactsReturn.replace(/name="telefoneTipo"/g, "name=\"contato-adicional[".concat(contatosAdicionais, "][telefone][").concat(uid, "][tipo]\""));
     contactsReturn = contactsReturn.replace('name="contato-adicional[][nome]', 'name="contato-adicional[' + contatosAdicionais + "][nome]");
     contactsReturn = contactsReturn.replace('name="contato-adicional[][cargo]', 'name="contato-adicional[' + contatosAdicionais + "][cargo]");
     contactsReturn = contactsReturn.replace('name="contato-adicional[][empresa]', 'name="contato-adicional[' + contatosAdicionais + "][empresa]");
-    contactsReturn = contactsReturn.replace('name="email', 'name="contato[' + contatosAdicionais + "][email][" + uid + "][email]");
-    contactsReturn = contactsReturn.replace('name="telefone', 'name="contato[' + contatosAdicionais + "][telefone][" + uid + "][telefone]");
+    contactsReturn = contactsReturn.replace('name="email', 'name="contato-adicional[' + contatosAdicionais + "][email][" + uid + "][email]");
+    contactsReturn = contactsReturn.replace('name="telefone', 'name="contato-adicional[' + contatosAdicionais + "][telefone][" + uid + "][telefone]");
     contactsReturn = contactsReturn.replace(/emailsAdicionais/g, "emailsAdicionais" + contatosAdicionais);
     contactsReturn = contactsReturn.replace(/contatos-adicional/g, "contatos-adicional" + contatosAdicionais);
     contactsReturn = contactsReturn.replace(/style="display: none"/g, ""); //tornando div visivel
@@ -924,7 +924,7 @@ $(document).ready(function () {
     $("#contatos-adicional").before(getContactsField(uid, contatosAdicionais));
     $(".telefone").mask(telefoneMask, telefoneMaskOptions);
     $("html, body").animate({
-      scrollTop: $(".contatos-adicional" + uid).offset().top - 80
+      scrollTop: $(".contatos-adicional" + contatosAdicionais).offset().top - 80
     }, 500);
   });
 
@@ -933,8 +933,8 @@ $(document).ready(function () {
     var emailReturn = emailField;
 
     if (contatoAdicional) {
-      emailReturn = emailReturn.replace(/name="email"/g, "name=\"contato[".concat(contatoAdicional, "][email][").concat(uid, "][email]\""));
-      emailReturn = emailReturn.replace(/name="emailTipo"/g, "name=\"contato[".concat(contatoAdicional, "][email][").concat(uid, "][tipo]\""));
+      emailReturn = emailReturn.replace(/name="email"/g, "name=\"contato-adicional[".concat(contatoAdicional, "][email][").concat(uid, "][email]\""));
+      emailReturn = emailReturn.replace(/name="emailTipo"/g, "name=\"contato-adicional[".concat(contatoAdicional, "][email][").concat(uid, "][tipo]\""));
     } else {
       emailReturn = emailReturn.replace(/name="email"/g, "name=\"email-adicional[".concat(uid, "][email]\""));
       emailReturn = emailReturn.replace(/name="emailTipo"/g, "name=\"email-adicional[".concat(uid, "][tipo]\""));
@@ -953,8 +953,8 @@ $(document).ready(function () {
     telefoneReturn = telefoneReturn.replace(/data-add="telefone"/g, 'data-del="telefone-adicional' + uid + '"');
 
     if (contatoAdicional) {
-      telefoneReturn = telefoneReturn.replace(/name="telefone"/g, "name=\"contato[".concat(contatoAdicional, "][telefone][").concat(uid, "][telefone]\""));
-      telefoneReturn = telefoneReturn.replace(/name="telefoneTipo"/g, "name=\"contato[".concat(contatoAdicional, "][telefone][").concat(uid, "][tipo]\""));
+      telefoneReturn = telefoneReturn.replace(/name="telefone"/g, "name=\"contato-adicional[".concat(contatoAdicional, "][telefone][").concat(uid, "][telefone]\""));
+      telefoneReturn = telefoneReturn.replace(/name="telefoneTipo"/g, "name=\"contato-adicional[".concat(contatoAdicional, "][telefone][").concat(uid, "][tipo]\""));
     } else {
       telefoneReturn = telefoneReturn.replace(/name="telefone"/g, "name=\"telefone-adicional[".concat(uid, "][telefone]\""));
       telefoneReturn = telefoneReturn.replace(/name="telefoneTipo"/g, "name=\"telefone-adicional[".concat(uid, "][tipo]\""));
@@ -1224,7 +1224,7 @@ $(document).ready(function () {
       },
       telefone: {
         required: true,
-        telefone_celular: true
+        phone: "both"
       },
       email: {
         required: true,
@@ -1254,7 +1254,7 @@ $(document).ready(function () {
       $("input.telefone-adicional" + uid).empty();
       $("input.telefone-adicional" + uid).rules("add", {
         required: true,
-        telefone_celular: true
+        phone: "both"
       });
       $("input.telefone-adicional" + uid).mask(telefoneMask, telefoneMaskOptions);
     } else if (element.attr("data-add") == "email") {

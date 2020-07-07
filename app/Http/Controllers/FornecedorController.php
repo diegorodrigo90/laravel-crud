@@ -39,22 +39,22 @@ class FornecedorController extends Controller
     public function store(Request $request)
     {
 
-        return response()->json($request);
+        // return response()->json($request);
 
 
         switch ($request->tipoPessoa) {
             case 'juridica':
 
                 $pessoa = [
-                    ['tipo' => 'juridica'],
-                    ['cnpj' => $request->cnpj],
-                    ['razao_social' => $request->razaoSocial],
-                    ['nome_fantasia' => $request->nomeFantasia],
-                    ['indicador_inscricao_estadual' => $request->indicadorInscricaoEstadual],
-                    ['inscricao_municipal' => $request->inscricaoMunicipal],
-                    ['recolhimento' => $request->recolhimento],
-                    ['ativo' => $request->ativo],
-                    ['observacao' => $request->observacao],
+                    'tipo' => 'juridica',
+                    'cnpj' => $request->cnpj,
+                    'razao_social' => $request->razaoSocial,
+                    'nome_fantasia' => $request->nomeFantasia,
+                    'indicador_inscricao_estadual' => $request->indicadorInscricaoEstadual,
+                    'inscricao_municipal' => $request->inscricaoMunicipal,
+                    'recolhimento' => $request->recolhimento,
+                    'ativo' => $request->ativo,
+                    'observacao' => $request->observacao,
                 ];
 
                 break;
@@ -62,42 +62,69 @@ class FornecedorController extends Controller
             case 'fisica':
 
                 $pessoa = [
-                    ['tipo' => 'juridica'],
-                    ['cpf' => $request->cpf],
-                    ['nome' => $request->nome],
-                    ['apelido' => $request->apelido],
-                    ['rg' => $request->rg],
-                    ['ativo' => $request->ativo],
-                    ['observacao' => $request->observacao],
+                    'tipo' => 'juridica',
+                    'cpf' => $request->cpf,
+                    'nome' => $request->nome,
+                    'apelido' => $request->apelido,
+                    'rg' => $request->rg,
+                    'ativo' => $request->ativo,
+                    'observacao' => $request->observacao,
                 ];
 
                 break;
         }
 
         $contato = [
-            ['telefone' => $request->telefone],
-            ['telefone_tipo' => $request->telefoneTipo],
-            ['email' => $request->email],
-            ['email_tipo' => $request->emailTipo],
+            'telefone' => $request->telefone,
+            'telefone_tipo' => $request->telefoneTipo,
+            'email' => $request->email,
+            'email_tipo' => $request->emailTipo,
         ];
 
         $endereco = [
-            ['cep' => $request->cep],
-            ['logradouro' => $request->logradouro],
-            ['numero' => $request->numero],
-            ['complemento' => $request->complemento],
-            ['bairro' => $request->bairro],
-            ['ponto_referencia' => $request->pontoReferencia],
-            ['uf' => $request->uf],
-            ['cidade' => $request->cidade],
-            ['is_condominio' => $request->isCondominio],
-            ['endereco_condominio' => $request->enderecoCondominio],
-            ['numero_condominio' => $request->numeroCondominio],
+            'cep' => $request->cep,
+            'logradouro' => $request->logradouro,
+            'numero' => $request->numero,
+            'complemento' => $request->complemento,
+            'bairro' => $request->bairro,
+            'ponto_referencia' => $request->pontoReferencia,
+            'uf' => $request->uf,
+            'cidade' => $request->cidade,
+            'is_condominio' => $request->isCondominio,
+            'endereco_condominio' => $request->enderecoCondominio,
+            'numero_condominio' => $request->numeroCondominio,
         ];
 
+        if ($request->{'telefone-adicional'}) {
+            $telefonesAdicionais = array();
+
+            foreach($request->{'telefone-adicional'} as $key => $telefones){
+                array_push($telefonesAdicionais, $telefones);
+            }
+
+        }
+
+        if ($request->{'email-adicional'}) {
+            $emailsAdicionais = array();
+
+            foreach($request->{'email-adicional'} as $key => $emails){
+                array_push($emailsAdicionais, $emails);
+            }
+
+        }
+
+        if ($request->{'contato-adicional'}) {
+            $contatosAdicionais = array();
+
+            foreach($request->{'contato-adicional'} as $key => $contatos){
+                array_push($contatosAdicionais, $contatos);
+            }
+        }
 
 
-        return response()->json($request);
+
+        dd($contatosAdicionais);
+
     }
 
     /**
