@@ -15,9 +15,10 @@ class CreatePessoasJuridicasTable extends Migration
     {
         Schema::create('pessoas_juridicas', function (Blueprint $table) {
             $table->id();
-            $table->integer('cnpj');
+            $table->string('cnpj')->unique();
             $table->string('razao_social');
             $table->string('indicador_inscricao_estadual');
+            $table->string('nome_fantasia');
             $table->string('inscricao_estadual')->nullable();
             $table->string('inscricao_municipal')->nullable();
             $table->string('recolhimento');

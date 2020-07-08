@@ -2,7 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Fornecedor;
+use App\Models\PessoaFisica;
+use App\Models\PessoaJuridica;
 use App\Models\State;
+use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
 use PhpParser\Node\Stmt\TryCatch;
 
@@ -42,36 +46,54 @@ class FornecedorController extends Controller
 
         // return response()->json($request);
 
-        $fornecedor = [
-            'tipo' => 'juridica',
-            'ativo' => $request->ativo,
-            'observacao' => $request->observacao,
-        ];
 
-        switch ($fornecedor['tipo']) {
-            case 'juridica':
+        if ($request->tipoPessoa == 'juridica') {
 
-                $pessoa_juridica = [
-                    'cnpj' => $request->cnpj,
-                    'razao_social' => $request->razaoSocial,
-                    'nome_fantasia' => $request->nomeFantasia,
-                    'indicador_inscricao_estadual' => $request->indicadorInscricaoEstadual,
-                    'inscricao_municipal' => $request->inscricaoMunicipal,
-                    'recolhimento' => $request->recolhimento,
-                ];
+            try {
 
-                break;
+                $pessoa = new PessoaJuridica;
+                $pessoa->cnpj = (int) preg_replace('/[^0-9]/', '', $request->cnpj);
+                $pessoa->razao_social = $request->razaoSocial;
+                $pessoa->nome_fantasia = $request->nomeFantasia;
+                $pessoa->indicador_inscricao_estadual = $request->indicadorInscricaoEstadual;
+                $pessoa->inscricao_municipal = $request->inscricaoMunicipal;
+                $pessoa->recolhimento = $request->recolhimento;
+                $pessoa->save();
+            } catch (QueryException $error) {
+                if ($pessoa) $pessoa->delete();
+                // dd($error);
+                return redirect()->back()->withErrors('Erro ao cadastrar fornecedor');
+            }
+        } else if ($request->tipoPessoa == 'fisica') {
 
-            case 'fisica':
+            try {
 
-                $pessoa_fisica = [
-                    'cpf' => $request->cpf,
-                    'nome' => $request->nome,
-                    'apelido' => $request->apelido,
-                    'rg' => $request->rg,
-                ];
+                $pessoa = new PessoaFisica;
+                $pessoa->cpf =  (int) preg_replace('/[^0-9]/', '', $request->cpf);
+                $pessoa->nome = $request->nome;
+                $pessoa->apelido = $request->apelido;
+                $pessoa->rg = $request->rg;
+                $pessoa->save();
+            } catch (QueryException $error) {
+                if ($pessoa) $pessoa->delete();
+                // dd($error);
+                return redirect()->back()->withErrors('Erro ao cadastrar fornecedor');
 
-                break;
+            }
+        }
+
+        try {
+            $fornecedor = new Fornecedor;
+            $fornecedor->is_active = ($request->ativo == 'Sim' ? true : false);
+            $fornecedor->is_active = ($request->ativo == 'Sim' ? true : false);
+            $fornecedor->pessoable()->associate($pessoa);
+            $fornecedor->save();
+
+        } catch (QueryException $error) {
+            if ($fornecedor) $fornecedor->delete();
+            if ($pessoa) $pessoa->delete();
+            // dd($error);
+            return redirect()->back()->withErrors('Erro ao cadastrar fornecedor');
         }
 
         $contato = [
@@ -109,7 +131,7 @@ class FornecedorController extends Controller
                     ['telefones ' =>
                     ['adicionais' =>
                     [
-                        array_values ($telefone)
+                        array_values($telefone)
                     ]]]
                 );
             }

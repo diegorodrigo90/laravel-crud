@@ -24,10 +24,10 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        Fornecedor::deleted(function($pessoa){
+        Fornecedor::deleted(function($fornecedor){
             //excluindo qualquer tipo de pessoa, ao excluir o fonecedor
-            $model = $pessoa->pessoa_type;
-            $obj = $model::find($pessoa->pessoa_id);
+            $model = $fornecedor->pessoa_type;
+            $obj = $model::find($fornecedor->pessoa_id);
             $obj->delete();
         });
     }

@@ -15,10 +15,10 @@ class CreatePessoasFisicasTable extends Migration
     {
         Schema::create('pessoas_fisicas', function (Blueprint $table) {
             $table->id();
-            $table->integer('cpf');
+            $table->string('cpf')->unique();
             $table->string('nome');
             $table->string('apelido')->nullable();
-            $table->integer('rg');
+            $table->string('rg')->unique();
             $table->timestamps();
 
         });
