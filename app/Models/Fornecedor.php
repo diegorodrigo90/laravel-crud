@@ -6,5 +6,11 @@ use Illuminate\Database\Eloquent\Model;
 
 class Fornecedor extends Model
 {
-    //
+    protected $table = 'fornecedores';
+
+    public function pessoable()
+    {
+        return $this->morphTo();
+    }
+
 }

@@ -1332,7 +1332,7 @@ $(document).ready(function () {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! C:\Projetos\Pessoal\laravel-crud\resources\js\fornecedores.js */"./resources/js/fornecedores.js");
+module.exports = __webpack_require__(/*! C:\Projetos\laravel-crud\resources\js\fornecedores.js */"./resources/js/fornecedores.js");
 
 
 /***/ })

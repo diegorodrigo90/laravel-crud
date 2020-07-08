@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreatePurveyorTable extends Migration
+class CreatePessoasFisicasTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,14 @@ class CreatePurveyorTable extends Migration
      */
     public function up()
     {
-        Schema::create('purveyor', function (Blueprint $table) {
+        Schema::create('pessoas_fisicas', function (Blueprint $table) {
             $table->id();
+            $table->integer('cpf');
+            $table->string('nome');
+            $table->string('apelido')->nullable();
+            $table->integer('rg');
             $table->timestamps();
+
         });
     }
 
@@ -26,6 +31,6 @@ class CreatePurveyorTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('purveyor');
+        Schema::dropIfExists('pessoas_fisicas');
     }
 }

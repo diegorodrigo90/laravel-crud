@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\State;
 use Illuminate\Http\Request;
+use PhpParser\Node\Stmt\TryCatch;
 
 class FornecedorController extends Controller
 {
@@ -41,44 +42,50 @@ class FornecedorController extends Controller
 
         // return response()->json($request);
 
+        $fornecedor = [
+            'tipo' => 'juridica',
+            'ativo' => $request->ativo,
+            'observacao' => $request->observacao,
+        ];
 
-        switch ($request->tipoPessoa) {
+        switch ($fornecedor['tipo']) {
             case 'juridica':
 
-                $pessoa = [
-                    'tipo' => 'juridica',
+                $pessoa_juridica = [
                     'cnpj' => $request->cnpj,
                     'razao_social' => $request->razaoSocial,
                     'nome_fantasia' => $request->nomeFantasia,
                     'indicador_inscricao_estadual' => $request->indicadorInscricaoEstadual,
                     'inscricao_municipal' => $request->inscricaoMunicipal,
                     'recolhimento' => $request->recolhimento,
-                    'ativo' => $request->ativo,
-                    'observacao' => $request->observacao,
                 ];
 
                 break;
 
             case 'fisica':
 
-                $pessoa = [
-                    'tipo' => 'juridica',
+                $pessoa_fisica = [
                     'cpf' => $request->cpf,
                     'nome' => $request->nome,
                     'apelido' => $request->apelido,
                     'rg' => $request->rg,
-                    'ativo' => $request->ativo,
-                    'observacao' => $request->observacao,
                 ];
 
                 break;
         }
 
         $contato = [
-            'telefone' => $request->telefone,
-            'telefone_tipo' => $request->telefoneTipo,
-            'email' => $request->email,
-            'email_tipo' => $request->emailTipo,
+            'telefones' =>
+            [
+                'telefone' => $request->telefone,
+                'tipo' => $request->telefoneTipo,
+            ],
+            'emails' =>
+            [
+                'email' => $request->email,
+                'tipo' => $request->emailTipo,
+            ],
+
         ];
 
         $endereco = [
@@ -90,41 +97,49 @@ class FornecedorController extends Controller
             'ponto_referencia' => $request->pontoReferencia,
             'uf' => $request->uf,
             'cidade' => $request->cidade,
-            'is_condominio' => $request->isCondominio,
+            'is_condominio' => ($request->isCondominio == 'Sim' ? true : false),
             'endereco_condominio' => $request->enderecoCondominio,
             'numero_condominio' => $request->numeroCondominio,
         ];
 
         if ($request->{'telefone-adicional'}) {
-            $telefonesAdicionais = array();
-
-            foreach($request->{'telefone-adicional'} as $key => $telefones){
-                array_push($telefonesAdicionais, $telefones);
+            foreach ($request->{'telefone-adicional'} as $key => $telefone) {
+                array_push(
+                    $contato,
+                    ['telefones ' =>
+                    ['adicionais' =>
+                    [
+                        array_values ($telefone)
+                    ]]]
+                );
             }
-
         }
 
         if ($request->{'email-adicional'}) {
-            $emailsAdicionais = array();
+            foreach ($request->{'email-adicional'} as $key => $email) {
+                array_push(
+                    $contato,
+                    ['emails' =>
+                    ['adicionais' =>
+                    [
+                        $email
 
-            foreach($request->{'email-adicional'} as $key => $emails){
-                array_push($emailsAdicionais, $emails);
+                    ]]]
+                );
             }
-
         }
 
         if ($request->{'contato-adicional'}) {
-            $contatosAdicionais = array();
+            $contatoAdicional = array();
 
-            foreach($request->{'contato-adicional'} as $key => $contatos){
-                array_push($contatosAdicionais, $contatos);
+            foreach ($request->{'contato-adicional'} as $key => $contato) {
+                array_push($contatoAdicional, $contato);
             }
         }
 
 
 
-        dd($contatosAdicionais);
-
+        dd($contato);
     }
 
     /**
