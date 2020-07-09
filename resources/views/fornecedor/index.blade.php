@@ -87,7 +87,7 @@ function formatCnpjCpf($value)
                         <div class="row">
                             <a href="{{route('fornecedor.show', [$id =$fornecedor->id])}}">
                                 <div type="button" class="btn btn-sm btn-success mx-1" data-toggle="tooltip"
-                                    title="Editar"><i class="fa fa-eye"></i></div>
+                                    title="Visualizar"><i class="fa fa-eye"></i></div>
                             </a>
                             <a href="{{route('fornecedor.edit', [$id =$fornecedor->id])}}">
                                 <div type="button" class="btn btn-sm btn-primary mx-1" data-toggle="tooltip"
@@ -119,7 +119,7 @@ function formatCnpjCpf($value)
                         <div class="row">
                             <a href="{{route('fornecedor.show', [$id =$fornecedor->id])}}">
                                 <div type="button" class="btn btn-sm btn-success mx-1" data-toggle="tooltip"
-                                    title="Editar"><i class="fa fa-eye"></i></div>
+                                    title="Visualizar"><i class="fa fa-eye"></i></div>
                             </a>
                             <a href="{{route('fornecedor.edit', [$id =$fornecedor->id])}}">
                                 <div type="button" class="btn btn-sm btn-primary mx-1" data-toggle="tooltip"
