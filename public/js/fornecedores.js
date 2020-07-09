@@ -1062,11 +1062,6 @@ $(document).ready(function () {
         $("#razaoSocial").prop("disabled", false);
         $("#nomeFantasia").prop("disabled", false);
       },
-      error: function error(request, status, _error) {
-        $("#razaoSocial").val("");
-        $("#nomeFantasia").val("");
-        $("#situacaoCNPJ").val("");
-      },
       success: function success(data) {
         $("#razaoSocial").val(data.nome);
         $("#nomeFantasia").val(data.fantasia);
@@ -1140,11 +1135,6 @@ $(document).ready(function () {
         $("#logradouro").prop("disabled", false);
         $("#complemento").prop("disabled", false);
         $("#bairro").prop("disabled", false);
-      },
-      error: function error(request, status, _error2) {
-        $("#logradouro").val("");
-        $("#complemento").val("");
-        $("#bairro").val("");
       },
       success: function success(data) {
         $("#logradouro").val(data.logradouro);
@@ -1332,7 +1322,7 @@ $(document).ready(function () {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! C:\Projetos\laravel-crud\resources\js\fornecedores.js */"./resources/js/fornecedores.js");
+module.exports = __webpack_require__(/*! C:\Projetos\Pessoal\laravel-crud\resources\js\fornecedores.js */"./resources/js/fornecedores.js");
 
 
 /***/ })

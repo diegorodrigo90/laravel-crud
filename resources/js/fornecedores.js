@@ -280,11 +280,6 @@ $(document).ready(function() {
                 $("#razaoSocial").prop("disabled", false);
                 $("#nomeFantasia").prop("disabled", false);
             },
-            error: function(request, status, error) {
-                $("#razaoSocial").val("");
-                $("#nomeFantasia").val("");
-                $("#situacaoCNPJ").val("");
-            },
             success: function(data) {
                 $("#razaoSocial").val(data.nome);
                 $("#nomeFantasia").val(data.fantasia);
@@ -359,11 +354,6 @@ $(document).ready(function() {
                 $("#logradouro").prop("disabled", false);
                 $("#complemento").prop("disabled", false);
                 $("#bairro").prop("disabled", false);
-            },
-            error: function(request, status, error) {
-                $("#logradouro").val("");
-                $("#complemento").val("");
-                $("#bairro").val("");
             },
             success: function(data) {
                 $("#logradouro").val(data.logradouro);

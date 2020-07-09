@@ -22,7 +22,9 @@ class FornecedorController extends Controller
      */
     public function index()
     {
-        return view('fornecedor.index');
+        $fornecedores = Fornecedor::paginate(10);
+
+        return view('fornecedor.index', compact('fornecedores'));
     }
 
     /**
@@ -48,6 +50,7 @@ class FornecedorController extends Controller
     {
 
 
+        // return response()->json($request);
 
 
         if ($request->tipoPessoa == 'juridica') {
@@ -64,7 +67,6 @@ class FornecedorController extends Controller
                 $pessoa->save();
             } catch (QueryException $error) {
                 if ($pessoa) $pessoa->delete();
-                dd($error);
                 return redirect()->back()->withErrors('Erro ao cadastrar fornecedor');
             }
         } else if ($request->tipoPessoa == 'fisica') {
@@ -79,7 +81,6 @@ class FornecedorController extends Controller
                 $pessoa->save();
             } catch (QueryException $error) {
                 if ($pessoa) $pessoa->delete();
-                dd($error);
                 return redirect()->back()->withErrors('Erro ao cadastrar fornecedor');
             }
         }
@@ -93,7 +94,6 @@ class FornecedorController extends Controller
         } catch (QueryException $error) {
             if ($fornecedor) $fornecedor->delete();
             if ($pessoa) $pessoa->delete();
-            dd($error);
             return redirect()->back()->withErrors('Erro ao cadastrar fornecedor');
         }
 
@@ -119,23 +119,23 @@ class FornecedorController extends Controller
 
             if ($request->{'telefone-adicional'}) {
                 foreach ($request->{'telefone-adicional'} as $key => $telefone) {
-                        $contato = new ContatoPrincipal();
-                        $contato->fornecedor_id = $fornecedor->id;
-                        $contato->qual_contato = 'Telefone';
-                        $contato->contato = $telefone['telefone'];
-                        $contato->tipo = $telefone['tipo'];
-                        $contato->save();
+                    $contato = new ContatoPrincipal();
+                    $contato->fornecedor_id = $fornecedor->id;
+                    $contato->qual_contato = 'Telefone';
+                    $contato->contato = $telefone['telefone'];
+                    $contato->tipo = $telefone['tipo'];
+                    $contato->save();
                 }
             }
 
             if ($request->{'email-adicional'}) {
                 foreach ($request->{'email-adicional'} as $key => $email) {
-                        $contato = new ContatoPrincipal();
-                        $contato->fornecedor_id = $fornecedor->id;
-                        $contato->qual_contato = 'E-mail';
-                        $contato->contato = $email['email'];
-                        $contato->tipo = $email['tipo'];
-                        $contato->save();
+                    $contato = new ContatoPrincipal();
+                    $contato->fornecedor_id = $fornecedor->id;
+                    $contato->qual_contato = 'E-mail';
+                    $contato->contato = $email['email'];
+                    $contato->tipo = $email['tipo'];
+                    $contato->save();
                 }
             }
         } catch (QueryException $error) {
@@ -145,7 +145,6 @@ class FornecedorController extends Controller
                 $fornecedor->delete();
             }
 
-            dd($error);
             return redirect()->back()->withErrors('Erro ao cadastrar fornecedor');
         }
 
@@ -168,7 +167,6 @@ class FornecedorController extends Controller
             $endereco->save();
         } catch (QueryException $error) {
             $fornecedor->delete();
-            dd($error);
             return redirect()->back()->withErrors('Erro ao cadastrar fornecedor');
         }
 
@@ -177,50 +175,40 @@ class FornecedorController extends Controller
 
             if ($request->{'contato-adicional'}) {
 
-                dd($request->{'contato-adicional'});
-
                 foreach ($request->{'contato-adicional'} as $key => $contato) {
-                    $contato = new PessoaContato();
-                    $contato->fornecedor_id = $fornecedor->id;
-                    $contato->nome = $contato['nome'];
-                    $contato->empresa = $contato['empresa'];
-                    $contato->cargo = $contato['cargo'];
-                    $contato->save();
+                    $pessoaContato = new PessoaContato();
+                    $pessoaContato->fornecedor_id = $fornecedor->id;
+                    $pessoaContato->nome = $contato['nome'];
+                    $pessoaContato->empresa = $contato['empresa'];
+                    $pessoaContato->cargo = $contato['cargo'];
+                    $pessoaContato->save();
 
-                    $teste = $contato;
-
-                    dd($contato['telefone']);
-
-                    foreach ($contato->telefone as $telefone) {
-                            $telefone = new ContatoAdicional();
-                            $telefone->contato_id = $pessoaContato->id;
-                            $telefone->qual_contato = 'Telefone';
-                            $telefone->contato = $telefone->telefone;
-                            $telefone->tipo = $telefone->tipo;
-                            $telefone->save();
+                    foreach ($contato['telefone'] as $telefones) {
+                        $telefone = new ContatoAdicional();
+                        $telefone->contato_id = $pessoaContato->id;
+                        $telefone->qual_contato = 'Telefone';
+                        $telefone->contato = $telefones['telefone'];
+                        $telefone->tipo = $telefones['tipo'];
+                        $telefone->save();
                     }
 
-                    foreach ($contato->telefone as $key => $email) {
-                            $email = new ContatoAdicional();
-                            $email->contato_id = $pessoaContato->id;
-                            $email->qual_contato = 'E-mail';
-                            $email->contato = $email->email;
-                            $email->tipo = $email->tipo;
-                            $email->save();
+                    foreach ($contato['email'] as $key => $emails) {
+                        $email = new ContatoAdicional();
+                        $email->contato_id = $pessoaContato->id;
+                        $email->qual_contato = 'E-mail';
+                        $email->contato = $emails['email'];
+                        $email->tipo = $emails['tipo'];
+                        $email->save();
                     }
-
-
-
                 }
             }
         } catch (QueryException $error) {
             $fornecedor->delete();
-            dd($error);
             return redirect()->back()->withErrors('Erro ao cadastrar fornecedor');
         }
 
 
-        dd('ok');
+        return redirect()->route('fornecedor.index')->withSuccess('Fornecedor adicionado');
     }
 
     /**

@@ -19,6 +19,27 @@
 
 @section('content')
 
+@if($errors->any())
+    @foreach ($errors->all() as $error)
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            {{ $error }}
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+      </div>
+    @endforeach
+@endif
+
+@if(session('success'))
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        {{session('success')}}
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+</div>
+@endif
+
+
 <div class="card">
     <div class="card-body">
         <table id="fornecedoresTable" class="display col-12">
@@ -32,6 +53,40 @@
                 </tr>
             </thead>
             <tbody>
+
+
+
+
+        @foreach ($fornecedores as $fornecedor)
+
+            @if ($fornecedor->pessoable_type == 'App\Models\PessoaJuridica')
+            <td>{{ $fornecedor->pessoable->razao_social }}</td>
+            <td>{{ $fornecedor->pessoable->nome_fantasia }}</td>
+            <td>{{ $fornecedor->pessoable->cnpj }}</td>
+                @if ($fornecedor->is_active)
+                <td> Ativo</td>
+                @else
+                <td>Inativo</td>
+                @endif
+                <td></td>
+            @endif
+
+            @if ($fornecedor->pessoable_type == 'App\Models\PessoaFisica')
+                <td>2</td>
+                <td>2</td>
+                <td>2</td>
+                @if ($fornecedor->is_active)
+                <td> Ativo</td>
+                @else
+                <td>Inativo</td>
+                @endif
+                <td></td>
+            @endif
+
+        @endforeach
+
+
+
                 {{-- <tr>
                     <td>Tiger Nixon</td>
                     <td>System Architect</td>
