@@ -39,6 +39,20 @@
 </div>
 @endif
 
+<?php
+function formatCnpjCpf($value)
+{
+  $cnpj_cpf = preg_replace("/\D/", '', $value);
+
+  if (strlen($cnpj_cpf) === 11) {
+    return preg_replace("/(\d{3})(\d{3})(\d{3})(\d{2})/", "\$1.\$2.\$3-\$4", $cnpj_cpf);
+  }
+
+  return preg_replace("/(\d{2})(\d{3})(\d{3})(\d{4})(\d{2})/", "\$1.\$2.\$3/\$4-\$5", $cnpj_cpf);
+}
+
+
+?>
 
 <div class="card">
     <div class="card-body">
@@ -57,43 +71,59 @@
 
 
 
-        @foreach ($fornecedores as $fornecedor)
+                @foreach ($fornecedores as $fornecedor)
 
-            @if ($fornecedor->pessoable_type == 'App\Models\PessoaJuridica')
-            <td>{{ $fornecedor->pessoable->razao_social }}</td>
-            <td>{{ $fornecedor->pessoable->nome_fantasia }}</td>
-            <td>{{ $fornecedor->pessoable->cnpj }}</td>
-                @if ($fornecedor->is_active)
-                <td> Ativo</td>
-                @else
-                <td>Inativo</td>
+                @if ($fornecedor->pessoable_type == 'App\Models\PessoaJuridica')
+                <tr>
+                <td>{{ $fornecedor->pessoable->razao_social }}</td>
+                <td>{{ $fornecedor->pessoable->nome_fantasia }}</td>
+                <td>{{ formatCnpjCpf($fornecedor->pessoable->cnpj) }}</td>
+                    @if ($fornecedor->is_active)
+                        <td> Ativo</td>
+                        @else
+                        <td>Inativo</td>
+                        @endif
+                        <td>
+                            <div class="row">
+                            <a href="{{route('fornecedor.edit', [$id =$fornecedor->id])}}">
+                                <div type="button" class="btn btn-sm btn-primary mx-1" data-toggle="tooltip" title="Editar"><i class="fa fa-edit"></i></div>
+                            </a>
+                            <a href="{{route('fornecedor.edit', [$id =$fornecedor->id])}}">
+                                <div type="button" class="btn btn-sm btn-danger mx-1" data-toggle="tooltip" title="Salvar"><i class="fa fa-trash"></i></div>
+                            </a>
+                            </div>
+
+                        </td>
+                    </tr>
                 @endif
-                <td></td>
-            @endif
 
-            @if ($fornecedor->pessoable_type == 'App\Models\PessoaFisica')
-                <td>2</td>
-                <td>2</td>
-                <td>2</td>
-                @if ($fornecedor->is_active)
-                <td> Ativo</td>
-                @else
-                <td>Inativo</td>
+                @if ($fornecedor->pessoable_type == 'App\Models\PessoaFisica')
+                <tr>
+                    <td>{{ $fornecedor->pessoable->nome }}</td>
+                    <td>{{ $fornecedor->pessoable->apelido }}</td>
+                    <td>{{ formatCnpjCpf($fornecedor->pessoable->cpf) }}</td>
+                        @if ($fornecedor->is_active)
+                        <td> Ativo</td>
+                        @else
+                        <td>Inativo</td>
+                        @endif
+                        <td>
+                            <div class="row">
+                            <a href="{{route('fornecedor.edit', [$id =$fornecedor->id])}}">
+                                <div type="button" class="btn btn-sm btn-primary mx-1" data-toggle="tooltip" title="Editar"><i class="fa fa-edit"></i></div>
+                            </a>
+                            <a href="{{route('fornecedor.edit', [$id =$fornecedor->id])}}">
+                                <div type="button" class="btn btn-sm btn-danger mx-1" data-toggle="tooltip" title="Salvar"><i class="fa fa-trash"></i></div>
+                            </a>
+                            </div>
+
+                        </td>
+                </tr>
                 @endif
-                <td></td>
-            @endif
 
-        @endforeach
+            @endforeach
 
 
-
-                {{-- <tr>
-                    <td>Tiger Nixon</td>
-                    <td>System Architect</td>
-                    <td>Edinburgh</td>
-                    <td>61</td>
-                    <td>2011/04/25</td>
-                </tr> --}}
             </tbody>
             <tfoot>
                 <tr>
@@ -116,6 +146,10 @@
     @section('js')
     <script>
         $(document).ready( function () {
+
+    $('[data-toggle="tooltip"]').tooltip();
+
+
     $('#fornecedoresTable').DataTable(
         {
             "language": {

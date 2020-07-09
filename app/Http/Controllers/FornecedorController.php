@@ -83,6 +83,8 @@ class FornecedorController extends Controller
                 if ($pessoa) $pessoa->delete();
                 return redirect()->back()->withErrors('Erro ao cadastrar fornecedor');
             }
+        } else {
+            return redirect()->back()->withErrors('Erro ao cadastrar fornecedor');
         }
 
         try {
