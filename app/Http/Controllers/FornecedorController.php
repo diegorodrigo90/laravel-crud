@@ -222,8 +222,10 @@ class FornecedorController extends Controller
     public function show($id)
     {
         $fornecedor = Fornecedor::find($id);
+        $states = State::all();
 
-        return view('fornecedor.show', compact('fornecedor'));
+
+        return view('fornecedor.show', compact('fornecedor', 'states'));
 
     }
 
@@ -235,7 +237,12 @@ class FornecedorController extends Controller
      */
     public function edit($id)
     {
-        //
+        $fornecedor = Fornecedor::find($id);
+        $states = State::all();
+
+
+        return view('fornecedor.edit', compact('fornecedor', 'states'));
+
     }
 
     /**
