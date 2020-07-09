@@ -22,7 +22,7 @@ class FornecedorController extends Controller
      */
     public function index()
     {
-        $fornecedores = Fornecedor::paginate(10);
+        $fornecedores = Fornecedor::paginate(100);
 
         return view('fornecedor.index', compact('fornecedores'));
     }

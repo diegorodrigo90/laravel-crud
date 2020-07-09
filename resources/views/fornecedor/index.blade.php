@@ -79,9 +79,9 @@ function formatCnpjCpf($value)
                     <td>{{ $fornecedor->pessoable->nome_fantasia }}</td>
                     <td>{{ formatCnpjCpf($fornecedor->pessoable->cnpj) }}</td>
                     @if ($fornecedor->is_active)
-                    <td> Ativo</td>
+                    <td> <span class="badge badge-success">Ativo</span> </td>
                     @else
-                    <td>Inativo</td>
+                    <td> <span class="badge badge-danger">Inativo</span> </td>
                     @endif
                     <td>
                         <div class="row">
@@ -96,8 +96,8 @@ function formatCnpjCpf($value)
 
                             <div type="button" class="btn btn-sm btn-danger mx-1 mostra-modal-excluir"
                                 data-id="{{$fornecedor->id}}" data-nome="{{ $fornecedor->pessoable->razao_social }}"
-                                data-link="{{route('fornecedor.destroy', [$id = $fornecedor->id])}}" data-toggle="tooltip"
-                                title="Excluir"><i class="fa fa-trash"></i></div>
+                                data-link="{{route('fornecedor.destroy', [$id = $fornecedor->id])}}"
+                                data-toggle="tooltip" title="Excluir"><i class="fa fa-trash"></i></div>
 
                         </div>
 
@@ -111,9 +111,9 @@ function formatCnpjCpf($value)
                     <td>{{ $fornecedor->pessoable->apelido }}</td>
                     <td>{{ formatCnpjCpf($fornecedor->pessoable->cpf) }}</td>
                     @if ($fornecedor->is_active)
-                    <td> Ativo</td>
+                    <td> <span class="badge badge-success">Ativo</span> </td>
                     @else
-                    <td>Inativo</td>
+                    <td><span class="badge badge-danger">Inativo</span></td>
                     @endif
                     <td>
                         <div class="row">
@@ -127,11 +127,9 @@ function formatCnpjCpf($value)
                             </a>
 
                             <div type="button" class="btn btn-sm btn-danger mx-1 mostra-modal-excluir"
-                                data-id="{{$fornecedor->id}}"
-                                data-nome="{{ $fornecedor->pessoable->nome }}"
+                                data-id="{{$fornecedor->id}}" data-nome="{{ $fornecedor->pessoable->nome }}"
                                 data-link="{{route('fornecedor.destroy', [$id =$fornecedor->id])}}"
-                                data-toggle="tooltip"
-                                title="Excluir"><i class="fa fa-trash"></i></div>
+                                data-toggle="tooltip" title="Excluir"><i class="fa fa-trash"></i></div>
 
                         </div>
 
