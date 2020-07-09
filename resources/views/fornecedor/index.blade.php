@@ -89,7 +89,7 @@ function formatCnpjCpf($value)
                                 <div type="button" class="btn btn-sm btn-primary mx-1" data-toggle="tooltip" title="Editar"><i class="fa fa-edit"></i></div>
                             </a>
                             <a href="{{route('fornecedor.edit', [$id =$fornecedor->id])}}">
-                                <div type="button" class="btn btn-sm btn-danger mx-1" data-toggle="tooltip" title="Salvar"><i class="fa fa-trash"></i></div>
+                                <div type="button" class="btn btn-sm btn-danger mx-1" data-toggle="tooltip" title="Excluir"><i class="fa fa-trash"></i></div>
                             </a>
                             </div>
 
@@ -113,7 +113,7 @@ function formatCnpjCpf($value)
                                 <div type="button" class="btn btn-sm btn-primary mx-1" data-toggle="tooltip" title="Editar"><i class="fa fa-edit"></i></div>
                             </a>
                             <a href="{{route('fornecedor.edit', [$id =$fornecedor->id])}}">
-                                <div type="button" class="btn btn-sm btn-danger mx-1" data-toggle="tooltip" title="Salvar"><i class="fa fa-trash"></i></div>
+                                <div type="button" class="btn btn-sm btn-danger mx-1" data-toggle="tooltip" title="Excluir"><i class="fa fa-trash"></i></div>
                             </a>
                             </div>
 
