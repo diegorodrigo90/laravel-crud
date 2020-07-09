@@ -24,11 +24,8 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        Fornecedor::deleted(function($fornecedor){
-            //excluindo qualquer tipo de pessoa, ao excluir o fonecedor
-            $model = $fornecedor->pessoa_type;
-            $obj = $model::find($fornecedor->pessoa_id);
-            $obj->delete();
+        Fornecedor::deleting(function ($model) {
+            $model->pessoable()->delete();
         });
     }
 }

@@ -24,7 +24,8 @@ class CreateEnderecosFornecedoresTable extends Migration
             $table->string('ponto_referencia')->nullable();
             $table->unsignedBigInteger('uf');
             $table->unsignedBigInteger('cidade');
-            $table->boolean('endereco_condominio')->nullable();
+            $table->boolean('is_condominio');
+            $table->string('endereco_condominio')->nullable();
             $table->string('numero_condominio')->nullable();
             $table->timestamps();
 
