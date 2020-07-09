@@ -31,6 +31,8 @@
 </div>
 @endif
 
+{{ $fornecedor}}
+
 <form role="form" method="POST" action="{{ route('fornecedor.index') }}" id="fornecedorForm">
     @csrf
     <div id="accordion" role="tablist" aria-multiselectable="true">

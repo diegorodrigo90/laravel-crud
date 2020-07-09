@@ -221,7 +221,10 @@ class FornecedorController extends Controller
      */
     public function show($id)
     {
-        //
+        $fornecedor = Fornecedor::find($id);
+
+        return view('fornecedor.show', compact('fornecedor'));
+
     }
 
     /**
@@ -255,6 +258,12 @@ class FornecedorController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $fornecedor = Fornecedor::find($id);
+        $fornecedor->delete();
+
+        return redirect()->route('fornecedor.index')->withSuccess('Fornecedor excluir');
+
+
+
     }
 }

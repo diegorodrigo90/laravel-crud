@@ -1,3 +1,36 @@
+@extends('adminlte::page')
+
+@section('title', 'Fornecedores - Cadastrar')
+
+@section('content_header')
+
+<section class="content-header">
+    <h1>Fornecedores <small> - Cadastrar</small></h1>
+</section>
+@stop
+
+@section('content')
+
+@if($errors->any())
+    @foreach ($errors->all() as $error)
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            {{ $error }}
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+      </div>
+    @endforeach
+@endif
+
+@if(session('success'))
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        {{session('success')}}
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+</div>
+@endif
+
 <form role="form" method="POST" action="{{ route('fornecedor.index') }}" id="fornecedorForm">
     @csrf
     <div id="accordion" role="tablist" aria-multiselectable="true">
@@ -474,3 +507,10 @@
 
 <script src="{{ asset('/js/fornecedores.js')}}" defer></script>
 @stop
+
+
+@stop
+
+@section('footer')
+Laravel CRUD
+@endsection
