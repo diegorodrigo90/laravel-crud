@@ -122,8 +122,8 @@ $(document).ready(function () {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\Projetos\Pessoal\laravel-crud\resources\js\display.js */"./resources/js/display.js");
-module.exports = __webpack_require__(/*! C:\Projetos\Pessoal\laravel-crud\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! C:\Projetos\laravel-crud\resources\js\display.js */"./resources/js/display.js");
+module.exports = __webpack_require__(/*! C:\Projetos\laravel-crud\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })
