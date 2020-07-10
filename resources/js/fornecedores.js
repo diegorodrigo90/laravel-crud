@@ -214,7 +214,6 @@ $(document).ready(function() {
 
             $(element).hide();
             input.prop("required", false);
-            input.val("");
         }
     };
 
@@ -236,7 +235,7 @@ $(document).ready(function() {
         { field: "#div-recolhimento", required: true }
     ];
 
-    const cangePessoaTipo = {
+    const changePessoaTipo = {
         display: {
             juridica: function() {
                 $(pessoaFisicaElements).each(function(index) {
@@ -271,10 +270,6 @@ $(document).ready(function() {
             beforeSend: function() {
                 $("#razaoSocial").prop("disabled", true);
                 $("#nomeFantasia").prop("disabled", true);
-
-                $("#razaoSocial").val("carregando...");
-                $("#nomeFantasia").val("carregando...");
-                $("#situacaoCNPJ").val("carregando...");
             },
             complete: function() {
                 $("#razaoSocial").prop("disabled", false);
@@ -346,9 +341,6 @@ $(document).ready(function() {
                 $("#complemento").prop("disabled", true);
                 $("#bairro").prop("disabled", true);
 
-                $("#logradouro").val("carregando...");
-                $("#complemento").val("carregando...");
-                $("#bairro").val("carregando...");
             },
             complete: function() {
                 $("#logradouro").prop("disabled", false);
@@ -532,13 +524,13 @@ $(document).ready(function() {
 
     $("#formPessoaFisica").html("");
 
-    $("input[name='tipoPessoa']").on("change", function() {
+    $("input[name='tipoPessoa']").on("change click", function() {
         if ($(this).val() == "fisica") {
-            cangePessoaTipo.display.fisica();
+            changePessoaTipo.display.fisica();
         }
 
         if ($(this).val() == "juridica") {
-            cangePessoaTipo.display.juridica();
+            changePessoaTipo.display.juridica();
         }
     });
 

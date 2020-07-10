@@ -5,7 +5,7 @@
 @section('content_header')
 
 <section class="content-header">
-    <h1>Fornecedores <small> - Cadastrar</small></h1>
+    <h1>Fornecedores <small> - Editar</small></h1>
 </section>
 @stop
 
@@ -31,6 +31,8 @@
 </div>
 @endif
 
+
+
 <form role="form" method="POST" action="{{ route('fornecedor.index') }}" id="fornecedorForm">
     @csrf
     <div id="accordion" role="tablist" aria-multiselectable="true">
@@ -46,25 +48,25 @@
                 <div class="card-body">
                     <div class="form-check form-check-inline mb-3">
                         <input class="form-check-input" type="radio" name="tipoPessoa" id="PessoaJuridicaRadio"
-                            value="juridica" checked>
+                            value="juridica" @isset($fornecedor->pessoable->cnpj) checked @endisset>
                         <label class="form-check-label" for="PessoaJuridicaRadio">Pessoa Jurídica</label>
                     </div>
                     <div class="form-check form-check-inline mb-3">
                         <input class="form-check-input" type="radio" name="tipoPessoa" id="PessoaFisicaRadio"
-                            value="fisica">
+                            value="fisica" @isset($fornecedor->pessoable->cpf) checked @endisset>
                         <label class="form-check-label" for="PessoaFisicaRadio">Pessoa Física</label>
                     </div>
 
                     <div class="row">
 
-                        <div class="col-md-3" id="div-cnpj">
+                        <div class="col-md-3" id="div-cnpj" @isset($fornecedor->pessoable->cpf) style="display: none;" @endisset>
                             <div class="form-group">
-                                <label for="cnpj">CNPJ <sup style="color: red">•</sup></label>
+                                <label for="cnpj">CNPJ <sup style="color: red" >•</sup></label>
                                 <input type="tel" name="cnpj" class="form-control set-required" id="cnpj" required>
                             </div>
                         </div>
 
-                        <div class="col-md-3" id="div-cpf" style="display: none">
+                        <div class="col-md-3" id="div-cpf" @if($fornecedor->pessoable->cnpj) style="display: none;" @endif >
                             <div class="form-group">
                                 <label for="cpf">CPF <sup style="color: red;">•</sup></label>
                                 <input pattern="\d{3}\.\d{3}\.\d{3}-\d{2}" name="cpf" type="text"
@@ -72,21 +74,21 @@
                             </div>
                         </div>
 
-                        <div class="col-md-6" id="div-nome" style="display: none">
+                        <div class="col-md-6" id="div-nome" @if($fornecedor->pessoable->cnpj) style="display: none;" @endif>
                             <div class="form-group">
                                 <label for="nome">Nome <sup style="color: red">•</sup></label>
                                 <input type="text" class="form-control set-required" id="nome" name="nome" required>
                             </div>
                         </div>
 
-                        <div class="col-md-3" id="div-apelido" style="display: none">
+                        <div class="col-md-3" id="div-apelido" @if($fornecedor->pessoable->cnpj) style="display: none;" @endif>
                             <div class="form-group">
                                 <label for="apelido">Apelido</label>
                                 <input type="text" class="form-control set-required" id="apelido" name="apelido">
                             </div>
                         </div>
 
-                        <div class="col-md-3" id="div-rg" style="display: none">
+                        <div class="col-md-3" id="div-rg" @if($fornecedor->pessoable->cnpj) style="display: none;" @endif>
                             <div class="form-group">
                                 <label for="rg">RG <sup style="color: red">•</sup></label>
                                 <input type="text" class="form-control set-required" id="rg" name="rg">
@@ -94,7 +96,7 @@
                         </div>
 
 
-                        <div class="col-md-6" id="div-razao-social">
+                        <div class="col-md-6" id="div-razao-social" @isset($fornecedor->pessoable->cpf) style="display: none;" @endisset>
                             <div class="form-group">
                                 <label for="razaoSocial">Razão Social <sup style="color: red">•</sup></label>
                                 <input type="text" class="form-control set-required" id="razaoSocial" name="razaoSocial"
@@ -102,7 +104,7 @@
                             </div>
                         </div>
 
-                        <div class="col-md-3" id="div-nome-fantasia">
+                        <div class="col-md-3" id="div-nome-fantasia" @isset($fornecedor->pessoable->cpf) style="display: none;" @endisset>
                             <div class="form-group">
                                 <label for="nomeFantasia">Nome fantasia <sup style="color: red">•</sup></label>
                                 <input type="text" class="form-control set-required" id="nomeFantasia"
@@ -110,7 +112,7 @@
                             </div>
                         </div>
 
-                        <div class="col-md-3" id="div-indicador-inscricao-estadual">
+                        <div class="col-md-3" id="div-indicador-inscricao-estadual" @isset($fornecedor->pessoable->cpf) style="display: none;" @endisset>
                             <div class="form-group">
                                 <label for="indicadorInscricaoEstadual">Indicador de Inscrição Estadual<sup
                                         style="color: red">•</sup></label>
@@ -124,7 +126,7 @@
                             </div>
                         </div>
 
-                        <div class="col-md-3" id="div-inscricao-estadual">
+                        <div class="col-md-3" id="div-inscricao-estadual" @isset($fornecedor->pessoable->cpf) style="display: none;" @endisset>
                             <div class="form-group">
                                 <label for="inscricaoEstadual">Inscrição Estadual</label>
                                 <input type="text" class="form-control set-required" id="inscricaoEstadual"
@@ -132,7 +134,7 @@
                             </div>
                         </div>
 
-                        <div class="col-md-3" id="div-inscricao-municipal">
+                        <div class="col-md-3" id="div-inscricao-municipal"  @isset($fornecedor->pessoable->cpf) style="display: none;" @endisset>
                             <div class="form-group">
                                 <label for="inscricaoMunicipal">Inscrição Municipal</label>
                                 <input type="text" class="form-control set-required" id="inscricaoMunicipal"
@@ -140,7 +142,8 @@
                             </div>
                         </div>
 
-                        <div class="col-md-3" id="div-situacao-cnpj">
+                    
+                        <div class="col-md-3" id="div-situacao-cnpj" @isset($fornecedor->pessoable->cpf) style="display: none;" @endisset>
                             <div class="form-group">
                                 <label for="situacaoCNPJ">Situação CNPJ</label>
                                 <input type="text" class="form-control set-required" id="situacaoCNPJ"
@@ -148,7 +151,7 @@
                             </div>
                         </div>
 
-                        <div class="col-md-3" id="div-recolhimento">
+                        <div class="col-md-3" id="div-recolhimento" @isset($fornecedor->pessoable->cpf) style="display: none;" @endisset>
                             <div class="form-group">
                                 <label for="recolhimento">Recolhimento<sup style="color: red">•</sup></label>
                                 <select id="recolhimento" name="recolhimento" class="form-control set-required"
@@ -305,7 +308,7 @@
         <!-- /sem contatos adicionais -->
 
         <!-- Contatos adicionais-->
-        <div id="contatos-adicional" style="display: none">
+        <div id="contatos-adicional" style="display: none;">
             <div class="card card-secondary contatos-adicional">
                 <h5 class="card-header" role="tab">
                     <a data-toggle="collapse" data-parent="#accordion" href="#contatosAdicionais" aria-expanded="true"
@@ -328,7 +331,7 @@
                                 </div>
                             </div>
 
-                            <div class="col-md-3" id="div-inscricao-minucipal">
+                            <div class="col-md-3" id="div-inscricao-municipal">
                                 <div class="form-group">
                                     <label for="contato-adicional[empresa]">Empresa</label>
                                     <input type="text" class="form-control set-required"
@@ -449,7 +452,7 @@
                             </div>
                         </div>
 
-                        <div class="col-md-3 enderecoCondominio" style="display: none">
+                        <div class="col-md-3 enderecoCondominio" style="display: none;">
                             <div class="form-group">
                                 <label for="enderecoCondominio">Endereço<sup style="color: red">•</sup></label>
                                 <input type="text" class="form-control set-required" id="enderecoCondominio"
@@ -457,7 +460,7 @@
                             </div>
                         </div>
 
-                        <div class="col-md-3 numeroCondominio" style="display: none">
+                        <div class="col-md-3 numeroCondominio" style="display: none;">
                             <div class="form-group">
                                 <label for="numeroCondominio">Número<sup style="color: red">•</sup></label>
                                 <input type="text" class="form-control set-required" id="numeroCondominio"
@@ -506,6 +509,16 @@
 <script src="{{ asset('/js/validate.rules.js')}}" defer></script>
 
 <script src="{{ asset('/js/fornecedores.js')}}" defer></script>
+
+<script>
+
+var cnpj = '{{empty($fornecedor->pessoable->cnpj)}}';
+var cpf = '{{empty($fornecedor->pessoable->cpf)}}';
+
+
+
+</script>
+
 @stop
 
 

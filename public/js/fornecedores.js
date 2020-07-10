@@ -983,7 +983,6 @@ $(document).ready(function () {
       var input = $(element + " > div > .set-required");
       $(element).hide();
       input.prop("required", false);
-      input.val("");
     }
   };
   var pessoaFisicaElements = [{
@@ -1024,7 +1023,7 @@ $(document).ready(function () {
     field: "#div-recolhimento",
     required: true
   }];
-  var cangePessoaTipo = {
+  var changePessoaTipo = {
     display: {
       juridica: function juridica() {
         $(pessoaFisicaElements).each(function (index) {
@@ -1054,9 +1053,6 @@ $(document).ready(function () {
       beforeSend: function beforeSend() {
         $("#razaoSocial").prop("disabled", true);
         $("#nomeFantasia").prop("disabled", true);
-        $("#razaoSocial").val("carregando...");
-        $("#nomeFantasia").val("carregando...");
-        $("#situacaoCNPJ").val("carregando...");
       },
       complete: function complete() {
         $("#razaoSocial").prop("disabled", false);
@@ -1127,9 +1123,6 @@ $(document).ready(function () {
         $("#logradouro").prop("disabled", true);
         $("#complemento").prop("disabled", true);
         $("#bairro").prop("disabled", true);
-        $("#logradouro").val("carregando...");
-        $("#complemento").val("carregando...");
-        $("#bairro").val("carregando...");
       },
       complete: function complete() {
         $("#logradouro").prop("disabled", false);
@@ -1278,13 +1271,13 @@ $(document).ready(function () {
 
   $(".telefone").mask(telefoneMask, telefoneMaskOptions);
   $("#formPessoaFisica").html("");
-  $("input[name='tipoPessoa']").on("change", function () {
+  $("input[name='tipoPessoa']").on("change click", function () {
     if ($(this).val() == "fisica") {
-      cangePessoaTipo.display.fisica();
+      changePessoaTipo.display.fisica();
     }
 
     if ($(this).val() == "juridica") {
-      cangePessoaTipo.display.juridica();
+      changePessoaTipo.display.juridica();
     }
   });
   $("#isCondominio").change(function () {
@@ -1322,7 +1315,7 @@ $(document).ready(function () {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! C:\Projetos\Pessoal\laravel-crud\resources\js\fornecedores.js */"./resources/js/fornecedores.js");
+module.exports = __webpack_require__(/*! C:\Projetos\laravel-crud\resources\js\fornecedores.js */"./resources/js/fornecedores.js");
 
 
 /***/ })

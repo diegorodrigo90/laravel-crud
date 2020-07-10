@@ -73,7 +73,7 @@ function formatCnpjCpf($value)
 
                 @foreach ($fornecedores as $fornecedor)
 
-                @if ($fornecedor->pessoable_type == 'App\Models\PessoaJuridica')
+                @if ($fornecedor->pessoable->cnpj)
                 <tr>
                     <td>{{ $fornecedor->pessoable->razao_social }}</td>
                     <td>{{ $fornecedor->pessoable->nome_fantasia }}</td>
@@ -105,7 +105,7 @@ function formatCnpjCpf($value)
                 </tr>
                 @endif
 
-                @if ($fornecedor->pessoable_type == 'App\Models\PessoaFisica')
+                @if ($fornecedor->pessoable->cpf)
                 <tr>
                     <td>{{ $fornecedor->pessoable->nome }}</td>
                     <td>{{ $fornecedor->pessoable->apelido }}</td>
@@ -157,7 +157,7 @@ function formatCnpjCpf($value)
     <!-- Modal -->
     <div class="modal " id="modalExcluirFornecedor" tabindex="-1" role="dialog" aria-labelledby="modalExcluirFornecedor"
         aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="exampleModalLabel"><b>Excluir fornecedor?</b></h5>
@@ -170,7 +170,7 @@ function formatCnpjCpf($value)
 
                 </div>
                 <div class="modal-footer">
-                    <button class="btn btn-success" data-dismiss="modal">Cancelar</button>
+                    <button class="btn btn-primary" data-dismiss="modal">Cancelar</button>
 
                     <form action="#" id="excluirFornecedor" method="POST">
                         @method('delete')
