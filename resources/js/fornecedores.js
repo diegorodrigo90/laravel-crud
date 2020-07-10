@@ -407,6 +407,9 @@ $(document).ready(function() {
         }
     };
 
+    $('#numero').mask('000009');
+
+
     $("#fornecedorForm").validate({
         errorClass: "is-invalid error",
         validClass: "is-valid",
@@ -545,6 +548,10 @@ $(document).ready(function() {
             setFieldDisplay.hide(".enderecoCondominio");
             setFieldDisplay.hide(".numeroCondominio");
         }
+    });
+
+    $('.mostra-modal-excluir').on('click', function(){
+        $('#modalExcluirFornecedor').modal('show');
     });
 
     $('input[name="telefone"]').mask(telefoneMask, telefoneMaskOptions);

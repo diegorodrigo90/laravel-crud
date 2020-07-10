@@ -12,4 +12,5 @@ class ContatoPrincipal extends Model
         'fornecedor_id', 'qual_contato', 'contato', 'tipo',
     ];
 
+
 }

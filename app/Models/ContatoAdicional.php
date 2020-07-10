@@ -9,7 +9,6 @@ class ContatoAdicional extends Model
     protected $table = 'contatos_adicionais';
 
     protected $fillable = [
-        'contato_id', 'qual_contato', 'contato', 'tipo',
+        'pessoa_contato_id', 'qual_contato', 'contato', 'tipo',
     ];
-
 }

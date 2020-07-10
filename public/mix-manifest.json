@@ -1,6 +1,5 @@
 {
     "/js/display.js": "/js/display.js",
-    "/js/editar-fornecedor.js": "/js/editar-fornecedor.js",
     "/css/app.css": "/css/app.css",
     "/js/fornecedores.js": "/js/fornecedores.js",
     "/js/validate.rules.js": "/js/validate.rules.js"

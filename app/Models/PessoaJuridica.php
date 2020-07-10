@@ -17,12 +17,4 @@ class PessoaJuridica extends Model
         return $this->morphOne('App\Models\Fornecedor', 'pessoable');
     }
 
-    public function contatos() {
-        return $this->belongsTo('App\Models\ContatoPrincipal', 'fornecedor_id');
-    }
-
-    public function contatosAdicionais() {
-        return $this->belongsTo('App\Models\PessoaContato', 'fornecedor_id');
-    }
-
 }

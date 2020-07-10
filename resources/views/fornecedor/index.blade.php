@@ -68,9 +68,6 @@ function formatCnpjCpf($value)
             </thead>
             <tbody>
 
-
-
-
                 @foreach ($fornecedores as $fornecedor)
 
                 @if ($fornecedor->pessoable->cnpj)

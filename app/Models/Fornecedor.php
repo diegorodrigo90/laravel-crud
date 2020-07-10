@@ -17,4 +17,23 @@ class Fornecedor extends Model
         return $this->morphTo();
     }
 
+    public function endereco()
+    {
+        return $this->belongsTo('App\Models\EnderecoFornecedor', 'endereco_id');
+    }
+
+    public function contatosPrincipais()
+    {
+        return $this->hasMany('App\Models\ContatoPrincipal')->orderBy('id', 'ASC');
+    }
+
+    public function pessoasContatos()
+    {
+        return $this->hasMany('App\Models\PessoaContato')->orderBy('id', 'ASC');
+    }
+
+    public function contatosAdicionais()
+    {
+        return $this->hasManyThrough('App\Models\ContatoAdicional', 'App\Models\PessoaContato');
+    }
 }

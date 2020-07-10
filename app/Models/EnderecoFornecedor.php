@@ -9,8 +9,17 @@ class EnderecoFornecedor extends Model
     protected $table = 'enderecos_fornecedores';
 
     protected $fillable = [
-        'fornecedor_id', 'cep', 'logradouro', 'numero',
+        'cep', 'logradouro', 'numero',
         'complemento', 'bairro', 'ponto_referencia', 'uf',
         'cidade', 'endereco_condominio', 'numero_condominio'
     ];
+
+    public function getCidade(){
+        return $this->belongsTo('App\Models\City', 'cidade');
+    }
+
+    public function getEstado(){
+        return $this->belongsTo('App\Models\State', 'uf');
+    }
+
 }

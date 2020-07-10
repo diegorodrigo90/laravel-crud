@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\City;
 use App\Models\ContatoAdicional;
 use App\Models\ContatoPrincipal;
 use App\Models\EnderecoFornecedor;
@@ -53,6 +54,7 @@ class FornecedorController extends Controller
         // return response()->json($request);
 
 
+
         if ($request->tipoPessoa == 'juridica') {
 
             try {
@@ -67,6 +69,7 @@ class FornecedorController extends Controller
                 $pessoa->save();
             } catch (QueryException $error) {
                 if ($pessoa) $pessoa->delete();
+                dd($error);
                 return redirect()->back()->withErrors('Erro ao cadastrar fornecedor');
             }
         } else if ($request->tipoPessoa == 'fisica') {
@@ -88,14 +91,41 @@ class FornecedorController extends Controller
         }
 
         try {
+
+            $endereco = new EnderecoFornecedor();
+            $endereco->cep = (int) preg_replace('/[^0-9]/', '', $request->cep);
+            $endereco->logradouro = $request->logradouro;
+            $endereco->numero = $request->numero;
+            $endereco->complemento = $request->complemento;
+            $endereco->bairro = $request->bairro;
+            $endereco->ponto_referencia = $request->pontoReferencia;
+            $endereco->uf = $request->uf;
+            $endereco->cidade = $request->cidade;
+            $endereco->is_condominio = ($request->isCondominio == 'Sim' ? true : false);
+            $endereco->endereco_condominio = $request->enderecoCondominio;
+            $endereco->numero_condominio = $request->numeroCondominio;
+            $endereco->save();
+        } catch (QueryException $error) {
+            dd($error);
+            return redirect()->back()->withErrors('Erro ao cadastrar fornecedor');
+        }
+
+        try {
             $fornecedor = new Fornecedor;
             $fornecedor->is_active = ($request->ativo == 'Sim' ? true : false);
             $fornecedor->is_active = ($request->ativo == 'Sim' ? true : false);
+            $fornecedor->endereco_id = $endereco->id;
+            $fornecedor->observacao = $request->observacao;
+
             $fornecedor->pessoable()->associate($pessoa);
+            $fornecedor->endereco()->associate($endereco);
+
             $fornecedor->save();
         } catch (QueryException $error) {
-            if ($fornecedor) $fornecedor->delete();
+            if ($endereco) $endereco->delete();
             if ($pessoa) $pessoa->delete();
+            dd($error);
+
             return redirect()->back()->withErrors('Erro ao cadastrar fornecedor');
         }
 
@@ -146,31 +176,12 @@ class FornecedorController extends Controller
                 if ($contatos) $contatos->delete();
                 $fornecedor->delete();
             }
+            dd($error);
 
             return redirect()->back()->withErrors('Erro ao cadastrar fornecedor');
         }
 
 
-        try {
-
-            $endereco = new EnderecoFornecedor();
-            $endereco->cep = (int) preg_replace('/[^0-9]/', '', $request->cep);
-            $endereco->logradouro = $request->logradouro;
-            $endereco->fornecedor_id = $fornecedor->id;
-            $endereco->numero = $request->numero;
-            $endereco->complemento = $request->complemento;
-            $endereco->bairro = $request->bairro;
-            $endereco->ponto_referencia = $request->pontoReferencia;
-            $endereco->uf = $request->uf;
-            $endereco->cidade = $request->cidade;
-            $endereco->is_condominio = ($request->isCondominio == 'Sim' ? true : false);
-            $endereco->endereco_condominio = $request->enderecoCondominio;
-            $endereco->numero_condominio = $request->numeroCondominio;
-            $endereco->save();
-        } catch (QueryException $error) {
-            $fornecedor->delete();
-            return redirect()->back()->withErrors('Erro ao cadastrar fornecedor');
-        }
 
 
         try {
@@ -187,7 +198,7 @@ class FornecedorController extends Controller
 
                     foreach ($contato['telefone'] as $telefones) {
                         $telefone = new ContatoAdicional();
-                        $telefone->contato_id = $pessoaContato->id;
+                        $telefone->pessoa_contato_id = $pessoaContato->id;
                         $telefone->qual_contato = 'Telefone';
                         $telefone->contato = $telefones['telefone'];
                         $telefone->tipo = $telefones['tipo'];
@@ -196,7 +207,7 @@ class FornecedorController extends Controller
 
                     foreach ($contato['email'] as $key => $emails) {
                         $email = new ContatoAdicional();
-                        $email->contato_id = $pessoaContato->id;
+                        $email->pessoa_contato_id = $pessoaContato->id;
                         $email->qual_contato = 'E-mail';
                         $email->contato = $emails['email'];
                         $email->tipo = $emails['tipo'];
@@ -206,6 +217,7 @@ class FornecedorController extends Controller
             }
         } catch (QueryException $error) {
             $fornecedor->delete();
+            dd($error);
             return redirect()->back()->withErrors('Erro ao cadastrar fornecedor');
         }
 
@@ -222,11 +234,8 @@ class FornecedorController extends Controller
     public function show($id)
     {
         $fornecedor = Fornecedor::find($id);
-        $states = State::all();
-
-
-        return view('fornecedor.show', compact('fornecedor', 'states'));
-
+        return response()->json($fornecedor->contatosAdicionais);
+        return view('fornecedor.show', compact('fornecedor'));
     }
 
     /**
@@ -239,10 +248,10 @@ class FornecedorController extends Controller
     {
         $fornecedor = Fornecedor::find($id);
         $states = State::all();
+        $cities = City::where('state_id', $fornecedor->endereco->uf)->get();
 
 
-        return view('fornecedor.edit', compact('fornecedor', 'states'));
-
+        return view('fornecedor.edit', compact('fornecedor', 'states', 'cities'));
     }
 
     /**
@@ -269,8 +278,5 @@ class FornecedorController extends Controller
         $fornecedor->delete();
 
         return redirect()->route('fornecedor.index')->withSuccess('Fornecedor excluir');
-
-
-
     }
 }

@@ -81,7 +81,7 @@
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 3);
+/******/ 	return __webpack_require__(__webpack_require__.s = 2);
 /******/ })
 /************************************************************************/
 /******/ ({
@@ -217,14 +217,14 @@ function isCpfFormatted(cpf) {
 
 /***/ }),
 
-/***/ 3:
+/***/ 2:
 /*!**********************************************!*\
   !*** multi ./resources/js/validate.rules.js ***!
   \**********************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! C:\Projetos\laravel-crud\resources\js\validate.rules.js */"./resources/js/validate.rules.js");
+module.exports = __webpack_require__(/*! C:\Projetos\Pessoal\laravel-crud\resources\js\validate.rules.js */"./resources/js/validate.rules.js");
 
 
 /***/ })

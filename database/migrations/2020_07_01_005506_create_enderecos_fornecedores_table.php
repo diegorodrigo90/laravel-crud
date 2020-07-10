@@ -15,7 +15,6 @@ class CreateEnderecosFornecedoresTable extends Migration
     {
         Schema::create('enderecos_fornecedores', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('fornecedor_id');
             $table->integer('cep');
             $table->string('logradouro');
             $table->integer('numero');
@@ -29,7 +28,6 @@ class CreateEnderecosFornecedoresTable extends Migration
             $table->string('numero_condominio')->nullable();
             $table->timestamps();
 
-            $table->foreign('fornecedor_id')->references('id')->on('fornecedores')->onDelete('cascade');
             $table->foreign('uf')->references('id')->on('states');
             $table->foreign('cidade')->references('id')->on('cities');
 
