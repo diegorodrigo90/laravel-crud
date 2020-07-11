@@ -19,7 +19,7 @@ class Fornecedor extends Model
 
     public function endereco()
     {
-        return $this->belongsTo('App\Models\EnderecoFornecedor', 'endereco_id');
+        return $this->hasOne('App\Models\EnderecoFornecedor', 'fornecedor_id');
     }
 
     public function contatosPrincipais()

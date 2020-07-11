@@ -20,7 +20,6 @@ class CreatePessoasFisicasTable extends Migration
             $table->string('apelido')->nullable();
             $table->string('rg')->unique();
             $table->timestamps();
-
         });
     }
 

@@ -22,8 +22,6 @@ class CreateContatosPrincipaisTable extends Migration
             $table->timestamps();
 
             $table->foreign('fornecedor_id')->references('id')->on('fornecedores')->onDelete('cascade');
-
-
         });
     }
 

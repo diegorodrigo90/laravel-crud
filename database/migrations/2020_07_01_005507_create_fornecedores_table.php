@@ -17,12 +17,9 @@ class CreateFornecedoresTable extends Migration
             $table->id();
             $table->morphs('pessoable');
             $table->boolean('is_active');
-            $table->unsignedBigInteger('endereco_id');
-
             $table->longText('observacao')->nullable();
             $table->timestamps();
 
-            $table->foreign('endereco_id')->references('id')->on('enderecos_fornecedores')->onDelete('cascade');
         });
     }
 

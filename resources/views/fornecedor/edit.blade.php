@@ -570,7 +570,7 @@
         </div>
     </div>
 </div>
-
+{{ $fornecedor->pessoasContatos }}
 @section('css')
 
 @stop
@@ -579,6 +579,14 @@
 <script type="text/javascript" src="{{ asset('/js/validate.rules.js')}}" defer></script>
 <script type="text/javascript" defer>
     var runContactFilling = true;
+    var contatosData  = {
+        "contatosPrincipais" : {!! $fornecedor->contatosPrincipais->toJson(JSON_PRETTY_PRINT) !!},
+        "PessoasContatos" : {!! $fornecedor->pessoasContatos->toJson(JSON_PRETTY_PRINT) !!},
+        "contatosAdicionais" : {!! $fornecedor->contatosPrincipais->toJson(JSON_PRETTY_PRINT) !!}
+
+    }
+
+
 
 </script>
 <script type="text/javascript" src="{{ asset('/js/fornecedores.js')}}" defer></script>

@@ -2,10 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\FornecedorForm;
 use App\Models\City;
-use App\Models\ContatoAdicional;
-use App\Models\ContatoPrincipal;
-use App\Models\EnderecoFornecedor;
 use App\Models\Fornecedor;
 use App\Models\PessoaContato;
 use App\Models\PessoaFisica;
@@ -50,18 +48,12 @@ class FornecedorController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(FornecedorForm $request)
+
     {
-
-
         // return response()->json($request);
-
-
-
-        if ($request->tipoPessoa == 'juridica') {
-
-            try {
-
+        try {
+            if ($request->tipoPessoa == 'juridica') {
                 $pessoa = new PessoaJuridica;
                 $pessoa->cnpj = (int) preg_replace('/[^0-9]/', '', $request->cnpj);
                 $pessoa->razao_social = $request->razaoSocial;
@@ -69,160 +61,135 @@ class FornecedorController extends Controller
                 $pessoa->indicador_inscricao_estadual = $request->indicadorInscricaoEstadual;
                 $pessoa->inscricao_municipal = $request->inscricaoMunicipal;
                 $pessoa->recolhimento = $request->recolhimento;
-                $pessoa->save();
-            } catch (QueryException $error) {
-                if ($pessoa) $pessoa->delete();
-                dd($error);
-                return redirect()->back()->withErrors('Erro ao cadastrar fornecedor');
-            }
-        } else if ($request->tipoPessoa == 'fisica') {
-
-            try {
-
+                // $pessoa->save();
+            } else if ($request->tipoPessoa == 'fisica') {
                 $pessoa = new PessoaFisica;
                 $pessoa->cpf =  (int) preg_replace('/[^0-9]/', '', $request->cpf);
                 $pessoa->nome = $request->nome;
                 $pessoa->apelido = $request->apelido;
                 $pessoa->rg = $request->rg;
-                $pessoa->save();
-            } catch (QueryException $error) {
-                if ($pessoa) $pessoa->delete();
-                return redirect()->back()->withErrors('Erro ao cadastrar fornecedor');
+            } else {
+                return redirect()->back()->withErrors('Erro ao cadastrar fornecedor')->withInput($request->input());
             }
-        } else {
-            return redirect()->back()->withErrors('Erro ao cadastrar fornecedor');
-        }
+            $pessoa->save();
 
-        try {
-
-            $endereco = new EnderecoFornecedor();
-            $endereco->cep = (int) preg_replace('/[^0-9]/', '', $request->cep);
-            $endereco->logradouro = $request->logradouro;
-            $endereco->numero = $request->numero;
-            $endereco->complemento = $request->complemento;
-            $endereco->bairro = $request->bairro;
-            $endereco->ponto_referencia = $request->pontoReferencia;
-            $endereco->uf = $request->uf;
-            $endereco->cidade = $request->cidade;
-            $endereco->is_condominio = ($request->isCondominio == 'Sim' ? true : false);
-            $endereco->endereco_condominio = $request->enderecoCondominio;
-            $endereco->numero_condominio = $request->numeroCondominio;
-            $endereco->save();
-        } catch (QueryException $error) {
-            dd($error);
-            return redirect()->back()->withErrors('Erro ao cadastrar fornecedor');
-        }
-
-        try {
             $fornecedor = new Fornecedor;
-            $fornecedor->is_active = ($request->ativo == 'Sim' ? true : false);
-            $fornecedor->is_active = ($request->ativo == 'Sim' ? true : false);
-            $fornecedor->endereco_id = $endereco->id;
+            $fornecedor->is_active = ($request->ativo == 'sim' ? true : false);
             $fornecedor->observacao = $request->observacao;
-
             $fornecedor->pessoable()->associate($pessoa);
-            $fornecedor->endereco()->associate($endereco);
-
             $fornecedor->save();
-        } catch (QueryException $error) {
-            if ($endereco) $endereco->delete();
-            if ($pessoa) $pessoa->delete();
-            dd($error);
 
-            return redirect()->back()->withErrors('Erro ao cadastrar fornecedor');
-        }
+            $fornecedor->endereco()->create(
+                [
+                    "cep" => (int) preg_replace('/[^0-9]/', '', $request->cep),
+                    "logradouro" => $request->logradouro,
+                    "numero" => $request->numero,
+                    "complemento" => $request->complemento,
+                    "bairro" => $request->bairro,
+                    "ponto_referencia" => $request->pontoReferencia,
+                    "uf" => $request->uf,
+                    "is_condominio" => ($request->isCondominio == 'sim') ? true : false,
+                    "cidade" => $request->cidade,
+                    "endereco_condominio" => $request->enderecoCondominio,
+                    "numero_condominio" => $request->numeroCondominio
+                ],
+            );
 
-        try {
             if ($request->email) {
-                $contato = new ContatoPrincipal();
-                $contato->fornecedor_id = $fornecedor->id;
-                $contato->qual_contato = 'E-mail';
-                $contato->contato = $request->email;
-                $contato->tipo = $request->emailTipo;
-                $contato->save();
+                $fornecedor->contatosPrincipais()->create(
+                    [
+                        "qual_contato" => 'E-mail',
+                        "contato" => $request->email,
+                        "tipo" => $request->email,
+                    ],
+                );
             }
 
             if ($request->telefone) {
-                $contato = new ContatoPrincipal();
-                $contato->fornecedor_id = $fornecedor->id;
-                $contato->qual_contato = 'Telefone';
-                $contato->contato = $request->telefone;
-                $contato->tipo = $request->telefoneTipo;
-                $contato->save();
+                $fornecedor->contatosPrincipais()->create(
+                    [
+                        "qual_contato" => 'Telefone',
+                        "contato" => $request->telefone,
+                        "tipo" => $request->telefone,
+                    ],
+                );
             }
 
 
             if ($request->{'telefone-adicional'}) {
                 foreach ($request->{'telefone-adicional'} as $key => $telefone) {
-                    $contato = new ContatoPrincipal();
-                    $contato->fornecedor_id = $fornecedor->id;
-                    $contato->qual_contato = 'Telefone';
-                    $contato->contato = $telefone['telefone'];
-                    $contato->tipo = $telefone['tipo'];
-                    $contato->save();
+                    $fornecedor->contatosPrincipais()->create(
+                        [
+                            "qual_contato" => 'Telefone',
+                            "contato" => $telefone['telefone'],
+                            "tipo" => $telefone['tipo'],
+                        ],
+                    );
                 }
             }
 
             if ($request->{'email-adicional'}) {
                 foreach ($request->{'email-adicional'} as $key => $email) {
-                    $contato = new ContatoPrincipal();
-                    $contato->fornecedor_id = $fornecedor->id;
-                    $contato->qual_contato = 'E-mail';
-                    $contato->contato = $email['email'];
-                    $contato->tipo = $email['tipo'];
-                    $contato->save();
+                    $fornecedor->contatosPrincipais()->create(
+                        [
+                            "qual_contato" => 'E-mail',
+                            "contato" => $email['email'],
+                            "tipo" => $email['tipo'],
+                        ],
+                    );
                 }
             }
-        } catch (QueryException $error) {
-            if ($fornecedor) {
-                $contatos = ContatoPrincipal::where('fornecedor_id', $fornecedor->id);
-                if ($contatos) $contatos->delete();
-                $fornecedor->delete();
-            }
-            dd($error);
-
-            return redirect()->back()->withErrors('Erro ao cadastrar fornecedor');
-        }
-
-
-
-
-        try {
 
             if ($request->{'contato-adicional'}) {
 
+                foreach ($request->{'email-adicional'} as $key => $email) {
+                    $fornecedor->contatosPrincipais()->create(
+                        [
+                            "qual_contato" => 'E-mail',
+                            "contato" => $email['email'],
+                            "tipo" => $email['tipo'],
+                        ],
+                    );
+                }
+
                 foreach ($request->{'contato-adicional'} as $key => $contato) {
+
                     $pessoaContato = new PessoaContato();
-                    $pessoaContato->fornecedor_id = $fornecedor->id;
                     $pessoaContato->nome = $contato['nome'];
                     $pessoaContato->empresa = $contato['empresa'];
                     $pessoaContato->cargo = $contato['cargo'];
+                    $pessoaContato->fornecedor_id = $fornecedor->id;
                     $pessoaContato->save();
 
                     foreach ($contato['telefone'] as $telefones) {
-                        $telefone = new ContatoAdicional();
-                        $telefone->pessoa_contato_id = $pessoaContato->id;
-                        $telefone->qual_contato = 'Telefone';
-                        $telefone->contato = $telefones['telefone'];
-                        $telefone->tipo = $telefones['tipo'];
-                        $telefone->save();
+
+                        $pessoaContato->contato()->create(
+                            [
+                                'qual_contato' => 'Telefone',
+                                'contato' => $telefones['telefone'],
+                                'tipo' => $telefones['tipo'],
+                            ]
+                        );
                     }
 
                     foreach ($contato['email'] as $key => $emails) {
-                        $email = new ContatoAdicional();
-                        $email->pessoa_contato_id = $pessoaContato->id;
-                        $email->qual_contato = 'E-mail';
-                        $email->contato = $emails['email'];
-                        $email->tipo = $emails['tipo'];
-                        $email->save();
+                        $pessoaContato->contato()->create(
+                            [
+                                'qual_contato' => 'E-mail',
+                                'contato' => $emails['email'],
+                                'tipo' => $emails['tipo'],
+                            ]
+                        );
                     }
                 }
             }
         } catch (QueryException $error) {
-            $fornecedor->delete();
-            dd($error);
-            return redirect()->back()->withErrors('Erro ao cadastrar fornecedor');
+            if ($pessoa) $pessoa->delete();
+            if ($fornecedor) $fornecedor->delete();
+            ddd($error);
+            return redirect()->back()->withErrors('Erro ao cadastrar fornecedor')->withInput($request->input());
         }
+
 
 
         return redirect()->route('fornecedor.index')->withSuccess('Fornecedor adicionado');

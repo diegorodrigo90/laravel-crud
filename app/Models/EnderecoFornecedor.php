@@ -11,7 +11,7 @@ class EnderecoFornecedor extends Model
     protected $fillable = [
         'cep', 'logradouro', 'numero',
         'complemento', 'bairro', 'ponto_referencia', 'uf',
-        'cidade', 'endereco_condominio', 'numero_condominio'
+        'cidade', 'is_condominio' ,'endereco_condominio', 'numero_condominio'
     ];
 
     public function getCidade(){

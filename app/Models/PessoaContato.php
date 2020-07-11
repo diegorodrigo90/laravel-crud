@@ -9,6 +9,11 @@ class PessoaContato extends Model
     protected $table = 'pessoas_contatos';
 
     protected $fillable = [
-        'fornecedor_id', 'contato_adicional_id', 'nome', 'empresa', 'cargo'
+        'fornecedor_id', 'nome', 'empresa', 'cargo'
     ];
+
+    public function contato()
+    {
+        return $this->hasOne('App\Models\ContatoAdicional', 'pessoa_contato_id');
+    }
 }

@@ -1049,14 +1049,6 @@ var receitaWS = function receitaWS(cnpj) {
     dataType: "jsonp",
     url: "https://www.receitaws.com.br/v1/cnpj/" + removeNonNumericsCaracters(cnpj),
     //Url da Action Aqui
-    beforeSend: function beforeSend() {
-      $("#razaoSocial").prop("disabled", true);
-      $("#nomeFantasia").prop("disabled", true);
-    },
-    complete: function complete() {
-      $("#razaoSocial").prop("disabled", false);
-      $("#nomeFantasia").prop("disabled", false);
-    },
     success: function success(data) {
       $("#razaoSocial").val(data.nome);
       $("#nomeFantasia").val(data.fantasia);
@@ -1118,16 +1110,6 @@ var viaCep = function viaCep(cep) {
     dataType: "jsonp",
     url: "https://viacep.com.br/ws/" + removeNonNumericsCaracters(cep) + "/json",
     //Url da Action Aqui
-    beforeSend: function beforeSend() {
-      $("#logradouro").prop("disabled", true);
-      $("#complemento").prop("disabled", true);
-      $("#bairro").prop("disabled", true);
-    },
-    complete: function complete() {
-      $("#logradouro").prop("disabled", false);
-      $("#complemento").prop("disabled", false);
-      $("#bairro").prop("disabled", false);
-    },
     success: function success(data) {
       $("#logradouro").val(data.logradouro);
       $("#complemento").val(data.complemento);
@@ -1308,11 +1290,11 @@ $("#uf").select2();
 $("#cidade").select2();
 $('[data-toggle="tooltip"]').tooltip();
 
-var fillContactFields = function fillContactFields() {
-  addEmailTelefone($('.button-add'));
+var fillContactFields = function fillContactFields(element, value, type) {
+  console.log(contatosData);
 };
 
-if (runContactFilling) fillContactFields();
+if (typeof runContactFilling !== 'undefined') fillContactFields();
 
 /***/ }),
 
