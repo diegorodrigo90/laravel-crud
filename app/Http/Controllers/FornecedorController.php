@@ -23,7 +23,10 @@ class FornecedorController extends Controller
      */
     public function index()
     {
-        $fornecedores = Fornecedor::paginate(100);
+        // TODO: Implementar datables com laravel paginate
+        // $fornecedores = Fornecedor::paginate(100);
+
+        $fornecedores = Fornecedor::all();
 
         return view('fornecedor.index', compact('fornecedores'));
     }

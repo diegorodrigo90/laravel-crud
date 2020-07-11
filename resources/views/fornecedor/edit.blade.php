@@ -1,6 +1,6 @@
 @extends('adminlte::page')
 
-@section('title', 'Fornecedores - Cadastrar')
+@section('title', 'Fornecedores - Editar')
 
 @section('content_header')
 
@@ -576,17 +576,13 @@
 @stop
 
 @section('js')
-<script src="{{ asset('/js/validate.rules.js')}}" defer></script>
-
-<script src="{{ asset('/js/fornecedores.js')}}" defer></script>
-
-<script>
-    var cnpj = '{{empty($fornecedor->pessoable->cnpj)}}';
-var cpf = '{{empty($fornecedor->pessoable->cpf)}}';
-
-
+<script type="text/javascript" src="{{ asset('/js/validate.rules.js')}}" defer></script>
+<script type="text/javascript" defer>
+    var runContactFilling = true;
 
 </script>
+<script type="text/javascript" src="{{ asset('/js/fornecedores.js')}}" defer></script>
+
 
 @stop
 
