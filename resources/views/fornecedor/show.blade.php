@@ -528,11 +528,19 @@
 
 
             </div>
+
+            <a href="{{ route('fornecedor.index')}}">
+                <div class="btn btn-secondary mt-3 mb-5">
+                    <i class="fa fa-arrow-left"></i> Voltar
+                </div>
+            </a>
+
             <a href="{{ route('fornecedor.edit', [$id = $fornecedor->id])}}">
-                <div type="submit" class="btn btn-primary mt-3 mb-5">
+                <div class="btn btn-primary mt-3 mb-5">
                     <i class="fa fa-edit"></i> Editar
                 </div>
             </a>
+
             @section('css')
 
             @stop
