@@ -55,7 +55,7 @@ function formatCnpjCpf($value)
 
 <div class="card">
     <div class="card-body">
-        <table id="fornecedoresTable" class="display col-12 table-hover">
+        <table id="fornecedoresTable" class="table table-bordered table-hover">
             <thead>
                 <tr>
                     <th>Razão Social/ Nome</th>
@@ -153,45 +153,45 @@ function formatCnpjCpf($value)
     </div>
 </div>
 
-    <!-- Modal -->
-    <div class="modal " id="modalExcluirFornecedor" tabindex="-1" role="dialog" aria-labelledby="modalExcluirFornecedor"
-        aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel"><b>Excluir fornecedor?</b></h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    Realmente deseja excluir o fornecedor <span id="fornecedorNome"></span>?
+<!-- Modal -->
+<div class="modal " id="modalExcluirFornecedor" tabindex="-1" role="dialog" aria-labelledby="modalExcluirFornecedor"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel"><b>Excluir fornecedor?</b></h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                Realmente deseja excluir o fornecedor <span id="fornecedorNome"></span>?
 
-                </div>
-                <div class="modal-footer">
-                    <button class="btn btn-primary" data-dismiss="modal">Cancelar</button>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-primary" data-dismiss="modal">Cancelar</button>
 
-                    <form action="#" id="excluirFornecedor" method="POST">
-                        @method('delete')
-                        @csrf
-                        <button type="submit" id="linkExcluirFornecedor" class="btn btn-danger">Excluir</button>
-                    </form>
+                <form action="#" id="excluirFornecedor" method="POST">
+                    @method('delete')
+                    @csrf
+                    <button type="submit" id="linkExcluirFornecedor" class="btn btn-danger">Excluir</button>
+                </form>
 
-                </div>
             </div>
         </div>
     </div>
+</div>
 
 
-    @stop
+@stop
 
-    @section('css')
-    @stop
+@section('css')
+@stop
 
-    @section('js')
+@section('js')
 
-    <script src="{{ asset('/js/display.js')}}" defer></script>
-    @stop
+<script src="{{ asset('/js/display.js')}}" defer></script>
+@stop
 
 
-    @stop
+@stop

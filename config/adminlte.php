@@ -298,7 +298,7 @@ return [
                 [
                     'type' => 'css',
                     'asset' => true,
-                    'location' => '//cdn.datatables.net/1.10.19/css/dataTables.bootstrap4.min.css',
+                    'location' => '//cdn.datatables.net/1.10.21/css/dataTables.bootstrap4.min.css',
                 ],
             ],
         ],
