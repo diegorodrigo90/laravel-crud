@@ -1,4 +1,5 @@
 const mix = require('laravel-mix');
+require('laravel-mix-eslint-config');
 
 /*
  |--------------------------------------------------------------------------
@@ -11,7 +12,8 @@ const mix = require('laravel-mix');
  |
  */
 
-mix.js('resources/js/display.js', 'public/js')
-    .js('resources/js/fornecedores.js', 'public/js')
-    .js('resources/js/validate.rules.js', 'public/js')
+
+mix.js('resources/js/display.js', 'public/js').eslint()
+    .js('resources/js/fornecedores.js', 'public/js').eslint()
+    .js('resources/js/validate.rules.js', 'public/js').eslint()
     .sass('resources/sass/app.scss', 'public/css');

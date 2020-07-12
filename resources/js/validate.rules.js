@@ -16,7 +16,7 @@ function isCnpj(cnpj) {
 		return false;
 
 	tamanho = cnpj.length - 2;
-	numeros = cnpj.substring(0,tamanho);
+	numeros = cnpj.substring(0, tamanho);
 	digitos = cnpj.substring(tamanho);
 	soma = 0;
 	pos = tamanho - 7;
@@ -26,11 +26,11 @@ function isCnpj(cnpj) {
 			pos = 9;
 	}
 	resultado = soma % 11 < 2 ? 0 : 11 - soma % 11;
-	if (resultado != digitos.charAt(0)){
+	if (resultado != digitos.charAt(0)) {
 		return false;
 	}
 	tamanho = tamanho + 1;
-	numeros = cnpj.substring(0,tamanho);
+	numeros = cnpj.substring(0, tamanho);
 	soma = 0;
 	pos = tamanho - 7;
 	for (i = tamanho; i >= 1; i--) {
@@ -50,42 +50,46 @@ function isCnpjFormatted(cnpj) {
 }
 
 
-function isCpf(cpf){
-    exp = /\.|-/g;
-    cpf = cpf.toString().replace(exp, "");
-    var digitoDigitado = eval(cpf.charAt(9)+cpf.charAt(10));
-    var soma1=0, soma2=0;
-    var vlr =11;
-    for(i=0;i<9;i++){
-        soma1+=eval(cpf.charAt(i)*(vlr-1));
-        soma2+=eval(cpf.charAt(i)*vlr);
-        vlr--;
-    }
-    soma1 = (((soma1*10)%11)==10 ? 0:((soma1*10)%11));
-    soma2 = (((soma2+(2*soma1))*10)%11);
+function isCpf(cpf) {
+	let exp = /\.|-/g;
+	cpf = cpf.toString().replace(exp, '');
+	var digitoDigitado = eval(cpf.charAt(9) + cpf.charAt(10));
+	var soma1 = 0,
+		soma2 = 0;
+	var vlr = 11;
+	for (let i = 0; i < 9; i++) {
+		soma1 += eval(cpf.charAt(i) * (vlr - 1));
+		soma2 += eval(cpf.charAt(i) * vlr);
+		vlr--;
+	}
+	soma1 = (((soma1 * 10) % 11) == 10 ? 0 : ((soma1 * 10) % 11));
+	soma2 = (((soma2 + (2 * soma1)) * 10) % 11);
 
-    if(cpf == "11111111111" || cpf == "22222222222" || cpf ==
-			"33333333333" || cpf == "44444444444" || cpf == "55555555555" || cpf ==
-			"66666666666" || cpf == "77777777777" || cpf == "88888888888" || cpf ==
-			"99999999999" || cpf == "00000000000" ){
-		var digitoGerado = null;
-    }else{
-        var digitoGerado = (soma1*10) + soma2;
-    }
+	let digitoGerado;
 
-    if(digitoGerado != digitoDigitado){
-       return false;
-    }
-    return true;
+	if (cpf == '11111111111' || cpf == '22222222222' || cpf ==
+        '33333333333' || cpf == '44444444444' || cpf == '55555555555' || cpf ==
+        '66666666666' || cpf == '77777777777' || cpf == '88888888888' || cpf ==
+        '99999999999' || cpf == '00000000000') {
+		digitoGerado = null;
+	} else {
+		digitoGerado = (soma1 * 10) + soma2;
+	}
+
+	if (digitoGerado != digitoDigitado) {
+		return false;
+	}
+	return true;
 }
+
 function isCpfFormatted(cpf) {
-	var validCPF = /^\d{3}\.\d{3}\.\d{3}\-\d{2}$/;
+	var validCPF = /^\d{3}\.\d{3}\.\d{3}-\d{2}$/;
 	return cpf.match(validCPF);
 }
 
-(function($) {
-	$.validator.addMethod("cpf", function(value, element, type) {
-		if (value == "")
+(function ($) {
+	$.validator.addMethod('cpf', function (value, element, type) {
+		if (value == '')
 			return true;
 
 		if ((type == 'format' || type == 'both') && !isCpfFormatted(value))
@@ -93,12 +97,12 @@ function isCpfFormatted(cpf) {
 		else
 			return ((type == 'valid' || type == 'both')) ? isCpf(value) : true;
 
-	}, function(type,element) {
+	}, function (type, element) {
 		return (type == 'format' || (type == 'both' && !isCpfFormatted($(element).val()))) ?
-				'Formato do CPF não é válido' : 'Por favor digite um CPF válido';
+			'Formato do CPF não é válido' : 'Por favor digite um CPF válido';
 	});
-	$.validator.addMethod("cnpj", function(value, element, type) {
-		if (value == "")
+	$.validator.addMethod('cnpj', function (value, element, type) {
+		if (value == '')
 			return true;
 
 		if ((type == 'format' || type == 'both') && !isCnpjFormatted(value))
@@ -106,29 +110,31 @@ function isCpfFormatted(cpf) {
 		else
 			return ((type == 'valid' || type == 'both')) ? isCnpj(value) : true;
 
-	}, function(type,element) {
+	}, function (type, element) {
 		return (type == 'format' || (type == 'both' && !isCnpjFormatted($(element).val()))) ?
-				'Formato do CNPJ não é válido' : 'Por favor digite um CNPJ válido';
-    });
+			'Formato do CNPJ não é válido' : 'Por favor digite um CNPJ válido';
+	});
 
-    //validar telefone fixo e celular
-    jQuery.validator.addMethod('phone', function (value, element, type) {
-        value = value.replace(/["'()]/g,"");
-        value = value.replace(/-/g, "");
-        value = value.replace(/\s/g, "");
+	//validar telefone fixo e celular
+	jQuery.validator.addMethod('phone', function (value, element, type) {
+		value = value.replace(/["'()]/g, '');
+		value = value.replace(/-/g, '');
+		value = value.replace(/\s/g, '');
 
-        if(type == 'phone') regex = /^[0-9]{10}$/;
-        if(type == 'mobile') regex = /^[0-9]{11}$/;
-        if(type == 'both') regex = /^[0-9]{10,11}$/;
+		let regex;
 
-        if (value == '0000000000' | value == '00000000000' ) {
-            return (this.optional(element) || false);
-        }
-        return (this.optional(element) || regex.test(value));
-    }, 'Informe um telefone válido');
+		if (type == 'phone') regex = /^[0-9]{10}$/;
+		if (type == 'mobile') regex = /^[0-9]{11}$/;
+		if (type == 'both') regex = /^[0-9]{10,11}$/;
 
-    jQuery.validator.addMethod("cep", function(value, element) {
-        return this.optional(element) || /^[0-9]{5}-[0-9]{3}$/.test(value);
-      }, "Por favor, digite um CEP válido");
+		if (value == '0000000000' | value == '00000000000') {
+			return (this.optional(element) || false);
+		}
+		return (this.optional(element) || regex.test(value));
+	}, 'Informe um telefone válido');
+
+	jQuery.validator.addMethod('cep', function (value, element) {
+		return this.optional(element) || /^[0-9]{5}-[0-9]{3}$/.test(value);
+	}, 'Por favor, digite um CEP válido');
 
 })(jQuery);

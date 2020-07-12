@@ -148,14 +148,14 @@ function isCnpjFormatted(cnpj) {
 }
 
 function isCpf(cpf) {
-  exp = /\.|-/g;
-  cpf = cpf.toString().replace(exp, "");
+  var exp = /\.|-/g;
+  cpf = cpf.toString().replace(exp, '');
   var digitoDigitado = eval(cpf.charAt(9) + cpf.charAt(10));
   var soma1 = 0,
       soma2 = 0;
   var vlr = 11;
 
-  for (i = 0; i < 9; i++) {
+  for (var i = 0; i < 9; i++) {
     soma1 += eval(cpf.charAt(i) * (vlr - 1));
     soma2 += eval(cpf.charAt(i) * vlr);
     vlr--;
@@ -163,11 +163,12 @@ function isCpf(cpf) {
 
   soma1 = soma1 * 10 % 11 == 10 ? 0 : soma1 * 10 % 11;
   soma2 = (soma2 + 2 * soma1) * 10 % 11;
+  var digitoGerado;
 
-  if (cpf == "11111111111" || cpf == "22222222222" || cpf == "33333333333" || cpf == "44444444444" || cpf == "55555555555" || cpf == "66666666666" || cpf == "77777777777" || cpf == "88888888888" || cpf == "99999999999" || cpf == "00000000000") {
-    var digitoGerado = null;
+  if (cpf == '11111111111' || cpf == '22222222222' || cpf == '33333333333' || cpf == '44444444444' || cpf == '55555555555' || cpf == '66666666666' || cpf == '77777777777' || cpf == '88888888888' || cpf == '99999999999' || cpf == '00000000000') {
+    digitoGerado = null;
   } else {
-    var digitoGerado = soma1 * 10 + soma2;
+    digitoGerado = soma1 * 10 + soma2;
   }
 
   if (digitoGerado != digitoDigitado) {
@@ -178,28 +179,29 @@ function isCpf(cpf) {
 }
 
 function isCpfFormatted(cpf) {
-  var validCPF = /^\d{3}\.\d{3}\.\d{3}\-\d{2}$/;
+  var validCPF = /^\d{3}\.\d{3}\.\d{3}-\d{2}$/;
   return cpf.match(validCPF);
 }
 
 (function ($) {
-  $.validator.addMethod("cpf", function (value, element, type) {
-    if (value == "") return true;
+  $.validator.addMethod('cpf', function (value, element, type) {
+    if (value == '') return true;
     if ((type == 'format' || type == 'both') && !isCpfFormatted(value)) return false;else return type == 'valid' || type == 'both' ? isCpf(value) : true;
   }, function (type, element) {
     return type == 'format' || type == 'both' && !isCpfFormatted($(element).val()) ? 'Formato do CPF não é válido' : 'Por favor digite um CPF válido';
   });
-  $.validator.addMethod("cnpj", function (value, element, type) {
-    if (value == "") return true;
+  $.validator.addMethod('cnpj', function (value, element, type) {
+    if (value == '') return true;
     if ((type == 'format' || type == 'both') && !isCnpjFormatted(value)) return false;else return type == 'valid' || type == 'both' ? isCnpj(value) : true;
   }, function (type, element) {
     return type == 'format' || type == 'both' && !isCnpjFormatted($(element).val()) ? 'Formato do CNPJ não é válido' : 'Por favor digite um CNPJ válido';
   }); //validar telefone fixo e celular
 
   jQuery.validator.addMethod('phone', function (value, element, type) {
-    value = value.replace(/["'()]/g, "");
-    value = value.replace(/-/g, "");
-    value = value.replace(/\s/g, "");
+    value = value.replace(/["'()]/g, '');
+    value = value.replace(/-/g, '');
+    value = value.replace(/\s/g, '');
+    var regex;
     if (type == 'phone') regex = /^[0-9]{10}$/;
     if (type == 'mobile') regex = /^[0-9]{11}$/;
     if (type == 'both') regex = /^[0-9]{10,11}$/;
@@ -210,9 +212,9 @@ function isCpfFormatted(cpf) {
 
     return this.optional(element) || regex.test(value);
   }, 'Informe um telefone válido');
-  jQuery.validator.addMethod("cep", function (value, element) {
+  jQuery.validator.addMethod('cep', function (value, element) {
     return this.optional(element) || /^[0-9]{5}-[0-9]{3}$/.test(value);
-  }, "Por favor, digite um CEP válido");
+  }, 'Por favor, digite um CEP válido');
 })(jQuery);
 
 /***/ }),
