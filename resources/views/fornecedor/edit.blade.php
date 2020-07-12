@@ -569,7 +569,6 @@
         </div>
     </div>
 </div>
-{{ $fornecedor->pessoasContatos }}
 @section('css')
 
 @stop
