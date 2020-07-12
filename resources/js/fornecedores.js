@@ -516,13 +516,14 @@ var addEmailTelefone = function (element) {
 };
 
 //preencher os contatos na pagina de edição
+var contatosData = (typeof contatosData === 'undefined') ? null : contatosData;
+
 var fillContactsFields = function () {
 
 	console.log(contatosData);
 };
 
-//executa a função de fillContactsFields apenas se existir o objeto contatosData
-if (typeof contatosData !== 'undefined') fillContactsFields();
+if(contatosData)fillContactsFields();
 
 
 

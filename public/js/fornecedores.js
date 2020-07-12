@@ -1240,12 +1240,13 @@ var addEmailTelefone = function addEmailTelefone(element) {
 }; //preencher os contatos na pagina de edição
 
 
+var contatosData = typeof contatosData === 'undefined' ? null : contatosData;
+
 var fillContactsFields = function fillContactsFields() {
   console.log(contatosData);
-}; //executa a função de fillContactsFields apenas se existir o objeto contatosData
+};
 
-
-if (typeof contatosData !== 'undefined') fillContactsFields(); //adiconar email/telefone
+if (contatosData) fillContactsFields(); //adiconar email/telefone
 
 $('#addContact').on('click', function () {
   $('.contatos-adicionais').append($('.contacts-field').html());

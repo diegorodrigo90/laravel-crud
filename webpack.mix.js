@@ -12,8 +12,19 @@ require('laravel-mix-eslint-config');
  |
  */
 
+var options = {
+    enforce: 'pre',
+    test: /\.(js|vue)$/,
+    exclude: /node_modules/,
+    loader: 'eslint-loader',
+    options: {
+        fix: true,
+        cache: false,
+    }
+};
 
-mix.js('resources/js/display.js', 'public/js').eslint()
-    .js('resources/js/fornecedores.js', 'public/js').eslint()
-    .js('resources/js/validate.rules.js', 'public/js').eslint()
-    .sass('resources/sass/app.scss', 'public/css');
+mix.js('resources/js/display.js', 'public/js').eslint(options)
+    .js('resources/js/fornecedores.js', 'public/js').eslint(options)
+    .js('resources/js/validate.rules.js', 'public/js').eslint(options)
+    .sass('resources/sass/app.scss', 'public/css')
+    .browserSync('localhost:8000');
