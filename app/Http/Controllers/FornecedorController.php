@@ -207,10 +207,8 @@ class FornecedorController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Fornecedor $fornecedor)
     {
-        $fornecedor = Fornecedor::find($id);
-        return response()->json($fornecedor->contatosAdicionais);
         return view('fornecedor.show', compact('fornecedor'));
     }
 

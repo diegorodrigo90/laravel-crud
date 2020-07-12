@@ -264,41 +264,9 @@
                 </div>
                 <!-- /Contato principal -->
 
-                {{-- botão adicionar contato adicional --}}
-                <div class="col-12 d-flex flex-row-reverse">
-                    <div class="form-group">
-                        <div id="addContact" data-toggle="tooltip" title="Novo contato adicional"
-                            class="btn btn-primary mt-3">
-                            <i class="fa fa-plus"></i>
-                        </div>
-                    </div>
-                </div>
-
-                {{-- /botão adicionar contato adicional --}}
-
-                <!-- sem contatos adicionais-->
-                <div class="card card-secondary" id="sem-contato-adicional">
-                    <h5 class="card-header" role="tab">
-                        <a data-toggle="collapse" data-parent="#accordion" href="#contatosAdicionais"
-                            aria-expanded="true" aria-controls="collapseTwo" class="d-block">
-                            <i class="fa fa-chevron-down float-right"></i> Contatos adicionais
-                        </a>
-                    </h5>
-
-                    <div id="contatosAdicionais" class="collapse show" role="tabpanel"
-                        aria-labelledby="contatosAdicionais">
-
-                        <div class="card-body">
-
-                            <div class="d-flex justify-content-center text-muted">NENHUM CONTATO ADICIONAL. </div>
-
-                        </div>
-                    </div>
-                </div>
-                <!-- /sem contatos adicionais -->
 
                 <!-- Contatos adicionais-->
-                <div id="contatos-adicional" style="display: none">
+                <div id="contatos-adicional">
                     <div class="card card-secondary contatos-adicional">
                         <h5 class="card-header" role="tab">
                             <a data-toggle="collapse" data-parent="#accordion" href="#contatosAdicionais"
