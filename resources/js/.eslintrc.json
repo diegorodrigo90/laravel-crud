@@ -5,29 +5,26 @@
         "es6": true,
         "jquery": true
     },
-    "extends": [
-        "eslint:recommended",
-        "plugin:vue/recommended"
-    ],
+    "extends": ["eslint:recommended", "plugin:vue/recommended"],
     "parserOptions": {
         "sourceType": "module"
     },
     "rules": {
-        "indent": [
-            "error",
-            "tab"
+        "indent": ["error", "tab"],
+        "linebreak-style": ["error", "unix"],
+        "quotes": ["error", "single"],
+        "semi": ["error", "always"],
+        "key-spacing": [
+            2,
+            {
+                "align": "value",
+                "afterColon": true
+            }
         ],
-        "linebreak-style": [
-            "error",
-            "unix"
+        "no-multi-spaces": [
+            2,
+            { "exceptions": { "AssignmentExpression": true } }
         ],
-        "quotes": [
-            "error",
-            "single"
-        ],
-        "semi": [
-            "error",
-            "always"
-        ]
+        "no-multiple-empty-lines": [2, { "max": 2 }]
     }
 }

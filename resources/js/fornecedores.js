@@ -220,53 +220,53 @@ var setFieldDisplay = {
 };
 
 const pessoaFisicaElements = [{
-	field: '#div-cpf',
+	field:    '#div-cpf',
 	required: true
 },
 {
-	field: '#div-nome',
+	field:    '#div-nome',
 	required: true
 },
 {
-	field: '#div-apelido',
+	field:    '#div-apelido',
 	required: false
 },
 {
-	field: '#div-rg',
+	field:    '#div-rg',
 	required: true
 }
 ];
 
 const pessoaJuridicaElements = [{
-	field: '#div-cnpj',
+	field:    '#div-cnpj',
 	required: true
 },
 {
-	field: '#div-razao-social',
+	field:    '#div-razao-social',
 	required: true
 },
 {
-	field: '#div-nome-fantasia',
+	field:    '#div-nome-fantasia',
 	required: true
 },
 {
-	field: '#div-indicador-inscricao-estadual',
+	field:    '#div-indicador-inscricao-estadual',
 	required: true
 },
 {
-	field: '#div-inscricao-estadual',
+	field:    '#div-inscricao-estadual',
 	required: false
 },
 {
-	field: '#div-inscricao-municipal',
+	field:    '#div-inscricao-municipal',
 	required: false
 },
 {
-	field: '#div-situacao-cnpj',
+	field:    '#div-situacao-cnpj',
 	required: false
 },
 {
-	field: '#div-recolhimento',
+	field:    '#div-recolhimento',
 	required: true
 }
 ];
@@ -299,11 +299,11 @@ const changePessoaTipo = {
 //verificando cnpj no receita ws
 var receitaWS = function (cnpj) {
 	$.ajax({
-		type: 'GET',
+		type:     'GET',
 		dataType: 'jsonp',
-		url: 'https://www.receitaws.com.br/v1/cnpj/' +
+		url:      'https://www.receitaws.com.br/v1/cnpj/' +
             removeNonNumericsCaracters(cnpj), //Url da Action Aqui
-		success: function (data) {
+		success:  function (data) {
 			$('#razaoSocial').val(data.nome);
 			$('#nomeFantasia').val(data.fantasia);
 			$('#situacaoCNPJ').val(data.situacao);
@@ -319,10 +319,10 @@ var receitaWS = function (cnpj) {
 //pegando cidades do estado
 var getCities = async function (state, city) {
 	$.ajax({
-		type: 'GET',
+		type:     'GET',
 		dataType: 'json',
-		url: url + '/api/v1/cidades/' + state, //Url da Action Aqui
-		success: function (data) {
+		url:      url + '/api/v1/cidades/' + state, //Url da Action Aqui
+		success:  function (data) {
 			$('#cidade')
 				.empty()
 				.trigger('change'); //limpando select2 antes de adicionar cidades
@@ -359,9 +359,9 @@ var getCities = async function (state, city) {
 
 var viaCep = function (cep) {
 	$.ajax({
-		type: 'GET',
+		type:     'GET',
 		dataType: 'jsonp',
-		url: 'https://viacep.com.br/ws/' +
+		url:      'https://viacep.com.br/ws/' +
             removeNonNumericsCaracters(cep) +
             '/json', //Url da Action Aqui
 		success: function (data) {
@@ -428,17 +428,17 @@ $('#numero').mask('000009');
 
 
 $('#fornecedorForm').validate({
-	errorClass: 'is-invalid error',
-	validClass: 'is-valid',
+	errorClass:     'is-invalid error',
+	validClass:     'is-valid',
 	errorPlacement: function (error, element) {
 		if (element.hasClass('group-error')) {
 			error.insertAfter(element.next('.select2-container')); // TODO: Corrigir posicionamento do erro com o select2
 		} else element.after(error); // default error placement
 	},
-	onkeyup: validate_function,
+	onkeyup:    validate_function,
 	onfocusout: validate_function,
 	//debug: true, //retira essa linha, para o form voltar a funcionar
-	rules: {
+	rules:      {
 		cpf: {
 			cpf: 'both' //valida tanto Formatação como os Digitos
 			//caso não queira validar a formatação use => cpf: 'valid’
@@ -450,11 +450,11 @@ $('#fornecedorForm').validate({
 
 		telefone: {
 			required: true,
-			phone: 'both'
+			phone:    'both'
 		},
 		email: {
 			required: true,
-			email: true
+			email:    true
 		},
 		cep: {
 			cep: true
@@ -487,7 +487,7 @@ var addEmailTelefone = function (element) {
 
 		$('input.telefone-adicional' + uid).rules('add', {
 			required: true,
-			phone: 'both'
+			phone:    'both'
 		});
 		$('input.telefone-adicional' + uid).mask(
 			telefoneMask,
@@ -500,9 +500,10 @@ var addEmailTelefone = function (element) {
 
 		$('input.email-adicional' + uid).rules('add', {
 			required: true,
-			email: true
+			email:    true
 		});
 	}
+
 
 	$('.button-del').delegate('div', 'click', function () {
 		$('[data-toggle="tooltip"]').tooltip('hide'); //remover tooltip
@@ -552,8 +553,6 @@ $('#indicadorInscricaoEstadual').on('change', function () {
 	$('#inscricaoEstadual').removeClass('is-invalid');
 	$('#inscricaoEstadual').next('label.is-invalid').hide();
 });
-
-
 
 
 //adiconar email/telefone
@@ -606,8 +605,8 @@ $('.mostra-modal-excluir').on('click', function () {
 $('input[name="telefone"]').mask(telefoneMask, telefoneMaskOptions);
 
 $('#observacao-div').summernote({
-	lang: 'pt-BR',
-	height: '300',
+	lang:    'pt-BR',
+	height:  '300',
 	toolbar: [
 		['style', ['style']],
 		['font', ['bold', 'underline', 'clear']],
