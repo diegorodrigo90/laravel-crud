@@ -56,7 +56,7 @@ function formatCnpjCpf($value)
 
 <div class="card">
     <div class="card-body">
-        <table id="fornecedoresTable" class="display col-12">
+        <table id="fornecedoresTable" class="display col-12 hover table-hover">
             <thead>
                 <tr>
                     <th>Razão Social/ Nome</th>
@@ -81,22 +81,25 @@ function formatCnpjCpf($value)
                     <td> <span class="badge badge-danger">Inativo</span> </td>
                     @endif
                     <td>
-                        <div class="row">
-                            <a href="{{route('fornecedor.show', [$id =$fornecedor->id])}}">
-                                <div type="button" class="btn btn-sm btn-success mx-1" data-toggle="tooltip"
-                                    title="Visualizar"><i class="fa fa-eye"></i></div>
-                            </a>
-                            <a href="{{route('fornecedor.edit', [$id =$fornecedor->id])}}">
-                                <div type="button" class="btn btn-sm btn-primary mx-1" data-toggle="tooltip"
-                                    title="Editar"><i class="fa fa-edit"></i></div>
-                            </a>
 
-                            <div type="button" class="btn btn-sm btn-danger mx-1 mostra-modal-excluir"
-                                data-id="{{$fornecedor->id}}" data-nome="{{ $fornecedor->pessoable->razao_social }}"
-                                data-link="{{route('fornecedor.destroy', [$id = $fornecedor->id])}}"
-                                data-toggle="tooltip" title="Excluir"><i class="fa fa-trash"></i></div>
-
+                        <div class="dropdown">
+                            <button class="btn btn-light btn-sm dropdown-toggle" type="button" id="dropdownMenuButton"
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Ação
+                            </button>
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                <a class="dropdown-item" href="{{route('fornecedor.show', [$id =$fornecedor->id])}}"><i
+                                        class="fa fa-eye"></i> Visualizar</a>
+                                <a class="dropdown-item" href="{{route('fornecedor.edit', [$id =$fornecedor->id])}}"><i
+                                        class="fa fa-edit"></i> Editar</a>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item mostra-modal-excluir" data-id="{{$fornecedor->id}}"
+                                    data-nome="{{ $fornecedor->pessoable->razao_social }}"
+                                    data-link="{{route('fornecedor.destroy', [$id = $fornecedor->id])}}" href="#"><i
+                                        class="fa fa-trash"></i> Excluir</a>
+                            </div>
                         </div>
+
 
                     </td>
                 </tr>
@@ -113,21 +116,22 @@ function formatCnpjCpf($value)
                     <td><span class="badge badge-danger">Inativo</span></td>
                     @endif
                     <td>
-                        <div class="row">
-                            <a href="{{route('fornecedor.show', [$id =$fornecedor->id])}}">
-                                <div type="button" class="btn btn-sm btn-success mx-1" data-toggle="tooltip"
-                                    title="Visualizar"><i class="fa fa-eye"></i></div>
-                            </a>
-                            <a href="{{route('fornecedor.edit', [$id =$fornecedor->id])}}">
-                                <div type="button" class="btn btn-sm btn-primary mx-1" data-toggle="tooltip"
-                                    title="Editar"><i class="fa fa-edit"></i></div>
-                            </a>
-
-                            <div type="button" class="btn btn-sm btn-danger mx-1 mostra-modal-excluir"
-                                data-id="{{$fornecedor->id}}" data-nome="{{ $fornecedor->pessoable->nome }}"
-                                data-link="{{route('fornecedor.destroy', [$id =$fornecedor->id])}}"
-                                data-toggle="tooltip" title="Excluir"><i class="fa fa-trash"></i></div>
-
+                        <div class="dropdown">
+                            <button class="btn btn-light btn-sm dropdown-toggle" type="button" id="dropdownMenuButton"
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Ação
+                            </button>
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                <a class="dropdown-item" href="{{route('fornecedor.show', [$id =$fornecedor->id])}}"><i
+                                        class="fa fa-eye"></i> Visualizar</a>
+                                <a class="dropdown-item" href="{{route('fornecedor.edit', [$id =$fornecedor->id])}}"><i
+                                        class="fa fa-edit"></i> Editar</a>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item mostra-modal-excluir" data-id="{{$fornecedor->id}}"
+                                    data-nome="{{ $fornecedor->pessoable->nome }}"
+                                    data-link="{{route('fornecedor.destroy', [$id = $fornecedor->id])}}" href="#"><i
+                                        class="fa fa-trash"></i> Excluir</a>
+                            </div>
                         </div>
 
                     </td>

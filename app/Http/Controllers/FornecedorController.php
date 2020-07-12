@@ -81,7 +81,7 @@ class FornecedorController extends Controller
             $pessoa->save();
 
             $fornecedor = new Fornecedor;
-            $fornecedor->is_active = ($request->ativo == 'sim' ? true : false);
+            $fornecedor->is_active = ($request->ativo == 'Sim' ? true : false);
             $fornecedor->observacao = $request->observacao;
             $fornecedor->pessoable()->associate($pessoa);
             $fornecedor->save();
