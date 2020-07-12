@@ -11,6 +11,7 @@ use App\Models\PessoaJuridica;
 use App\Models\State;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class FornecedorController extends Controller
 {
@@ -51,7 +52,13 @@ class FornecedorController extends Controller
     public function store(FornecedorForm $request)
 
     {
+
         // return response()->json($request);
+
+
+
+        DB::beginTransaction();
+
         try {
             if ($request->tipoPessoa == 'juridica') {
                 $pessoa = new PessoaJuridica;
@@ -184,13 +191,12 @@ class FornecedorController extends Controller
                 }
             }
         } catch (QueryException $error) {
-            if ($pessoa) $pessoa->delete();
-            if ($fornecedor) $fornecedor->delete();
+            DB::rollback();
             ddd($error);
             return redirect()->back()->withErrors('Erro ao cadastrar fornecedor')->withInput($request->input());
         }
 
-
+        DB::commit();
 
         return redirect()->route('fornecedor.index')->withSuccess('Fornecedor adicionado');
     }

@@ -1302,18 +1302,11 @@ if (typeof runContactFilling !== 'undefined') fillContactFields(); //capturando 
 
 $("form#fornecedorForm").on("submit", function () {
   $('.collapse').collapse('show'); //expande todas os accordion ao enviar
-  //desabilita botão se formulario estiver válido
-
-  if ($(this).valid()) {
-    $('button[type=submit]').html('<i class="fa fa-spinner fa-spin"></i> Cadastrando...');
-    $('button[type=submit]').prop("disabled", true);
-  } //aguarda um tempo antes de enviar realmnte
-
+  //aguarda um tempo antes de enviar
 
   setTimeout(function () {
-    $('form#fornecedorForm').submit();
+    return false; // desativa envio padrão do formulario
   }, 1000);
-  return false; // desativa envio padrão do formulario
 });
 
 /***/ }),
