@@ -14,7 +14,7 @@
 @if($errors->any())
 <div class="alert alert-danger alert-dismissible fade show" role="alert">
     @foreach ($errors->all() as $error)
-    {{ $error }} <br/>
+    {{ $error }} <br />
     @endforeach
     <button type="button" class="close" data-dismiss="alert" aria-label="Close">
         <span aria-hidden="true">&times;</span>
@@ -497,6 +497,9 @@
     </button>
 </form>
 
+@stop
+
+
 @section('css')
 
 @stop
@@ -505,11 +508,6 @@
 <script src="{{ asset('/js/validate.rules.js')}}" defer></script>
 
 <script src="{{ asset('/js/fornecedores.js')}}" defer></script>
-@stop
 
 
 @stop
-
-@section('footer')
-Laravel CRUD
-@endsection

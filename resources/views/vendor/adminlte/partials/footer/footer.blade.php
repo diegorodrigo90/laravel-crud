@@ -1,3 +1,3 @@
 <footer class="main-footer">
-    @yield('footer')
+    Laravel CRUD
 </footer>

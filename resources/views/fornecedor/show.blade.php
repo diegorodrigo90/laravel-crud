@@ -541,6 +541,8 @@
                 </div>
             </a>
 
+            @stop
+
             @section('css')
 
             @stop
@@ -555,11 +557,6 @@
 
             </script>
 
-            @stop
 
 
             @stop
-
-            @section('footer')
-            Laravel CRUD
-            @endsection

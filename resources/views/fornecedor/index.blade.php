@@ -15,14 +15,13 @@
         </div>
     </div>
 </section>
-@stop
 
 @section('content')
 
 @if($errors->any())
 <div class="alert alert-danger alert-dismissible fade show" role="alert">
     @foreach ($errors->all() as $error)
-    <p> {{ $error }} </p>
+    {{ $error }} <br />
     @endforeach
     <button type="button" class="close" data-dismiss="alert" aria-label="Close">
         <span aria-hidden="true">&times;</span>
@@ -40,23 +39,23 @@
 @endif
 
 <?php
+
 function formatCnpjCpf($value)
 {
-  $cnpj_cpf = preg_replace("/\D/", '', $value);
+    $cnpj_cpf = preg_replace("/\D/", '', $value);
 
-  if (strlen($cnpj_cpf) === 11) {
-    return preg_replace("/(\d{3})(\d{3})(\d{3})(\d{2})/", "\$1.\$2.\$3-\$4", $cnpj_cpf);
-  }
+    if (strlen($cnpj_cpf) === 11) {
+        return preg_replace("/(\d{3})(\d{3})(\d{3})(\d{2})/", "\$1.\$2.\$3-\$4", $cnpj_cpf);
+    }
 
-  return preg_replace("/(\d{2})(\d{3})(\d{3})(\d{4})(\d{2})/", "\$1.\$2.\$3/\$4-\$5", $cnpj_cpf);
+    return preg_replace("/(\d{2})(\d{3})(\d{3})(\d{4})(\d{2})/", "\$1.\$2.\$3/\$4-\$5", $cnpj_cpf);
 }
-
 
 ?>
 
 <div class="card">
     <div class="card-body">
-        <table id="fornecedoresTable" class="display col-12 hover table-hover">
+        <table id="fornecedoresTable" class="display col-12 table-hover">
             <thead>
                 <tr>
                     <th>Razão Social/ Nome</th>
@@ -81,7 +80,6 @@ function formatCnpjCpf($value)
                     <td> <span class="badge badge-danger">Inativo</span> </td>
                     @endif
                     <td>
-
                         <div class="dropdown">
                             <button class="btn btn-light btn-sm dropdown-toggle" type="button" id="dropdownMenuButton"
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -99,7 +97,6 @@ function formatCnpjCpf($value)
                                         class="fa fa-trash"></i> Excluir</a>
                             </div>
                         </div>
-
 
                     </td>
                 </tr>
@@ -154,6 +151,7 @@ function formatCnpjCpf($value)
         </table>
         <!-- /.card-body -->
     </div>
+</div>
 
     <!-- Modal -->
     <div class="modal " id="modalExcluirFornecedor" tabindex="-1" role="dialog" aria-labelledby="modalExcluirFornecedor"
@@ -191,25 +189,9 @@ function formatCnpjCpf($value)
     @stop
 
     @section('js')
-    @section('js')
-    {{-- <script src="{{ asset('/js/validate.rules.js')}}" defer></script> --}}
 
     <script src="{{ asset('/js/display.js')}}" defer></script>
     @stop
-    <script>
-        $(document).ready( function () {
 
 
-    $('[data-toggle="tooltip"]').tooltip();
-
-
-    $('#fornecedoresTable').DataTable(
-        {
-            "language": {
-                "url": "//cdn.datatables.net/plug-ins/1.10.21/i18n/Portuguese-Brasil.json"
-            }
-        }
-    );
-} );
-    </script>
     @stop
