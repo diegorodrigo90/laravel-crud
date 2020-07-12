@@ -81,7 +81,7 @@ function formatCnpjCpf($value)
                     @endif
                     <td>
                         <div class="dropdown">
-                            <button class="btn btn-light btn-sm dropdown-toggle" type="button" id="dropdownMenuButton"
+                            <button class="btn btn-outline-dark btn-sm dropdown-toggle" type="button" id="dropdownMenuButton"
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 Ação
                             </button>
@@ -114,7 +114,7 @@ function formatCnpjCpf($value)
                     @endif
                     <td>
                         <div class="dropdown">
-                            <button class="btn btn-light btn-sm dropdown-toggle" type="button" id="dropdownMenuButton"
+                            <button class="btn btn-outline-dark btn-sm dropdown-toggle" type="button" id="dropdownMenuButton"
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 Ação
                             </button>
