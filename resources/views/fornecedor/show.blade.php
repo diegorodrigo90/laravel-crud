@@ -40,7 +40,7 @@
 
                     <div class="col-md-3" id="div-cpf" style="display: none">
                         <div class="form-group">
-                            <label for="cpf">CPF <sup style="color: red;">•</sup></label>
+                            <label for="cpf">CPF</label>
                             <input pattern="\d{3}\.\d{3}\.\d{3}-\d{2}" name="cpf" type="text"
                                 class="form-control set-required" id="cpf" value="{{ $fornecedor->pessoable->cpf }}"
                                 disabled>
@@ -49,7 +49,7 @@
 
                     <div class="col-md-6" id="div-nome" style="display: none">
                         <div class="form-group">
-                            <label for="nome">Nome <sup style="color: red">•</sup></label>
+                            <label for="nome">Nome </label>
                             <input type="text" class="form-control set-required" id="nome" name="nome"
                                 value="{{ $fornecedor->pessoable->nome }}" disabled>
                         </div>
@@ -65,7 +65,7 @@
 
                     <div class="col-md-3" id="div-rg" style="display: none">
                         <div class="form-group">
-                            <label for="rg">RG <sup style="color: red">•</sup></label>
+                            <label for="rg">RG </label>
                             <input type="text" class="form-control set-required" id="rg" name="rg"
                                 value="{{ $fornecedor->pessoable->rg }}" disabled>
                         </div>
@@ -91,7 +91,7 @@
 
                                 <div class="col-md-3" id="div-cnpj">
                                     <div class="form-group">
-                                        <label for="cnpj">CNPJ <sup style="color: red">•</sup></label>
+                                        <label for="cnpj">CNPJ </label>
                                         <input type="tel" value="{{$fornecedor->pessoable->cnpj}}" name="cnpj"
                                             class="form-control" id="cnpj" disabled>
                                     </div>
@@ -99,7 +99,7 @@
 
                                 <div class="col-md-6" id="div-razao-social">
                                     <div class="form-group">
-                                        <label for="razaoSocial">Razão Social <sup style="color: red">•</sup></label>
+                                        <label for="razaoSocial">Razão Social </label>
                                         <input type="text" value="{{$fornecedor->pessoable->razao_social}}"
                                             class="form-control set-required" id="razaoSocial" name="razaoSocial"
                                             disabled>
@@ -108,7 +108,7 @@
 
                                 <div class="col-md-3" id="div-nome-fantasia">
                                     <div class="form-group">
-                                        <label for="nomeFantasia">Nome fantasia <sup style="color: red">•</sup></label>
+                                        <label for="nomeFantasia">Nome fantasia </label>
                                         <input type="text" value="{{$fornecedor->pessoable->nome_fantasia}}"
                                             class="form-control set-required" id="nomeFantasia" name="nomeFantasia"
                                             disabled>
@@ -117,8 +117,7 @@
 
                                 <div class="col-md-3" id="div-indicador-inscricao-estadual">
                                     <div class="form-group">
-                                        <label for="indicadorInscricaoEstadual">Indicador de Inscrição Estadual<sup
-                                                style="color: red">•</sup></label>
+                                        <label for="indicadorInscricaoEstadual">Indicador de Inscrição Estadual</label>
                                         <select disabled id="indicadorInscricaoEstadual"
                                             name="indicadorInscricaoEstadual" class="form-control set-required"
                                             required>
@@ -157,7 +156,7 @@
 
                                 <div class="col-md-3" id="div-recolhimento">
                                     <div class="form-group">
-                                        <label for="recolhimento">Recolhimento<sup style="color: red">•</sup></label>
+                                        <label for="recolhimento">Recolhimento</label>
                                         <select id="recolhimento" name="recolhimento" class="form-control set-required"
                                             disabled>
                                             <option selected>{{ $fornecedor->pessoable->recolhimento }}</option>
@@ -170,7 +169,7 @@
 
                                 <div class="col-md-3" id="div-ativo">
                                     <div class="form-group">
-                                        <label for="ativo">Ativo<sup style="color: red">•</sup></label>
+                                        <label for="ativo">Ativo</label>
                                         <select id="ativo" name="ativo" class="form-control set-required" disabled>>
                                             <option selected>{{ ($fornecedor->is_active) ? 'Sim' : 'Não' }}</option>
 
@@ -205,16 +204,14 @@
                                         <span class="telefone-field">
                                             <div class="telefone-principal row col-md6">
                                                 <div class="form-group col-6">
-                                                    <label for="telefone">Telefone<sup
-                                                            style="color: red">•</sup></label>
+                                                    <label for="telefone">Telefone</label>
                                                     <input type="text" class="form-control telefone" name="telefone"
                                                         value="{{ $fornecedor->pessoable->telefone }}">
                                                 </div>
 
                                                 <div class="form-group  col-6">
 
-                                                    <label for="telefoneTipo">Tipo<sup
-                                                            style="color: red">•</sup></label>
+                                                    <label for="telefoneTipo">Tipo</label>
                                                     <div class="input-form">
                                                         <select id="telefoneTipo" name="telefoneTipo"
                                                             class="form-control group-error" required>
@@ -235,13 +232,13 @@
 
                                             <div class="email-principal row">
                                                 <div class="form-group col-6">
-                                                    <label for="email">E-mail<sup style="color: red">•</sup></label>
+                                                    <label for="email">E-mail</label>
                                                     <input type="text" class="form-control email" name="email" required>
                                                 </div>
 
                                                 <div class="form-group  col-6">
 
-                                                    <label for="emailTipo">Tipo<sup style="color: red;">•</sup></label>
+                                                    <label for="emailTipo">Tipo</label>
                                                     <div class="input-form">
                                                         <select name="emailTipo" name="emailTipo"
                                                             class="form-control group-error" required>
@@ -371,7 +368,7 @@
 
                                 <div class="col-md-3">
                                     <div class="form-group">
-                                        <label for="cep">CEP<sup style="color: red">•</sup></label>
+                                        <label for="cep">CEP</label>
                                         <input type="tel" class="form-control" id="cep" name="cep"
                                             value="{{$fornecedor->endereco->cep}}" disabled>
                                     </div>
@@ -379,7 +376,7 @@
 
                                 <div class="col-md-3">
                                     <div class="form-group">
-                                        <label for="logradouro">Logradouro<sup style="color: red">•</sup></label>
+                                        <label for="logradouro">Logradouro</label>
                                         <input type="text" class="form-control" id="logradouro" name="logradouro"
                                             value="{{$fornecedor->endereco->logradouro}}" disabled>
                                     </div>
@@ -387,7 +384,7 @@
 
                                 <div class="col-md-3">
                                     <div class="form-group">
-                                        <label for="numero">Número<sup style="color: red">•</sup></label>
+                                        <label for="numero">Número</label>
                                         <input type="text" class="form-control" id="numero" name="numero"
                                             value="{{$fornecedor->endereco->numero}}" disabled>
                                     </div>
@@ -403,7 +400,7 @@
 
                                 <div class="col-md-3">
                                     <div class="form-group">
-                                        <label for="bairro">Bairro<sup style="color: red">•</sup></label>
+                                        <label for="bairro">Bairro</label>
                                         <input type="text" class="form-control" id="bairro" name="bairro"
                                             value="{{$fornecedor->endereco->bairro}}" disabled>
                                     </div>
@@ -420,7 +417,7 @@
 
                                 <div class="col-md-3">
                                     <div class="form-group pl-1">
-                                        <label for="uf">UF<sup style="color: red">•</sup></label>
+                                        <label for="uf">UF</label>
                                         <select id="uf" name="uf" class="form-control" disabled>
                                             <option>{{ $fornecedor->endereco->getEstado->title }}</option>
                                         </select>
@@ -428,7 +425,7 @@
                                 </div>
                                 <div class="col-md-3">
                                     <div class="form-group">
-                                        <label for="cidade">Cidade<sup style="color: red">•</sup></label>
+                                        <label for="cidade">Cidade</label>
                                         <select id="cidade" name="cidade" class="form-control" disabled>
                                             <option>{{ $fornecedor->endereco->getCidade->title }}</option>
                                         </select>
@@ -438,7 +435,7 @@
 
                                 <div class="col-md-3">
                                     <div class="form-group">
-                                        <label for="condominio">Condomínio?<sup style="color: red">•</sup></label>
+                                        <label for="condominio">Condomínio?</label>
                                         <select id="isCondominio" name="isCondominio" class="form-control" disabled>
                                             <option>{{ ($fornecedor->endereco->is_condominio) ? 'Sim' : 'Não' }}
                                             </option>
@@ -449,7 +446,7 @@
                                 @if ($fornecedor->endereco->is_condominio)
                                 <div class="col-md-3 enderecoCondominio">
                                     <div class="form-group">
-                                        <label for="enderecoCondominio">Endereço<sup style="color: red">•</sup></label>
+                                        <label for="enderecoCondominio">Endereço</label>
                                         <input type="text" class="form-control set-required" id="enderecoCondominio"
                                             name="enderecoCondominio"
                                             value="{{$fornecedor->endereco->endereco_condominio}}" disabled>
@@ -458,7 +455,7 @@
 
                                 <div class="col-md-3 numeroCondominio">
                                     <div class="form-group">
-                                        <label for="numeroCondominio">Número<sup style="color: red">•</sup></label>
+                                        <label for="numeroCondominio">Número</label>
                                         <input type="text" class="form-control set-required" id="numeroCondominio"
                                             name="numeroCondominio" value="{{$fornecedor->endereco->numero_condominio}}"
                                             disabled>

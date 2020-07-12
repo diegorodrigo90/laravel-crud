@@ -12,14 +12,14 @@
 @section('content')
 
 @if($errors->any())
-@foreach ($errors->all() as $error)
 <div class="alert alert-danger alert-dismissible fade show" role="alert">
-    {{ $error }}
+    @foreach ($errors->all() as $error)
+    <p> {{ $error }} </p>
+    @endforeach
     <button type="button" class="close" data-dismiss="alert" aria-label="Close">
         <span aria-hidden="true">&times;</span>
     </button>
 </div>
-@endforeach
 @endif
 
 @if(session('success'))
@@ -62,7 +62,7 @@
                         <div class="col-md-3" id="div-cnpj" @isset($fornecedor->pessoable->cpf) style="display: none;"
                             @endisset>
                             <div class="form-group">
-                                <label for="cnpj">CNPJ <sup style="color: red">•</sup></label>
+                                <label for="cnpj">CNPJ </label>
                                 <input type="tel" name="cnpj" value="{{ $fornecedor->pessoable->cnpj }}"
                                     class="form-control set-required" id="cnpj" required>
                             </div>
@@ -71,7 +71,7 @@
                         <div class="col-md-3" id="div-cpf" @if($fornecedor->pessoable->cnpj) style="display: none;"
                             @endif >
                             <div class="form-group">
-                                <label for="cpf">CPF <sup style="color: red;">•</sup></label>
+                                <label for="cpf">CPF</label>
                                 <input pattern="\d{3}\.\d{3}\.\d{3}-\d{2}" name="cpf"
                                     value="{{ $fornecedor->pessoable->cpf }}" type="text"
                                     class="form-control set-required" id="cpf" required>
@@ -81,7 +81,7 @@
                         <div class="col-md-6" id="div-nome" @if($fornecedor->pessoable->cnpj) style="display: none;"
                             @endif>
                             <div class="form-group">
-                                <label for="nome">Nome <sup style="color: red">•</sup></label>
+                                <label for="nome">Nome </label>
                                 <input type="text" class="form-control set-required"
                                     value="{{ $fornecedor->pessoable->nome }}" id="nome" name="nome" required>
                             </div>
@@ -99,7 +99,7 @@
                         <div class="col-md-3" id="div-rg" @if($fornecedor->pessoable->cnpj) style="display: none;"
                             @endif>
                             <div class="form-group">
-                                <label for="rg">RG <sup style="color: red">•</sup></label>
+                                <label for="rg">RG </label>
                                 <input type="text" class="form-control set-required"
                                     value="{{ $fornecedor->pessoable->rg }}" id="rg" name="rg">
                             </div>
@@ -109,7 +109,7 @@
                         <div class="col-md-6" id="div-razao-social" @isset($fornecedor->pessoable->cpf) style="display:
                             none;" @endisset>
                             <div class="form-group">
-                                <label for="razaoSocial">Razão Social <sup style="color: red">•</sup></label>
+                                <label for="razaoSocial">Razão Social </label>
                                 <input type="text" class="form-control set-required" id="razaoSocial"
                                     value="{{ $fornecedor->pessoable->razao_social }}" name="razaoSocial" required>
                             </div>
@@ -118,7 +118,7 @@
                         <div class="col-md-3" id="div-nome-fantasia" @isset($fornecedor->pessoable->cpf) style="display:
                             none;" @endisset>
                             <div class="form-group">
-                                <label for="nomeFantasia">Nome fantasia <sup style="color: red">•</sup></label>
+                                <label for="nomeFantasia">Nome fantasia </label>
                                 <input type="text" class="form-control set-required" id="nomeFantasia"
                                     value="{{ $fornecedor->pessoable->nome_fantasia }}" name="nomeFantasia" required>
                             </div>
@@ -127,8 +127,7 @@
                         <div class="col-md-3" id="div-indicador-inscricao-estadual" @isset($fornecedor->pessoable->cpf)
                             style="display: none;" @endisset>
                             <div class="form-group">
-                                <label for="indicadorInscricaoEstadual">Indicador de Inscrição Estadual<sup
-                                        style="color: red">•</sup></label>
+                                <label for="indicadorInscricaoEstadual">Indicador de Inscrição Estadual</label>
                                 <select id="indicadorInscricaoEstadual" name="indicadorInscricaoEstadual"
                                     class="form-control set-required" required>
                                     <option @if($fornecedor->pessoable->cnpj == 'Contribuinte') selected @endif
@@ -173,7 +172,7 @@
                         <div class="col-md-3" id="div-recolhimento" @isset($fornecedor->pessoable->cpf) style="display:
                             none;" @endisset>
                             <div class="form-group">
-                                <label for="recolhimento">Recolhimento<sup style="color: red">•</sup></label>
+                                <label for="recolhimento">Recolhimento</label>
                                 <select id="recolhimento" name="recolhimento" class="form-control set-required"
                                     required>
                                     <option @if($fornecedor->pessoable->recolhimento == 'A recolher pelo prestador')
@@ -186,7 +185,7 @@
 
                         <div class="col-md-3" id="div-ativo">
                             <div class="form-group">
-                                <label for="ativo">Ativo<sup style="color: red">•</sup></label>
+                                <label for="ativo">Ativo</label>
                                 <select id="ativo" name="ativo" class="form-control set-required" required>
                                     <option @if($fornecedor->is_active) selected @endif>Sim</option>
                                     <option @if(!$fornecedor->is_active) selected @endif>Não</option>
@@ -220,13 +219,13 @@
                                 <span class="telefone-field">
                                     <div class="telefone-principal row col-md6">
                                         <div class="form-group col-6">
-                                            <label for="telefone">Telefone<sup style="color: red">•</sup></label>
+                                            <label for="telefone">Telefone</label>
                                             <input type="text" class="form-control telefone" name="telefone" required>
                                         </div>
 
                                         <div class="form-group  col-6">
 
-                                            <label for="telefoneTipo">Tipo<sup style="color: red">•</sup></label>
+                                            <label for="telefoneTipo">Tipo</label>
                                             <div class="input-group">
                                                 <select id="telefoneTipo" name="telefoneTipo"
                                                     class="form-control group-error" required>
@@ -257,13 +256,13 @@
 
                                     <div class="email-principal row">
                                         <div class="form-group col-6">
-                                            <label for="email">E-mail<sup style="color: red">•</sup></label>
+                                            <label for="email">E-mail</label>
                                             <input type="text" class="form-control email" name="email" required>
                                         </div>
 
                                         <div class="form-group  col-6">
 
-                                            <label for="emailTipo">Tipo<sup style="color: red;">•</sup></label>
+                                            <label for="emailTipo">Tipo</label>
                                             <div class="input-group">
                                                 <select name="emailTipo" name="emailTipo"
                                                     class="form-control group-error" required>
@@ -398,7 +397,7 @@
 
                         <div class="col-md-3">
                             <div class="form-group">
-                                <label for="cep">CEP<sup style="color: red">•</sup></label>
+                                <label for="cep">CEP</label>
                                 <input type="tel" class="form-control" id="cep" name="cep"
                                     value="{{ $fornecedor->endereco->cep }}" required>
                             </div>
@@ -406,7 +405,7 @@
 
                         <div class="col-md-3">
                             <div class="form-group">
-                                <label for="logradouro">Logradouro<sup style="color: red">•</sup></label>
+                                <label for="logradouro">Logradouro</label>
                                 <input type="text" class="form-control" id="logradouro" name="logradouro"
                                     value="{{ $fornecedor->endereco->logradouro }}" required>
                             </div>
@@ -414,7 +413,7 @@
 
                         <div class="col-md-3">
                             <div class="form-group">
-                                <label for="numero">Número<sup style="color: red">•</sup></label>
+                                <label for="numero">Número</label>
                                 <input type="text" class="form-control" id="numero" name="numero"
                                     value="{{ $fornecedor->endereco->numero }}" required>
                             </div>
@@ -430,7 +429,7 @@
 
                         <div class="col-md-3">
                             <div class="form-group">
-                                <label for="bairro">Bairro<sup style="color: red">•</sup></label>
+                                <label for="bairro">Bairro</label>
                                 <input type="text" class="form-control" id="bairro" name="bairro"
                                     value="{{ $fornecedor->endereco->bairro }}" required>
                             </div>
@@ -446,7 +445,7 @@
 
                         <div class="col-md-3">
                             <div class="form-group pl-1">
-                                <label for="uf">UF<sup style="color: red">•</sup></label>
+                                <label for="uf">UF</label>
                                 <select id="uf" name="uf" class="form-control" required>
                                     @foreach ($states as $state)
                                     <option value="{{ $state->id }}" @if($fornecedor->pessoable->uf == $state->id )
@@ -459,7 +458,7 @@
 
                         <div class="col-md-3">
                             <div class="form-group">
-                                <label for="cidade">Cidade<sup style="color: red">•</sup></label>
+                                <label for="cidade">Cidade</label>
                                 <select id="cidade" name="cidade" class="form-control" required>
                                     @foreach ($cities as $city)
                                     <option value="{{ $city->id }}" @if($fornecedor->pessoable->cidade == $city->id )
@@ -471,7 +470,7 @@
 
                         <div class="col-md-3">
                             <div class="form-group">
-                                <label for="condominio">Condomínio?<sup style="color: red">•</sup></label>
+                                <label for="condominio">Condomínio?</label>
                                 <select id="isCondominio" name="isCondominio" class="form-control" required>
                                     <option @if($fornecedor->endereco->is_condomino) selected @endif value="sim">Sim
                                     </option>
@@ -484,7 +483,7 @@
                         <div class="col-md-3 enderecoCondominio" @if(!$fornecedor->endereco->is_condomino)
                             style="display: none;" @endif >
                             <div class="form-group">
-                                <label for="enderecoCondominio">Endereço<sup style="color: red">•</sup></label>
+                                <label for="enderecoCondominio">Endereço</label>
                                 <input type="text" class="form-control set-required" id="enderecoCondominio"
                                     name="enderecoCondominio" @if(!$fornecedor->endereco->is_condomino) required @endif>
                             </div>
@@ -493,7 +492,7 @@
                         <div class="col-md-3 numeroCondominio" @if(!$fornecedor->endereco->is_condomino) style="display:
                             none;" @endif>
                             <div class="form-group">
-                                <label for="numeroCondominio">Número<sup style="color: red">•</sup></label>
+                                <label for="numeroCondominio">Número</label>
                                 <input type="text" class="form-control set-required" id="numeroCondominio"
                                     name="numeroCondominio" @if(!$fornecedor->endereco->is_condomino) required @endif>
                             </div>

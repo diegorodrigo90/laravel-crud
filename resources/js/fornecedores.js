@@ -1,6 +1,11 @@
 var url = document.getElementById("url").textContent;
 var uid = 0;
 var contatosAdicionais = 0;
+
+$("input, select").prev('label').after("<sup class='required' title='Campo obrigatório' style='color: red; display: none'> •</sup>"); //adicionando asterico para campos obrigatorios
+$("[required]").prev('.required').show(); //adicionando asterico para campos obrigatorios
+
+
 var telefoneField = $(".telefone-field").html(); //pegando html da div telefone
 var emailField = $(".email-field").html(); //pegando html da div telefone
 var contactsFields = $(".contacts-field").html(); //pegando html da div .contacts-field
@@ -16,6 +21,7 @@ telefoneField = telefoneField.replace(
     "Adicionar telefone",
     "Remover telefone"
 );
+
 
 //Modificando emailField com dados necessários
 emailField = emailField.replace(/button-add/g, "button-del");
@@ -426,7 +432,7 @@ $("#fornecedorForm").validate({
     validClass: "is-valid",
     errorPlacement: function (error, element) {
         if (element.hasClass("group-error")) {
-            error.insertAfter(element.parent(".input-group"));
+            error.insertAfter(element.next(".select2-container")); // TODO: Corrigir posicionamento do erro com o select2
         } else element.after(error); // default error placement
     },
     onkeyup: validate_function,
@@ -587,10 +593,30 @@ $("#cidade").select2();
 
 $('[data-toggle="tooltip"]').tooltip();
 
-var fillContactFields = function (element, value , type){
-  console.log(contatosData);
+var fillContactFields = function (element, value, type) {
+    console.log(contatosData);
 
 
 }
 
 if (typeof runContactFilling !== 'undefined') fillContactFields();
+
+
+
+//capturando form submit
+$("form#fornecedorForm").on("submit", function () {
+    $('.collapse').collapse('show'); //expande todas os accordion ao enviar
+
+    //desabilita botão se formulario estiver válido
+    if ($(this).valid()) {
+        $('button[type=submit]').html('<i class="fa fa-spinner fa-spin"></i> Cadastrando...');
+        $('button[type=submit]').prop("disabled", true);
+    }
+
+    //aguarda um tempo antes de enviar realmnte
+    setTimeout(function () {
+        $('form#fornecedorForm').submit();
+    }, 1000);
+
+    return false; // desativa envio padrão do formulario
+});

@@ -214,9 +214,8 @@ class FornecedorController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Fornecedor $fornecedor)
     {
-        $fornecedor = Fornecedor::find($id);
         $states = State::all();
         $cities = City::where('state_id', $fornecedor->endereco->uf)->get();
 
@@ -233,7 +232,7 @@ class FornecedorController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        return response()->json($request);
     }
 
     /**

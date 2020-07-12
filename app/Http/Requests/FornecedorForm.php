@@ -59,7 +59,7 @@ class FornecedorForm extends FormRequest
                 'telefoneTipo' => 'required',
                 'email' => 'required|email',
                 'emailTipo' => 'required',
-                'cep' => 'required|numeric',
+                'cep' => 'required',
                 'logradouro' => 'required',
                 'numero' => 'required|numeric',
                 'complemento' => 'nullable',
@@ -91,7 +91,7 @@ class FornecedorForm extends FormRequest
                 'emailTipo' => 'required',
                 'cep' => 'required',
                 'logradouro' => 'required',
-                'numero' => 'required|numeric',
+                'numero' => 'required',
                 'complemento' => 'nullable',
                 'bairro' => 'required',
                 'pontoReferencia' => 'nullable',
@@ -100,7 +100,8 @@ class FornecedorForm extends FormRequest
                 "isCondominio" => 'required', 'in:sim,nao',
                 'enderecoCondominio' => 'required_if:isCondominio,sim',
                 'numeroCondominio' => 'required_if:isCondominio,sim',
-                'observacao' => 'nullable'
+                'observacao' => 'nullable',
+
             ];
         }
     }
@@ -109,9 +110,34 @@ class FornecedorForm extends FormRequest
     {
 
         return [
-            'telefone.regex' => 'Telefone inválido',
             'cpf.unique' => 'CPF já está em uso com outro fornecedor',
-            'cnpj.unique' => 'CNPJ já está em uso com outro fornecedor'
+            'cnpj.unique' => 'CNPJ já está em uso com outro fornecedor',
+            'razaoSocial.required' => "Insira a razão social",
+            'nomeFantasia.required' => "Insira um nome fantasia",
+            'indicadorInscricaoEstadual.required' => "Selecione o indicador de inscrição estadual",
+            'recolhimento.required' => "Selecione o recolhimento",
+            'inscricaoMunicipal.required' => "Preencha a incrição municipal",
+            'ativo.required' => "Selecione seo forrncedor está ativo",
+            'telefone.required' => "Preencha o campo de telefone",
+            'telefone.regex' => 'Preencha o campo de telefone com um número válido',
+            'telefoneTipo.required' => "Selecione o tipo de telefone",
+            'email.required' => "Preencha o campo de telefone",
+            'email.email' => "Insira em e-mail válido",
+            'emailTipo.required' => "Selecione o tipo de e-mail",
+            'cep.required' => "Insira um cep",
+            'numero.required' => "Preencha um número para este endereço",
+            'bairro.required' => "Preencha um bairro para este endereço",
+            'uf.required' => "Selecione um estado",
+            'uf.numeric' => "Estado selecionado inválido",
+            'uf.required' => "Selecione uma cidade",
+            'uf.numeric' => "Cidade selecionada inválida",
+            'isCondominio.required' => "Deve marcar se é ou não um condomínio",
+            'enderecoCondominio.required_if' => "Insira o endereço do condomínio",
+            'numeroCondominio.required_if' => "Insira o número do condomínio",
+            'nome.required' => 'Preencha o nome',
+            'apelido.required' => 'Preencha o nome',
+            'rg.required' => 'Preencha o RG',
+
         ];
     }
 }

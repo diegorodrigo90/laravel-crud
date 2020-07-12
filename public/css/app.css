@@ -10932,3 +10932,10 @@ a.text-dark:focus {
   }
 }
 
+.required {
+  position: absolute;
+  margin-left: -10px;
+  color: #FB0000 !important;
+  font-size: 15px;
+}
+
