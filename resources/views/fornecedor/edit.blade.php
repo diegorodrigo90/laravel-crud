@@ -577,9 +577,9 @@
 <script type="text/javascript" src="{{ asset('/js/validate.rules.js')}}" defer></script>
 <script type="text/javascript">
     var contatosData  = {
-        "contatosPrincipais" : {!! $fornecedor->contatosPrincipais->toJson(JSON_PRETTY_PRINT) !!},
-        "PessoasContatos" : {!! $fornecedor->pessoasContatos->toJson(JSON_PRETTY_PRINT) !!},
-        "contatosAdicionais" : {!! $fornecedor->contatosPrincipais->toJson(JSON_PRETTY_PRINT) !!}
+        "contatosPrincipais" : {!! $fornecedor->contatosPrincipais->toJson() !!},
+        "PessoasContatos" : {!! $fornecedor->pessoasContatos->toJson() !!},
+        "contatosAdicionais" : {!! $fornecedor->contatosPrincipais->toJson() !!}
 
     }
 
