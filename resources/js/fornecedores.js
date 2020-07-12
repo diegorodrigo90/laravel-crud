@@ -516,14 +516,42 @@ var addEmailTelefone = function (element) {
 };
 
 //preencher os contatos na pagina de edição
-var contatosData = (typeof contatosData === 'undefined') ? null : contatosData;
-
+/*eslint-disable */
 var fillContactsFields = function () {
 
-	console.log(contatosData);
+    console.log(contatosData);
 };
 
-if(contatosData)fillContactsFields();
+//executa a função de fillContactsFields apenas se existir o objeto contatosData
+if (typeof contatosData !== 'undefined') fillContactsFields();
+/*eslint-enable */
+
+//Oculta/exibe campo de inscrição estadual
+var IndicadorInscricaoEstadual = function () {
+	let IndicadorInscricaoEstadual = $('#indicadorInscricaoEstadual');
+	let inscricaoEstadual = $('#inscricaoEstadual');
+
+	if (IndicadorInscricaoEstadual.val() == 'Contribuinte' || IndicadorInscricaoEstadual.val() == 'Contribuinte Isento') {
+		inscricaoEstadual.prev('sup').show();
+		inscricaoEstadual.prop('required', true);
+		inscricaoEstadual.prop('disabled', false);
+	} else {
+		inscricaoEstadual.prev('sup').hide();
+		inscricaoEstadual.prop('required', false);
+		inscricaoEstadual.prop('disabled', true);
+
+	}
+
+
+};
+
+IndicadorInscricaoEstadual();
+
+$('#indicadorInscricaoEstadual').on('change', function () {
+	IndicadorInscricaoEstadual();
+	$('#inscricaoEstadual').removeClass('is-invalid');
+	$('#inscricaoEstadual').next('label.is-invalid').hide();
+});
 
 
 

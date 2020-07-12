@@ -82,6 +82,7 @@ class FornecedorForm extends FormRequest
                 'razaoSocial' => 'required',
                 'nomeFantasia' => 'required',
                 'indicadorInscricaoEstadual' => 'required',
+                'inscricaoEstadual' => 'required_if:indicadorInscricaoEstadual,Contribuinte, Contribuinte Isento',
                 'recolhimento' => 'required',
                 'ativo' => 'required',
                 'telefone' => 'required|regex:/(\(?\d{2}\)?\s)?(\d{4,5}\-\d{4})/u',
@@ -135,6 +136,7 @@ class FornecedorForm extends FormRequest
             'nome.required' => 'Preencha o nome',
             'apelido.required' => 'Preencha o nome',
             'rg.required' => 'Preencha o RG',
+            'inscricaoEstadual.required_if' => 'Preencha a Inscrição Estadual',
 
         ];
     }
