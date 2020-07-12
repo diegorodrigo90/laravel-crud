@@ -38,35 +38,34 @@
                 <div class="row">
 
 
-                    <div class="col-md-3" id="div-cpf" style="display: none">
+                    <div class="col-md-3" id="div-cpf">
                         <div class="form-group">
                             <label for="cpf">CPF</label>
-                            <input pattern="\d{3}\.\d{3}\.\d{3}-\d{2}" name="cpf" type="text"
-                                class="form-control set-required" id="cpf" value="{{ $fornecedor->pessoable->cpf }}"
-                                disabled>
+                            <input pattern="\d{3}\.\d{3}\.\d{3}-\d{2}" name="cpf" type="text" class="form-control set-"
+                                id="cpf" value="{{ $fornecedor->pessoable->cpf }}" disabled>
                         </div>
                     </div>
 
-                    <div class="col-md-6" id="div-nome" style="display: none">
+                    <div class="col-md-6" id="div-nome">
                         <div class="form-group">
                             <label for="nome">Nome </label>
-                            <input type="text" class="form-control set-required" id="nome" name="nome"
+                            <input type="text" class="form-control set-" id="nome" name="nome"
                                 value="{{ $fornecedor->pessoable->nome }}" disabled>
                         </div>
                     </div>
 
-                    <div class="col-md-3" id="div-apelido" style="display: none">
+                    <div class="col-md-3" id="div-apelido">
                         <div class="form-group">
                             <label for="apelido">Apelido</label>
-                            <input type="text" class="form-control set-required" id="apelido" name="apelido"
+                            <input type="text" class="form-control set-" id="apelido" name="apelido"
                                 value="{{ $fornecedor->pessoable->apelido }}" disabled>
                         </div>
                     </div>
 
-                    <div class="col-md-3" id="div-rg" style="display: none">
+                    <div class="col-md-3" id="div-rg">
                         <div class="form-group">
                             <label for="rg">RG </label>
-                            <input type="text" class="form-control set-required" id="rg" name="rg"
+                            <input type="text" class="form-control set-" id="rg" name="rg"
                                 value="{{ $fornecedor->pessoable->rg }}" disabled>
                         </div>
                     </div>
@@ -101,8 +100,7 @@
                                     <div class="form-group">
                                         <label for="razaoSocial">Razão Social </label>
                                         <input type="text" value="{{$fornecedor->pessoable->razao_social}}"
-                                            class="form-control set-required" id="razaoSocial" name="razaoSocial"
-                                            disabled>
+                                            class="form-control set-" id="razaoSocial" name="razaoSocial" disabled>
                                     </div>
                                 </div>
 
@@ -110,8 +108,7 @@
                                     <div class="form-group">
                                         <label for="nomeFantasia">Nome fantasia </label>
                                         <input type="text" value="{{$fornecedor->pessoable->nome_fantasia}}"
-                                            class="form-control set-required" id="nomeFantasia" name="nomeFantasia"
-                                            disabled>
+                                            class="form-control set-" id="nomeFantasia" name="nomeFantasia" disabled>
                                     </div>
                                 </div>
 
@@ -119,8 +116,7 @@
                                     <div class="form-group">
                                         <label for="indicadorInscricaoEstadual">Indicador de Inscrição Estadual</label>
                                         <select disabled id="indicadorInscricaoEstadual"
-                                            name="indicadorInscricaoEstadual" class="form-control set-required"
-                                            required>
+                                            name="indicadorInscricaoEstadual" class="form-control set-">
                                             <option selected>{{ $fornecedor->pessoable->indicador_inscricao_estadual }}
                                             </option>
                                         </select>
@@ -130,7 +126,7 @@
                                 <div class="col-md-3" id="div-inscricao-estadual">
                                     <div class="form-group">
                                         <label for="inscricaoEstadual">Inscrição Estadual</label>
-                                        <input type="text" class="form-control set-required"
+                                        <input type="text" class="form-control set-"
                                             value="{{$fornecedor->pessoable->inscricao_estadual}}"
                                             id="inscricaoEstadual" name="inscricaoEstadual" disabled>
                                     </div>
@@ -139,7 +135,7 @@
                                 <div class="col-md-3" id="div-inscricao-municipal">
                                     <div class="form-group">
                                         <label for="inscricaoMunicipal">Inscrição Municipal</label>
-                                        <input type="text" class="form-control set-required"
+                                        <input type="text" class="form-control set-"
                                             value="{{$fornecedor->pessoable->inscricao_municipal}}"
                                             id="inscricaoMunicipal" name="inscricaoMunicipal" disabled>
                                     </div>
@@ -148,7 +144,7 @@
                                 <div class="col-md-3" id="div-situacao-cnpj">
                                     <div class="form-group">
                                         <label for="situacaoCNPJ">Situação CNPJ</label>
-                                        <input type="text" class="form-control set-required"
+                                        <input type="text" class="form-control set-"
                                             value="{{$fornecedor->pessoable->situacao_cnpj}}" id="situacaoCNPJ"
                                             name="situacaoCNPJ" disabled>
                                     </div>
@@ -157,7 +153,7 @@
                                 <div class="col-md-3" id="div-recolhimento">
                                     <div class="form-group">
                                         <label for="recolhimento">Recolhimento</label>
-                                        <select id="recolhimento" name="recolhimento" class="form-control set-required"
+                                        <select id="recolhimento" name="recolhimento" class="form-control set-"
                                             disabled>
                                             <option selected>{{ $fornecedor->pessoable->recolhimento }}</option>
                                         </select>
@@ -170,7 +166,7 @@
                                 <div class="col-md-3" id="div-ativo">
                                     <div class="form-group">
                                         <label for="ativo">Ativo</label>
-                                        <select id="ativo" name="ativo" class="form-control set-required" disabled>>
+                                        <select id="ativo" name="ativo" class="form-control set-" disabled>>
                                             <option selected>{{ ($fornecedor->is_active) ? 'Sim' : 'Não' }}</option>
 
                                         </select>
@@ -186,6 +182,7 @@
 
 
                 <!-- Contato principal-->
+
                 <div class="card card-secondary">
                     <h5 class="card-header" role="tab">
                         <a data-toggle="collapse" data-parent="#accordion" href="#contatoPrincipal" aria-expanded="true"
@@ -203,22 +200,24 @@
 
                                         <span class="telefone-field">
                                             <div class="telefone-principal row col-md6">
+                                                @foreach ($fornecedor->contatosPrincipais as $telefone)
+                                                @if ($telefone->qual_contato == "Telefone")
                                                 <div class="form-group col-6">
                                                     <label for="telefone">Telefone</label>
                                                     <input type="text" class="form-control telefone" name="telefone"
-                                                        value="{{ $fornecedor->pessoable->telefone }}">
+                                                        value="{{ $telefone->contato}}" disabled>
                                                 </div>
-
                                                 <div class="form-group  col-6">
-
                                                     <label for="telefoneTipo">Tipo</label>
                                                     <div class="input-form">
                                                         <select id="telefoneTipo" name="telefoneTipo"
-                                                            class="form-control group-error" required>
-                                                            <option selected disabled>Selecione</option>
+                                                            class="form-control group-error" disabled>
+                                                            <option selected>{{ $telefone->tipo}}</option>
                                                         </select>
                                                     </div>
                                                 </div>
+                                                @endif
+                                                @endforeach
                                             </div>
                                         </span>
 
@@ -229,28 +228,31 @@
                                     <div class="col-md-6" id="emailContato">
 
                                         <span class="email-field">
-
                                             <div class="email-principal row">
+                                                @foreach ($fornecedor->contatosPrincipais as $email)
+                                                @if ($email->qual_contato == "E-mail")
                                                 <div class="form-group col-6">
                                                     <label for="email">E-mail</label>
-                                                    <input type="text" class="form-control email" name="email" required>
+                                                    <input type="text" class="form-control email"
+                                                        value="{{ $email->contato }}" disabled>
                                                 </div>
+
 
                                                 <div class="form-group  col-6">
 
                                                     <label for="emailTipo">Tipo</label>
                                                     <div class="input-form">
                                                         <select name="emailTipo" name="emailTipo"
-                                                            class="form-control group-error" required>
-                                                            <option selected disabled>Selecione</option>
-                                                            <option>Pessoal</option>
-                                                            <option>Comercial</option>
-                                                            <option>Outro</option>
+                                                            class="form-control group-error" disabled>
+                                                            <option selected>{{ $email->tipo }}</option>
                                                         </select>
                                                     </div>
                                                 </div>
+                                                @endif
+                                                @endforeach
 
                                             </div>
+
                                         </span>
 
                                         <div class="emailsAdicionais"></div>
@@ -262,65 +264,131 @@
                         </div>
                     </div>
                 </div>
+
+
                 <!-- /Contato principal -->
 
 
                 <!-- Contatos adicionais-->
-                <div id="contatos-adicional">
-                    <div class="card card-secondary contatos-adicional">
-                        <h5 class="card-header" role="tab">
-                            <a data-toggle="collapse" data-parent="#accordion" href="#contatosAdicionais"
-                                aria-expanded="true" aria-controls="collapseTwo" class="d-block">
-                                <i class="fa fa-chevron-down float-right"></i> Contato Adicional
-                            </a>
-                        </h5>
+                @foreach ($fornecedor->pessoasContatos as $pessoa)
 
-                        <div class="collapse show" role="tabpanel" aria-labelledby="contatosAdicionais">
+                <div class="card card-secondary">
+                    <h5 class="card-header" role="tab">
+                        <a data-toggle="collapse" data-parent="#accordion" href="#contatoPrincipal" aria-expanded="true"
+                            aria-controls="contatoPrincipal" class="d-block">
+                            <i class="fa fa-chevron-down float-right"></i> Contato adicional
+                        </a>
+                    </h5>
+                    <div id="contatoPrincipal" class="collapse show" role="tabpanel" aria-labelledby="contatoPrincipal">
+                        <div class="card-body">
 
-                            <div class="card-body">
-
+                            <div class="contacts-field">
                                 <div class="row">
 
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label for="contato-adicional[nome]">Nome</label>
-                                            <input type="text" class="form-control set-required"
-                                                name="contato-adicional[][nome]">
+                                            <input type="text" class="form-control set-" value="{{ $pessoa->nome }}"
+                                                disabled>
                                         </div>
                                     </div>
 
                                     <div class="col-md-3" id="div-inscricao-minucipal">
                                         <div class="form-group">
                                             <label for="contato-adicional[empresa]">Empresa</label>
-                                            <input type="text" class="form-control set-required"
-                                                name="contato-adicional[][empresa]">
+                                            <input type="text" class="form-control set-" value="{{ $pessoa->empresa }}"
+                                                disabled>
                                         </div>
                                     </div>
 
                                     <div class="col-md-3" id="div-inscricao-minucipal">
                                         <div class="form-group">
                                             <label for="contato-adicional[cargo]">Cargo</label>
-                                            <input type="text" class="form-control set-required"
-                                                name="contato-adicional[][cargo]">
+                                            <input type="text" class="form-control set-" value="{{ $pessoa->cargo }}"
+                                                disabled>
                                         </div>
                                     </div>
 
                                 </div>
+                                <div class="row">
 
-                                <div id="contato-adicional-fields"></div>
+                                    <div class="col-md-6" id="telefoneContato">
+                                        @foreach ($fornecedor->contatosAdicionais as $contato)
+                                        @if($contato->pessoa_contato_id == $pessoa->id)
+                                        @if($contato->qual_contato == 'Telefone')
 
+                                        <span class="telefone-field">
+                                            <div class="telefone-principal row col-md6">
+                                                <div class="form-group col-6">
+                                                    <label for="telefone">Telefone</label>
+                                                    <input type="text" class="form-control telefone" name="telefone"
+                                                        value="{{ $contato->contato }}" disabled>
+                                                </div>
 
+                                                <div class="form-group  col-6">
+
+                                                    <label for="telefoneTipo">Tipo</label>
+                                                    <div class="input-form">
+                                                        <select id="telefoneTipo" name="telefoneTipo"
+                                                            class="form-control group-error" disabled>
+                                                            <option selected>{{ $contato->tipo }}</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </span>
+                                        @endif
+                                        @endif
+                                        @endforeach
+
+                                        <div class="telefonesAdicionais"></div>
+
+                                    </div>
+
+                                    <div class="col-md-6" id="emailContato">
+
+                                        @foreach ($fornecedor->contatosAdicionais as $contato)
+                                        @if($contato->pessoa_contato_id == $pessoa->id)
+                                        @if($contato->qual_contato == 'E-mail')
+
+                                        <span class="email-field">
+
+                                            <div class="email-principal row">
+                                                <div class="form-group col-6">
+                                                    <label for="email">E-mail</label>
+                                                <input type="text" class="form-control email" value="{{ $contato->contato }}" disabled>
+                                                </div>
+
+                                                <div class="form-group  col-6">
+
+                                                    <label for="emailTipo">Tipo</label>
+                                                    <div class="input-form">
+                                                        <select name="emailTipo" name="emailTipo"
+                                                            class="form-control group-error" disabled>
+                                                            <option selected disabled>{{ $contato->tipo }}</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </span>
+                                        @endif
+                                        @endif
+                                        @endforeach
+                                        <div class="emailsAdicionais"></div>
+
+                                    </div>
+                                </div>
                             </div>
 
-                            <div class="card-footer">
-                                <div class="btn btn-danger float-right remove-contact" data-toggle="tooltip"
-                                    title="Remover contato adicional" data-remove="contatos-adicional"><i
-                                        class="fa fa-trash"></i></div>
-                            </div>
                         </div>
                     </div>
                 </div>
-                <!-- /Contatos adicionais -->
+                @endforeach
+
+                <!-- /Contatos adicionais-->
+
+
 
                 <!-- Dados de endereço-->
                 <div class="card card-secondary">
@@ -415,7 +483,7 @@
                                 <div class="col-md-3 enderecoCondominio">
                                     <div class="form-group">
                                         <label for="enderecoCondominio">Endereço</label>
-                                        <input type="text" class="form-control set-required" id="enderecoCondominio"
+                                        <input type="text" class="form-control set-" id="enderecoCondominio"
                                             name="enderecoCondominio"
                                             value="{{$fornecedor->endereco->endereco_condominio}}" disabled>
                                     </div>
@@ -424,7 +492,7 @@
                                 <div class="col-md-3 numeroCondominio">
                                     <div class="form-group">
                                         <label for="numeroCondominio">Número</label>
-                                        <input type="text" class="form-control set-required" id="numeroCondominio"
+                                        <input type="text" class="form-control set-" id="numeroCondominio"
                                             name="numeroCondominio" value="{{$fornecedor->endereco->numero_condominio}}"
                                             disabled>
                                     </div>

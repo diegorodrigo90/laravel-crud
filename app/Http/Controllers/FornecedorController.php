@@ -107,7 +107,7 @@ class FornecedorController extends Controller
                     [
                         "qual_contato" => 'E-mail',
                         "contato" => $request->email,
-                        "tipo" => $request->email,
+                        "tipo" => $request->emailTipo,
                     ],
                 );
             }
@@ -117,7 +117,7 @@ class FornecedorController extends Controller
                     [
                         "qual_contato" => 'Telefone',
                         "contato" => $request->telefone,
-                        "tipo" => $request->telefone,
+                        "tipo" => $request->telefoneTipo,
                     ],
                 );
             }
