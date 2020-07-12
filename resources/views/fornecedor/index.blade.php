@@ -38,21 +38,6 @@
 </div>
 @endif
 
-<?php
-
-function formatCnpjCpf($value)
-{
-    $cnpj_cpf = preg_replace("/\D/", '', $value);
-
-    if (strlen($cnpj_cpf) === 11) {
-        return preg_replace("/(\d{3})(\d{3})(\d{3})(\d{2})/", "\$1.\$2.\$3-\$4", $cnpj_cpf);
-    }
-
-    return preg_replace("/(\d{2})(\d{3})(\d{3})(\d{4})(\d{2})/", "\$1.\$2.\$3/\$4-\$5", $cnpj_cpf);
-}
-
-?>
-
 <div class="card">
     <div class="card-body">
         <table id="fornecedoresTable" class="table table-bordered table-hover">
@@ -73,7 +58,7 @@ function formatCnpjCpf($value)
                 <tr>
                     <td>{{ $fornecedor->pessoable->razao_social }}</td>
                     <td>{{ $fornecedor->pessoable->nome_fantasia }}</td>
-                    <td>{{ formatCnpjCpf($fornecedor->pessoable->cnpj) }}</td>
+                    <td>{{ Helper::formatCnpjCpf($fornecedor->pessoable->cnpj) }}</td>
                     @if ($fornecedor->is_active)
                     <td> <span class="badge badge-success">Ativo</span> </td>
                     @else
@@ -92,7 +77,7 @@ function formatCnpjCpf($value)
                                 <a class="dropdown-item" href="{{route('fornecedor.edit', [$id =$fornecedor->id])}}"><i
                                         class="fa fa-edit"></i> Editar</a>
                                 <div class="dropdown-divider"></div>
-                                <a class="dropdown-item mostra-modal-excluir" data-id="{{$fornecedor->id}}"
+                                <a class="dropdown-item mostra-modal-excluir bg-danger" data-id="{{$fornecedor->id}}"
                                     data-nome="{{ $fornecedor->pessoable->razao_social }}"
                                     data-link="{{route('fornecedor.destroy', [$id = $fornecedor->id])}}" href="#"><i
                                         class="fa fa-trash"></i> Excluir</a>
@@ -107,7 +92,7 @@ function formatCnpjCpf($value)
                 <tr>
                     <td>{{ $fornecedor->pessoable->nome }}</td>
                     <td>{{ $fornecedor->pessoable->apelido }}</td>
-                    <td>{{ formatCnpjCpf($fornecedor->pessoable->cpf) }}</td>
+                    <td>{{ Helper::formatCnpjCpf($fornecedor->pessoable->cpf) }}</td>
                     @if ($fornecedor->is_active)
                     <td> <span class="badge badge-success">Ativo</span> </td>
                     @else

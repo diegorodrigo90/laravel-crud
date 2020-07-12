@@ -227,6 +227,7 @@ return [
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
         'HTMLMin' => HTMLMin\HTMLMin\Facades\HTMLMin::class,
+        'Helper' => App\Helper\Helper::class
 
     ],
 
