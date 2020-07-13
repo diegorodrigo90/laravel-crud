@@ -221,7 +221,8 @@
                                     <div class="telefone-principal row col-md6">
                                         <div class="form-group col-6">
                                             <label for="telefone">Telefone</label>
-                                            <input type="text" class="form-control telefone" name="telefone" required data-mask="telefoneMask, telefoneMaskOptions">
+                                            <input type="text" class="form-control telefone" name="telefone" required
+                                                data-mask="telefoneMask, telefoneMaskOptions">
                                         </div>
 
                                         <div class="form-group  col-6">
@@ -449,21 +450,21 @@
                                 <label for="uf">UF</label>
                                 <select id="uf" name="uf" class="form-control" required>
                                     @foreach ($states as $state)
-                                    <option value="{{ $state->id }}" @if($fornecedor->pessoable->uf == $state->id )
+                                    <option value="{{ $state->id }}" @if($fornecedor->endereco->uf == $state->id )
                                         selected @endif>{{ $state->letter }}</option>
                                     @endforeach
 
                                 </select>
                             </div>
-                        </div>
+                        </div>git
 
                         <div class="col-md-3">
                             <div class="form-group">
                                 <label for="cidade">Cidade</label>
                                 <select id="cidade" name="cidade" class="form-control" required>
                                     @foreach ($cities as $city)
-                                    <option value="{{ $city->id }}" @if($fornecedor->pessoable->cidade == $city->id )
-                                        selected @endif>{{ $city->title }}</option>
+                                    <option value="{{ $city->id }}" @if($fornecedor->endereco->cidade == $city->id
+                                        )selected @endif>{{ $city->title }}</option>
                                     @endforeach
                                 </select>
                             </div>
@@ -577,7 +578,6 @@
 @section('js')
 <script type="text/javascript" src="{{ asset('/js/validate.rules.js')}}"></script>
 <script type="text/javascript">
-
     var contatosData  = {
         "contatosPrincipais" : {!! $fornecedor->contatosPrincipais->toJson() !!},
         "pessoasContatos" : {!! $fornecedor->pessoasContatos->toJson() !!},
