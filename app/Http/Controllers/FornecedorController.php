@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\FornecedorForm;
 use App\Models\City;
+use App\Models\ContatoAdicional;
 use App\Models\ContatoPrincipal;
 use App\Models\Fornecedor;
 use App\Models\PessoaContato;
@@ -57,12 +58,13 @@ class FornecedorController extends Controller
         // return response()->json($request);
 
 
-
         DB::beginTransaction();
 
         try {
             if ($request->tipoPessoa == 'juridica') {
+
                 $pessoa = new PessoaJuridica;
+
                 $pessoa->cnpj = preg_replace('~\D~', '', $request->cnpj);
                 $pessoa->razao_social = $request->razaoSocial;
                 $pessoa->nome_fantasia = $request->nomeFantasia;
@@ -70,22 +72,27 @@ class FornecedorController extends Controller
                 $pessoa->inscricao_estadual = $request->inscricaoEstadual;
                 $pessoa->inscricao_municipal = $request->inscricaoMunicipal;
                 $pessoa->recolhimento = $request->recolhimento;
-                // $pessoa->save();
             } else if ($request->tipoPessoa == 'fisica') {
+
                 $pessoa = new PessoaFisica;
+
                 $pessoa->cpf =  preg_replace('~\D~', '', $request->cpf);
                 $pessoa->nome = $request->nome;
                 $pessoa->apelido = $request->apelido;
                 $pessoa->rg = $request->rg;
             } else {
+                DB::rollback();
+
                 return redirect()->back()->withErrors('Erro ao cadastrar fornecedor')->withInput($request->input());
             }
             $pessoa->save();
 
             $fornecedor = new Fornecedor;
+
             $fornecedor->is_active = ($request->ativo == 'Sim') ? true : false;
             $fornecedor->observacao = $request->observacao;
             $fornecedor->pessoable()->associate($pessoa);
+
             $fornecedor->save();
 
             $fornecedor->endereco()->create(
@@ -151,19 +158,7 @@ class FornecedorController extends Controller
             }
 
             if ($request->{'contato-adicional'}) {
-
-                foreach ($request->{'email-adicional'} as $key => $email) {
-                    $fornecedor->contatosPrincipais()->create(
-                        [
-                            "qual_contato" => 'E-mail',
-                            "contato" => $email['email'],
-                            "tipo" => $email['tipo'],
-                        ],
-                    );
-                }
-
                 foreach ($request->{'contato-adicional'} as $key => $contato) {
-
                     $pessoaContato = new PessoaContato();
                     $pessoaContato->nome = $contato['nome'];
                     $pessoaContato->empresa = $contato['empresa'];
@@ -172,24 +167,21 @@ class FornecedorController extends Controller
                     $pessoaContato->save();
 
                     foreach ($contato['telefone'] as $telefones) {
-
-                        $pessoaContato->contato()->create(
-                            [
-                                'qual_contato' => 'Telefone',
-                                'contato' => $telefones['telefone'],
-                                'tipo' => $telefones['tipo'],
-                            ]
-                        );
+                        $contatoAdicional = new ContatoAdicional();
+                        $contatoAdicional->pessoa_contato_id = $pessoaContato->id;
+                        $contatoAdicional->qual_contato = 'Telefone';
+                        $contatoAdicional->contato = $telefones['telefone'];
+                        $contatoAdicional->tipo = $telefones['tipo'];
+                        $contatoAdicional->save();
                     }
 
                     foreach ($contato['email'] as $key => $emails) {
-                        $pessoaContato->contato()->create(
-                            [
-                                'qual_contato' => 'E-mail',
-                                'contato' => $emails['email'],
-                                'tipo' => $emails['tipo'],
-                            ]
-                        );
+                        $contatoAdicional = new ContatoAdicional();
+                        $contatoAdicional->pessoa_contato_id = $pessoaContato->id;
+                        $contatoAdicional->qual_contato = 'E-mail';
+                        $contatoAdicional->contato = $emails['email'];
+                        $contatoAdicional->tipo = $emails['tipo'];
+                        $contatoAdicional->save();
                     }
                 }
             }
@@ -238,13 +230,10 @@ class FornecedorController extends Controller
     public function update(FornecedorForm $request, Fornecedor $fornecedor)
     {
 
-
         // return response()->json($request);
         DB::beginTransaction();
 
-
         try {
-
 
             $fornecedor->update(
                 [
@@ -277,7 +266,9 @@ class FornecedorController extends Controller
                     ]
                 );
             } else {
+
                 DB::rollback();
+
                 return redirect()->back()->withErrors('Erro ao atualizar fornecedor')->withInput($request->input());
             }
 
@@ -303,7 +294,6 @@ class FornecedorController extends Controller
             $fornecedor->pessoasContatos()->delete();
 
             //TODO: Remover esta implementação, e tratar cada contato com update/delete/create
-
             if ($request->email) {
                 $fornecedor->contatosPrincipais()->create(
                     [
@@ -350,18 +340,7 @@ class FornecedorController extends Controller
             }
 
             if ($request->{'contato-adicional'}) {
-                foreach ($request->{'email-adicional'} as $key => $email) {
-                    $fornecedor->contatosPrincipais()->create(
-                        [
-                            "qual_contato" => 'E-mail',
-                            "contato" => $email['email'],
-                            "tipo" => $email['tipo'],
-                        ],
-                    );
-                }
-
                 foreach ($request->{'contato-adicional'} as $key => $contato) {
-
                     $pessoaContato = new PessoaContato();
                     $pessoaContato->nome = $contato['nome'];
                     $pessoaContato->empresa = $contato['empresa'];
@@ -370,28 +349,29 @@ class FornecedorController extends Controller
                     $pessoaContato->save();
 
                     foreach ($contato['telefone'] as $telefones) {
-                        $pessoaContato->contato()->create(
-                            [
-                                'qual_contato' => 'Telefone',
-                                'contato' => $telefones['telefone'],
-                                'tipo' => $telefones['tipo'],
-                            ]
-                        );
+
+                        $contatoAdicional = new ContatoAdicional();
+                        $contatoAdicional->pessoa_contato_id = $pessoaContato->id;
+                        $contatoAdicional->qual_contato = 'Telefone';
+                        $contatoAdicional->contato = $telefones['telefone'];
+                        $contatoAdicional->tipo = $telefones['tipo'];
+                        $contatoAdicional->save();
                     }
 
                     foreach ($contato['email'] as $key => $emails) {
-                        $pessoaContato->contato()->create(
-                            [
-                                'qual_contato' => 'E-mail',
-                                'contato' => $emails['email'],
-                                'tipo' => $emails['tipo'],
-                            ]
-                        );
+                        $contatoAdicional = new ContatoAdicional();
+                        $contatoAdicional->pessoa_contato_id = $pessoaContato->id;
+                        $contatoAdicional->qual_contato = 'E-mail';
+                        $contatoAdicional->contato = $emails['email'];
+                        $contatoAdicional->tipo = $emails['tipo'];
+                        $contatoAdicional->save();
                     }
                 }
             }
         } catch (QueryException $error) {
+
             DB::rollback();
+
             return redirect()->back()->withErrors('Ocorreu um erro ao atualizar fornecedor')->withInput($request->input());
         }
 
