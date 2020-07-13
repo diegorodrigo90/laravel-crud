@@ -36,4 +36,16 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    //Admin LTE  data
+    public function adminlte_image()
+    {
+        return 'https://picsum.photos/300/300';
+    }
+
+    //Admin LTE fake data
+    public function adminlte_desc()
+    {
+        return 'That\'s a nice guy';
+    }
 }

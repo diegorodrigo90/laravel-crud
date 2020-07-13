@@ -32,9 +32,10 @@
 @endif
 
 
-
-<form role="form" method="POST" action="{{ route('fornecedor.index') }}" id="fornecedorForm">
+<form role="form" method="POST" action="{{ route('fornecedor.update', [$fornecedor->id]) }}" id="fornecedorForm">
     @csrf
+    @method('put')
+    <input type="hidden" name="id" value="{{ $fornecedor->id }}">
     <div id="accordion" role="tablist" aria-multiselectable="true">
         <!-- Dados do fornecedor -->
         <div class="card card-secondary">
@@ -574,14 +575,20 @@
 @stop
 
 @section('js')
-<script type="text/javascript" src="{{ asset('/js/validate.rules.js')}}" defer></script>
+<script type="text/javascript" src="{{ asset('/js/validate.rules.js')}}"></script>
 <script type="text/javascript">
+    $(document).ready(function () {
+
     var contatosData  = {
         "contatosPrincipais" : {!! $fornecedor->contatosPrincipais->toJson() !!},
         "PessoasContatos" : {!! $fornecedor->pessoasContatos->toJson() !!},
         "contatosAdicionais" : {!! $fornecedor->contatosPrincipais->toJson() !!}
 
     }
+
+	addEmailField();
+
+});
 
 </script>
 <script type="text/javascript" src="{{ asset('/js/fornecedores.js')}}" defer></script>

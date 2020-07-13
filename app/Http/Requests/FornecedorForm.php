@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use App\Models\Fornecedor;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
@@ -44,12 +45,23 @@ class FornecedorForm extends FormRequest
     {
         $input = parent::all();
 
+        $fornecedor = Fornecedor::find($this->id);
+
+        if ($fornecedor) {
+            $cpf = $fornecedor->pessoable->cpf;
+            $cnpj = $fornecedor->pessoable->cnpj;
+        } else {
+            $cpf = false;
+            $cnpj = false;
+        }
+
         if ($input['tipoPessoa'] == 'fisica') {
 
             return [
                 'cpf' => [
                     'required', 'cpf',
                     Rule::unique('pessoas_fisicas')
+                        ->ignore($cpf, 'cpf')
                 ],
                 'nome' => 'required',
                 'apelido' => 'required',
@@ -78,6 +90,7 @@ class FornecedorForm extends FormRequest
                 'cnpj' =>  [
                     'required', 'cnpj',
                     Rule::unique('pessoas_juridicas')
+                        ->ignore($cnpj, 'cnpj')
                 ],
                 'razaoSocial' => 'required',
                 'nomeFantasia' => 'required',

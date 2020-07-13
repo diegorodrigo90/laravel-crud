@@ -34,6 +34,6 @@ class Fornecedor extends Model
 
     public function contatosAdicionais()
     {
-        return $this->hasManyThrough('App\Models\ContatoAdicional', 'App\Models\PessoaContato');
+        return $this->hasManyThrough('App\Models\ContatoAdicional', 'App\Models\PessoaContato')->orderBy('id', 'ASC');
     }
 }

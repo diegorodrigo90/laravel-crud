@@ -115,8 +115,7 @@
                                 <div class="col-md-3" id="div-indicador-inscricao-estadual">
                                     <div class="form-group">
                                         <label for="indicadorInscricaoEstadual">Indicador de Inscrição Estadual</label>
-                                        <select disabled id="indicadorInscricaoEstadual"
-                                            name="indicadorInscricaoEstadual" class="form-control set-">
+                                        <select disabled name="indicadorInscricaoEstadual" class="form-control set-">
                                             <option selected>{{ $fornecedor->pessoable->indicador_inscricao_estadual }}
                                             </option>
                                         </select>
@@ -128,7 +127,7 @@
                                         <label for="inscricaoEstadual">Inscrição Estadual</label>
                                         <input type="text" class="form-control set-"
                                             value="{{$fornecedor->pessoable->inscricao_estadual}}"
-                                            id="inscricaoEstadual" name="inscricaoEstadual" disabled>
+                                            name="inscricaoEstadual" disabled>
                                     </div>
                                 </div>
 
@@ -356,7 +355,8 @@
                                             <div class="email-principal row">
                                                 <div class="form-group col-6">
                                                     <label for="email">E-mail</label>
-                                                <input type="text" class="form-control email" value="{{ $contato->contato }}" disabled>
+                                                    <input type="text" class="form-control email"
+                                                        value="{{ $contato->contato }}" disabled>
                                                 </div>
 
                                                 <div class="form-group  col-6">
@@ -552,8 +552,8 @@
             <script src="{{ asset('/js/fornecedores.js')}}" defer></script>
 
             <script>
-                $("#observacao").summernote("disable")
-      $(".note-toolbar").remove(); //remove a barra de edição
+                $("#observacao").summernote("disable");
+                $(".note-toolbar").remove(); //remove a barra de edição
 
             </script>
 
