@@ -26,12 +26,12 @@
             <div class="card-body">
                 <div class="form-check form-check-inline mb-3">
                     <input disabled class="form-check-input" type="radio" name="tipoPessoa" id="PessoaJuridicaRadio"
-                        value="juridica">
+                        value="juridica" @if($fornecedor->pessoable->cnpj) checked @endif>
                     <label class="form-check-label" for="PessoaJuridicaRadio">Pessoa Jurídica</label>
                 </div>
                 <div class="form-check form-check-inline mb-3">
                     <input disabled class="form-check-input" type="radio" name="tipoPessoa" id="PessoaFisicaRadio"
-                        value="fisica" checked>
+                        value="fisica" @if($fornecedor->pessoable->cpf) checked @endif>
                     <label class="form-check-label" for="PessoaFisicaRadio">Pessoa Física</label>
                 </div>
 

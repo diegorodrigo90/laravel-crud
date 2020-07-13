@@ -240,9 +240,8 @@ class FornecedorController extends Controller
 
 
         // return response()->json($request);
-
-
         DB::beginTransaction();
+
 
         try {
 
@@ -282,7 +281,7 @@ class FornecedorController extends Controller
                 return redirect()->back()->withErrors('Erro ao atualizar fornecedor')->withInput($request->input());
             }
 
-            $fornecedor->endereco()->create(
+            $fornecedor->endereco()->update(
                 [
                     "cep" => preg_replace('~\D~', '', $request->cep),
                     "logradouro" => $request->logradouro,
@@ -351,7 +350,6 @@ class FornecedorController extends Controller
             }
 
             if ($request->{'contato-adicional'}) {
-
                 foreach ($request->{'email-adicional'} as $key => $email) {
                     $fornecedor->contatosPrincipais()->create(
                         [
@@ -372,7 +370,6 @@ class FornecedorController extends Controller
                     $pessoaContato->save();
 
                     foreach ($contato['telefone'] as $telefones) {
-
                         $pessoaContato->contato()->create(
                             [
                                 'qual_contato' => 'Telefone',
@@ -395,12 +392,12 @@ class FornecedorController extends Controller
             }
         } catch (QueryException $error) {
             DB::rollback();
-            return redirect()->back()->withErrors('Erro ao atualizar fornecedor')->withInput($request->input());
+            return redirect()->back()->withErrors('Ocorreu um erro ao atualizar fornecedor')->withInput($request->input());
         }
 
         DB::commit();
 
-        return redirect()->route('fornecedor.edit', [$fornecedor->id])->withSuccess('Fornecedor atualizado');
+        return redirect()->route('fornecedor.edit', [$fornecedor->id])->withSuccess('Fornecedor atualizad com sucesso!');
     }
 
     /**

@@ -1255,11 +1255,13 @@ var fillContactsFields = function fillContactsFields() {
   firstEmail = 0;
   var fieldTelefone = $('#telefoneContato .button-add');
   var fieldEmail = $('#emailContato .button-add');
+  var addedEmail = [];
+  var addedTelefone = [];
   /*eslint-disable */
 
   $.each(contatosData.contatosPrincipais, function (index, value) {
     /*eslint-enable */
-    if (value.qual_contato == 'Telefone') {
+    if (value.qual_contato == 'Telefone' && !addedTelefone.includes(value.id)) {
       if (firstTelefone == 0) {
         var element = $('input[name="telefone"]');
         var tipo = $('select[name="telefoneTipo"]');
@@ -1267,54 +1269,45 @@ var fillContactsFields = function fillContactsFields() {
         tipo.val(value.tipo);
         firstTelefone = 1;
       } else {
-        var _element = $('input[name="telefone"]');
+        addEmailTelefone(fieldTelefone);
+        $('.telefone-adicional' + uid).val(value.contato);
+        $('select[name="telefone-adicional[' + uid + '][tipo]"]').val(value.tipo);
+      }
 
-        var _tipo = $('select[name="telefoneTipo"]');
+      addedTelefone.push(value.id);
+    } else if (value.qual_contato == 'E-mail' && !addedEmail.includes(value.id)) {
+      if (firstEmail == 0) {
+        var _element = $('input[name="email"]');
+
+        var _tipo = $('select[name="emailTipo"]');
 
         _element.val(value.contato);
 
         _tipo.val(value.tipo);
 
-        addEmailTelefone(fieldTelefone);
-        $('.telefone-adicional' + uid).val(value.contato);
-        $('select[name="telefone-adicional[' + uid + '][tipo]"]').val(value.tipo);
-      }
-    } else if (value.qual_contato == 'E-mail') {
-      var _element2 = $('input[name="email"]');
-
-      var _tipo2 = $('select[name="emailTipo"]');
-
-      if (firstEmail == 0) {
-        _element2.val(value.contato);
-
-        _tipo2.val(value.tipo);
-
         firstEmail = 1;
       } else {
-        var _element3 = $('input[name="email"]');
-
-        var _tipo3 = $('select[name="emailTipo"]');
-
-        _element3.val(value.contato);
-
-        _tipo3.val(value.tipo);
-
         addEmailTelefone(fieldEmail);
         $('.email-adicional' + uid).val(value.contato);
         $('select[name="email-adicional[' + uid + '][tipo]"]').val(value.tipo);
       }
     }
+
+    addedEmail.push(value.id);
   });
+  addedEmail = [];
+  addedTelefone = [];
   /*eslint-disable */
 
+  if (contatosData.pessoasContatos.length > 0) $('#sem-contato-adicional').hide();
   $.each(contatosData.pessoasContatos, function (index, value) {
     /*eslint-enable */
     firstTelefone = 0;
     firstEmail = 0;
     uid = uid + 1;
     contatosAdicionais = contatosAdicionais + 1;
-    currentAddContact = value.id;
-    $('#sem-contato-adicional').hide();
+    currentAddContact = value.id; //para usar relacionar aos contatos adicionais
+
     $('#contatos-adicional').before(getContactsField(uid, contatosAdicionais));
     $('.telefone').mask(telefoneMask, telefoneMaskOptions);
     $('input[name="contato-adicional[' + contatosAdicionais + '][nome]"]').val(value.nome);
@@ -1326,34 +1319,40 @@ var fillContactsFields = function fillContactsFields() {
 
     $.each(contatosData.contatosAdicionais, function (key, value) {
       /*eslint-enable */
+      uid = uid + 1;
+
       if (currentAddContact == value.pessoa_contato_id) {
-        if (value.qual_contato == 'Telefone') {
+        if (value.qual_contato == 'Telefone' && !addedEmail.includes(value.id)) {
           if (firstTelefone == 0) {
-            $('input[name="contato-adicional[' + contatosAdicionais + '][telefone][' + uid + '][telefone]"]').val(value.contato);
-            $('select[name="contato-adicional[' + contatosAdicionais + '][telefone][' + uid + '][tipo]"]').val(value.tipo);
+            $('.contatos-adicional' + contatosAdicionais + ' .telefone-field input').val(value.contato);
+            $('.contatos-adicional' + contatosAdicionais + ' .telefone-field select').val(value.tipo);
             firstTelefone = 1;
           } else {
             addEmailTelefone(fieldTelefone);
             $('input[name="contato-adicional[' + contatosAdicionais + '][telefone][' + uid + '][telefone]"]').val(value.contato);
             $('select[name="contato-adicional[' + contatosAdicionais + '][telefone][' + uid + '][tipo]"]').val(value.tipo);
           }
-        } else if (value.qual_contato == 'E-mail') {
+
+          addedEmail.push(value.id);
+        } else if (value.qual_contato == 'E-mail' && !addedTelefone.includes(value.id)) {
           if (firstEmail == 0) {
-            $('input[name="contato-adicional[' + contatosAdicionais + '][email][' + uid + '][email]"]').val(value.contato);
-            $('select[name="contato-adicional[' + contatosAdicionais + '][email][' + uid + '][tipo]"]').val(value.tipo);
+            $('.contatos-adicional' + contatosAdicionais + ' .email-field input').val(value.contato);
+            $('.contatos-adicional' + contatosAdicionais + ' .email-principal select').val(value.tipo);
             firstEmail = 1;
           } else {
             addEmailTelefone(fieldEmail);
             $('input[name="contato-adicional[' + contatosAdicionais + '][email][' + uid + '][email]"]').val(value.contato);
             $('select[name="contato-adicional[' + contatosAdicionais + '][email][' + uid + '][tipo]"]').val(value.tipo);
           }
+
+          addedTelefone.push(value.id);
         }
       }
     });
   });
-}; //executa a função de fillContactsFields apenas se existir o objeto contatosData
-
+};
 /*eslint-disable */
+//executa a função de fillContactsFields apenas se existir o objeto contatosData
 
 
 if (typeof contatosData !== 'undefined') fillContactsFields();
