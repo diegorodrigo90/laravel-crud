@@ -221,7 +221,7 @@
                                     <div class="telefone-principal row col-md6">
                                         <div class="form-group col-6">
                                             <label for="telefone">Telefone</label>
-                                            <input type="text" class="form-control telefone" name="telefone" required>
+                                            <input type="text" class="form-control telefone" name="telefone" required data-mask="telefoneMask, telefoneMaskOptions">
                                         </div>
 
                                         <div class="form-group  col-6">
@@ -577,18 +577,12 @@
 @section('js')
 <script type="text/javascript" src="{{ asset('/js/validate.rules.js')}}"></script>
 <script type="text/javascript">
-    $(document).ready(function () {
 
     var contatosData  = {
         "contatosPrincipais" : {!! $fornecedor->contatosPrincipais->toJson() !!},
-        "PessoasContatos" : {!! $fornecedor->pessoasContatos->toJson() !!},
-        "contatosAdicionais" : {!! $fornecedor->contatosPrincipais->toJson() !!}
-
+        "pessoasContatos" : {!! $fornecedor->pessoasContatos->toJson() !!},
+        "contatosAdicionais" : {!! $fornecedor->contatosAdicionais->toJson() !!}
     }
-
-	addEmailField();
-
-});
 
 </script>
 <script type="text/javascript" src="{{ asset('/js/fornecedores.js')}}" defer></script>

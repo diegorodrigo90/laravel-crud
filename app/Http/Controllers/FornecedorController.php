@@ -225,7 +225,6 @@ class FornecedorController extends Controller
         $states = State::all();
         $cities = City::where('state_id', $fornecedor->endereco->uf)->get();
 
-
         return view('fornecedor.edit', compact('fornecedor', 'states', 'cities'));
     }
 
