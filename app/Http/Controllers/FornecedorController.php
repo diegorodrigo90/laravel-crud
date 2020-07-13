@@ -104,14 +104,7 @@ class FornecedorController extends Controller
                 ],
             );
 
-            //TODO: Melhorar atualização dos contatos
-            $contatosPrincipais = ContatoPrincipal::where('fornecedor_id', '=', $fornecedor->id);
-            $contatosPrincipais->delete();
 
-            $pessoasContatos = PessoaContato::where('fornecedor_id', '=', $fornecedor->id);
-            $pessoasContatos->delete();
-
-            //TODO: Remover esta implementação, e tratar cada contato com update/delete
             if ($request->email) {
                 $fornecedor->contatosPrincipais()->create(
                     [
@@ -305,6 +298,13 @@ class FornecedorController extends Controller
                     "numero_condominio" => $request->numeroCondominio
                 ],
             );
+
+
+            //TODO: Melhorar atualização dos contatos
+            $fornecedor->contatosPrincipais()->delete();
+            $fornecedor->pessoasContatos()->delete();
+
+            //TODO: Remover esta implementação, e tratar cada contato com update/delete/create
 
             if ($request->email) {
                 $fornecedor->contatosPrincipais()->create(
