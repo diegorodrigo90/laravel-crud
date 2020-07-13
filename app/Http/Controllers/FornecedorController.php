@@ -200,7 +200,7 @@ class FornecedorController extends Controller
 
         DB::commit();
 
-        return redirect()->route('fornecedor.index')->withSuccess('Fornecedor adicionado');
+        return redirect()->route('fornecedor.index')->withSuccess('Fornecedor cadastrado com sucesso!');
     }
 
     /**

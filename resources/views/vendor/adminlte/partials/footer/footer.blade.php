@@ -1,3 +1,3 @@
 <footer class="main-footer">
-    <b>Laravel CRUD {{ now()->year }} </b>
+    @yield('footer')
 </footer>
